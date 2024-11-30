@@ -16,7 +16,7 @@
 
                 <a href="javascript:void(0)" onclick="fetchProductsByCategory('Iphone')" class="footer-category-link">Iphone</a>
                 <a href="javascript:void(0)" onclick="fetchProductsByCategory('MakeBook')" class="footer-category-link">MakeBook</a>
-                
+
 
             </div>
 
@@ -290,42 +290,42 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function fetchProductsByCategory(categoryName) {
-    if (!categoryName) {
-        alert('Category name is required.');
-        return;
+        if (!categoryName) {
+            alert('Category name is required.');
+            return;
+        }
+
+        // Show a loading indicator
+        document.getElementById('loading-indicator').style.display = 'block';
+
+        axios.get(`/product-category/${categoryName}`)
+            .then(response => {
+                // Hide the loading indicator
+                document.getElementById('loading-indicator').style.display = 'none';
+
+                if (response.data.length === 0) {
+                    alert('No products found in this category.');
+                    return;
+                }
+
+                // Save only necessary details in localStorage
+                localStorage.setItem('categoryProducts', JSON.stringify(response.data.data.map(product => ({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                }))));
+
+                // Redirect to the products page
+                window.location.href = '/category-products';
+            })
+            .catch(error => {
+                // Hide the loading indicator
+                document.getElementById('loading-indicator').style.display = 'none';
+
+                console.error('Error fetching category products:', error);
+                alert(error.response?.data?.message || 'An error occurred while fetching the products.');
+            });
     }
-
-    // Show a loading indicator
-    document.getElementById('loading-indicator').style.display = 'block';
-
-    axios.get(`/product-category/${categoryName}`)
-        .then(response => {
-            // Hide the loading indicator
-            document.getElementById('loading-indicator').style.display = 'none';
-
-            if (response.data.length === 0) {
-                alert('No products found in this category.');
-                return;
-            }
-
-            // Save only necessary details in localStorage
-            localStorage.setItem('categoryProducts', JSON.stringify(response.data.map(product => ({
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                image: product.image,
-            }))));
-
-            // Redirect to the products page
-            window.location.href = '/category-products';
-        })
-        .catch(error => {
-            // Hide the loading indicator
-            document.getElementById('loading-indicator').style.display = 'none';
-
-            console.error('Error fetching category products:', error);
-            alert(error.response?.data?.message || 'An error occurred while fetching the products.');
-        });
-}
 
 </script>

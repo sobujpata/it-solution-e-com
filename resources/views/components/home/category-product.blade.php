@@ -1,42 +1,56 @@
 <style>
     .buy-now {
-  background-color: #ff5722;
-  color: #fff;
-  float: left;
-  margin: 0px 0px 10px 8px;
-  padding: 5px;
-  border-radius: 5px;
-}
- .add-to-cart {
-  background-color: #000;
-  color: #fff;
-  float: right;
-  margin: 0px 8px 10px 0px;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.pagination {
-    display: flex;
-    gap: 5px;
-    margin-top: 20px;
-    justify-content: center;
-}
-
-.pagination-btn {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.pagination-btn.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-}
-
+        background-color: #ff5722;
+        color: #fff;
+        float: left;
+        margin: 0px 0px 10px 8px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .add-to-cart {
+        background-color: #000;
+        color: #fff;
+        float: right;
+        margin: 0px 8px 10px 0px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .pagination {
+        display: flex;
+        gap: 5px;
+        margin-top: 20px;
+        justify-content: center;
+    }
+    .pagination-btn {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .pagination-btn.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    .pagination-btn:hover {
+        background-color: #f1f1f1;
+    }
+    @media (max-width: 768px) {
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+        .pagination {
+            flex-wrap: wrap;
+        }
+        .pagination-btn {
+            width: 40px;
+            text-align: center;
+        }
+    }
 </style>
+
 <div class="product-container">
     <hr>
     <div class="container" style="padding-top: 10px">
@@ -48,216 +62,194 @@
             <div class="header-search-container">
                 <input type="search" name="search-category-product" id="category-search"
                        class="search-field"
-                       placeholder="Search products in category..."
-                       onkeyup="searchCategoryProducts()">
+                       placeholder="Search products in category... " onkeyup='searchCategoryProducts()'>
             </div>
-
-            <!--- PRODUCT GRID -->
+            <div id="loading-indicator" style="display: none; text-align: center;">
+                <p>Loading...</p>
+            </div>
             <div class="product-main" style="padding-top: 10px">
                 <div class="product-grid" id="product-list">
                     <!-- Products will be dynamically loaded here -->
                 </div>
-                <div id="pagination" class="pagination"></div>
-
             </div>
+            <div id="pagination" class="pagination-container"></div>
         </div>
     </div>
 </div>
 
-
 <script>
-    // function searchCategoryProducts() {
-    //     const searchQuery = document.getElementById('category-search').value;
-
-    //     if (searchQuery.length > 0) {  // Trigger search after 3 characters
-    //         axios.get('/product-category/search', { params: { query: searchQuery } })
-    //             .then(response => {
-    //                 // Ensure the response is valid and contains the 'data' array
-    //                 if (response.data && Array.isArray(response.data.data)) {
-    //                     displayProducts(response.data.data);  // Access the 'data' array from the response
-    //                 } else {
-    //                     console.error('Unexpected response format:', response.data);
-    //                     document.getElementById('product-list').innerHTML = '<p>Unexpected error occurred.</p>';
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error fetching search results:', error);
-    //                 document.getElementById('product-list').innerHTML = '<p>Error fetching search results. Please try again.</p>';
-    //             });
-
-    //     } else {
-    //         // Clear the product list if query is too short
-    //         // document.getElementById('product-list').innerHTML = '';
-    //         location.reload();
-    //     }
-
-    // }
     let currentPage = 1; // Track the current page
 
-function searchCategoryProducts(page = 1) {
-    const searchQuery = document.getElementById('category-search').value;
+    // Fetch and display products based on search query and page
+    function toggleLoading(show) {
+        document.getElementById('loading-indicator').style.display = show ? 'block' : 'none';
+    }
 
-    if (searchQuery.length > 0) {
-        axios.get('/product-category/search', { params: { query: searchQuery, page } })
-            .then(response => {
-                if (response.data && Array.isArray(response.data.data)) {
-                    displayProducts(response.data.data); // Display current page products
-                    setupPagination(response.data.current_page, response.data.last_page); // Setup pagination controls
-                } else {
-                    console.error('Unexpected response format:', response.data);
-                    document.getElementById('product-list').innerHTML = '<p>Unexpected error occurred.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-                document.getElementById('product-list').innerHTML = '<p>Error fetching search results. Please try again.</p>';
+    async function fetchData(endpoint, params = {}) {
+        try {
+            const queryParams = new URLSearchParams(params).toString();
+            const url = queryParams ? `${endpoint}?${queryParams}` : endpoint;
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
             });
-    } else {
-        location.reload(); // Reset page if query is cleared
-    }
-}
-function setupPagination(currentPage, lastPage) {
-    const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = ''; // Clear existing pagination
-
-    for (let page = 1; page <= lastPage; page++) {
-        const button = document.createElement('button');
-        button.textContent = page;
-        button.classList.add('pagination-btn');
-        if (page === currentPage) {
-            button.classList.add('active'); // Highlight current page
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw new Error('Unable to fetch products.');
         }
-        button.addEventListener('click', () => {
-            searchCategoryProducts(page); // Fetch products for the selected page
-        });
-        paginationContainer.appendChild(button);
     }
+
+    // Fetch and display products based on search query and page
+    function fetchAndDisplayProducts({ query = '', page = 1, categoryName = '' }) {
+    toggleLoading(true);
+    const endpoint = query ? '/product-category/search' : `/product-category/${categoryName}`;
+
+    async function fetchData(endpoint, params = {}) {
+        try {
+            const response = await fetch(endpoint + `?page=${page}&query=${query}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                return data;
+            } else {
+                throw new Error(data.message || 'Unknown error');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw new Error('Unable to fetch products: ' + error.message);
+        }
+    }
+
+    fetchData(endpoint, { query, page })
+        .then(data => {
+            toggleLoading(false);
+            displayProducts(data.data || [], data.pagination || {});
+            setupPagination(data.pagination?.current_page || 1, data.pagination?.last_page || 1);
+        })
+        .catch(error => {
+            toggleLoading(false);
+            console.error('Error:', error);
+            document.getElementById('product-list').innerHTML = `<p>${error.message}</p>`;
+        });
 }
 
 
 function displayProducts(products, meta = {}) {
     const productList = document.getElementById('product-list');
-    productList.innerHTML = ''; // Clear the current list
+    productList.innerHTML = ''; // Clear existing products
 
-    // Display total product count if available
-    if (meta.total) {
-        const totalCount = document.getElementById('total-count');
-        totalCount.textContent = `Total Products: ${meta.total}`;
-    }
-
-    // Check if products is an array and display accordingly
-    if (Array.isArray(products)) {
-        if (products.length === 0) {
-            productList.innerHTML = '<p>No products found.</p>';
-        } else {
-            products.forEach(product => {
-                const productDiv = document.createElement('div');
-                productDiv.classList.add('product-item');
-                productDiv.innerHTML = `
-                    <div class="showcase">
-                        <div class="showcase-banner">
-                            <img src="${product.image || 'default-image.png'}"
-                                 alt="${product.title || 'Product'}"
-                                 class="product-img default" width="300">
-                            <img src="${product.image || 'default-image.png'}"
-                                 alt="${product.title || 'Product'}"
-                                 class="product-img hover" width="300">
-                        </div>
-                        <div class="showcase-content">
-                            <h3>
-                                <a href="#" class="showcase-title">${product.title || 'Untitled'}</a>
-                            </h3>
-                            <div class="showcase-rating" id="rating-container-${product.id}"></div>
-                            <div class="price-box">
-                                <p class="price">Tk ${product.discount_price || product.price || 'N/A'}</p>
-                                ${product.discount_price ? `<del>Tk ${product.price}</del>` : ''}
-                            </div>
-                        </div>
-
-                        <button class="buy-now" onclick="buyNow(${product.id})">Buy Now</button>
-                        <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+    if (Array.isArray(products) && products.length > 0) {
+        products.forEach(product => {
+            const productImage = product.image || '/images/default-image.jpeg'; // Use a fallback image
+            const productDiv = document.createElement('div');
+            productDiv.classList.add('product-item');
+            productDiv.innerHTML = `
+                <div class="showcase">
+                    <div class="showcase-banner">
+                        <img src="${product.image}" alt="${product.title}" class="product-img" width="300">
                     </div>
-                `;
-                productList.appendChild(productDiv);
-            });
-
-            // Display pagination controls
-            displayPagination(meta);
-        }
+                    <div class="showcase-content">
+                        <h3>
+                            <a href="#" class="showcase-title">${product.title}</a>
+                        </h3>
+                        <div class="price-box">
+                            <p class="price">Tk ${product.discount_price || product.price || 'N/A'}</p>
+                            ${product.discount_price ? `<del>Tk ${product.price}</del>` : ''}
+                        </div>
+                    </div>
+                    <button class="buy-now" onclick="buyNow(${product.id})"> Buy Now</button>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `;
+            productList.appendChild(productDiv);
+        });
     } else {
-        productList.innerHTML = '<p>Invalid product data format.</p>';
+        productList.innerHTML = '<p>No products found.</p>';
     }
 }
-function displayPagination(meta) {
+
+    // Setup pagination buttons
+    function setupPagination(currentPage, lastPage) {
     const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = ''; // Clear previous pagination
+    paginationContainer.innerHTML = ''; // Clear existing pagination
 
-    if (meta.current_page && meta.last_page) {
-        for (let i = 1; i <= meta.last_page; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = i;
-            pageButton.classList.add('pagination-btn');
-            if (i === meta.current_page) {
-                pageButton.classList.add('active'); // Highlight the current page
-            }
-            pageButton.onclick = () => fetchProducts(i); // Fetch products for the selected page
-            paginationContainer.appendChild(pageButton);
-        }
-    }
-}
-function updatePaginationControls(pagination) {
-    const paginationControls = document.getElementById('pagination-controls');
-    paginationControls.innerHTML = '';
-
-    // Previous button
-    if (pagination.current_page > 1) {
+    // Add Previous Button
+    if (currentPage > 1) {
         const prevButton = document.createElement('button');
         prevButton.textContent = 'Previous';
-        prevButton.onclick = () => fetchProducts(pagination.current_page - 1);
-        paginationControls.appendChild(prevButton);
+        prevButton.classList.add('pagination-btn');
+        prevButton.setAttribute('aria-label', 'Previous Page');
+        prevButton.addEventListener('click', () => fetchAndDisplayProducts({ page: currentPage - 1 }));
+        paginationContainer.appendChild(prevButton);
     }
 
-    // Page numbers
-    for (let i = 1; i <= pagination.last_page; i++) {
-        const pageButton = document.createElement('button');
-        pageButton.textContent = i;
-        if (i === pagination.current_page) {
-            pageButton.disabled = true;
-        } else {
-            pageButton.onclick = () => fetchProducts(i);
-        }
-        paginationControls.appendChild(pageButton);
+    const range = 2; // Show 2 pages before and after the current page
+    const startPage = Math.max(1, currentPage - range);
+    const endPage = Math.min(lastPage, currentPage + range);
+
+    // Show the start of the page range
+    if (startPage > 1) {
+        paginationContainer.appendChild(createPageButton(1));
+        if (startPage > 2) paginationContainer.appendChild(createDotsButton());
     }
 
-    // Next button
-    if (pagination.current_page < pagination.last_page) {
+    // Show page buttons
+    for (let page = startPage; page <= endPage; page++) {
+        paginationContainer.appendChild(createPageButton(page));
+    }
+
+    // Show the end of the page range
+    if (endPage < lastPage) {
+        if (endPage < lastPage - 1) paginationContainer.appendChild(createDotsButton());
+        paginationContainer.appendChild(createPageButton(lastPage));
+    }
+
+    // Add Next Button
+    if (currentPage < lastPage) {
         const nextButton = document.createElement('button');
         nextButton.textContent = 'Next';
-        nextButton.onclick = () => fetchProducts(pagination.current_page + 1);
-        paginationControls.appendChild(nextButton);
+        nextButton.classList.add('pagination-btn');
+        nextButton.setAttribute('aria-label', 'Next Page');
+        nextButton.addEventListener('click', () => fetchAndDisplayProducts({ page: currentPage + 1 }));
+        paginationContainer.appendChild(nextButton);
     }
 }
 
-function fetchProducts(page = 1) {
-    const categoryName = document.getElementById('category-name').value;
+function createPageButton(page) {
+    const button = document.createElement('button');
+    button.textContent = page;
+    button.classList.add('pagination-btn');
+    button.setAttribute('aria-label', `Page ${page}`);
+    button.addEventListener('click', () => fetchAndDisplayProducts({ page }));
+    return button;
+}
 
-    axios.get(`/product-category/${categoryName}`, { params: { page } })
-        .then(response => {
-            const { data: products, pagination } = response.data;
-            displayProducts(products, pagination);
-            updatePaginationControls(pagination);
-        })
-        .catch(error => {
-            console.error('Error fetching products:', error.message || error);
-            document.getElementById('product-list').innerHTML = '<p>Error fetching products. Please try again.</p>';
-        });
+function createDotsButton() {
+    const button = document.createElement('button');
+    button.textContent = '...';
+    button.classList.add('pagination-btn');
+    button.disabled = true;
+    return button;
 }
 
 
 
+let debounceTimer;
+document.getElementById('category-search').addEventListener('keyup', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        const query = document.getElementById('category-search').value;
+        fetchAndDisplayProducts({ query, page: 1 });
+    }, 500); // Adjust debounce delay for smoother experience
+});
 
 
-// Initial product load (when the page loads)
+
+
+// Initialize products on page load
 document.addEventListener('DOMContentLoaded', () => {
     const products = JSON.parse(localStorage.getItem('categoryProducts')) || [];
     displayProducts(products);

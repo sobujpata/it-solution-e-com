@@ -64,16 +64,35 @@ class ProductController extends Controller
     public function CategoryProducts() {
         return view('home.category-wise-product');
     }
-    public function CategoryWise($categoryName)
+    public function searchCategoryProducts(Request $request)
 {
-    $category = Category::where('categoryName', $categoryName)->first();
+    $searchQuery = $request->query('query');
 
-    if (!$category) {
-        return response()->json(['message' => 'Category not found'], 404);
+    // Check if the query parameter is empty
+    if (empty($searchQuery)) {
+        return response()->json(['message' => 'Search query is required'], 400);
     }
 
-    $products = Product::where('category_id', $category->id)->paginate(8);
+    // Validate the query
+    $request->validate([
+        'query' => 'required|string|min:1',
+    ]);
 
+    // Perform the search
+    $products = Product::with('category')
+        ->where('title', 'like', '%' . $searchQuery . '%')
+        ->orWhere('price', 'like', '%' . $searchQuery . '%')
+        ->orWhereHas('category', function ($query) use ($searchQuery) {
+            $query->where('categoryName', 'like', '%' . $searchQuery . '%');
+        })
+        ->paginate(8);
+
+    // If no products found, return a response
+    if ($products->isEmpty()) {
+        return response()->json(['message' => 'No products found'], 404);
+    }
+
+    // Return products and pagination
     return response()->json([
         'data' => $products->items(),
         'pagination' => [
@@ -86,31 +105,57 @@ class ProductController extends Controller
 }
 
 
-    public function searchCategoryProducts(Request $request)
+public function CategoryWise(Request $request, $categoryName)
 {
-    $request->validate([
-        'query' => 'required|string|min:1',
-    ]);
+    $category = Category::where('categoryName', $categoryName)->first();
 
-    $searchQuery = $request->query('query');
-    // dd($searchQuery);
-    // First, try to search by product title or price, then fallback to category name
-    $products = Product::with('category') // Include category data
-        ->where('title', 'like', '%' . $searchQuery . '%')  // Search by product title
-        ->orWhere('price', 'like', '%' . $searchQuery . '%')  // Search by product price
-        ->orWhereHas('category', function ($query) use ($searchQuery) {
-            // Search by category name only if needed
-            $query->where('categoryName', 'like', '%' . $searchQuery . '%');
-        })
-        ->paginate(8); // Use pagination to limit results
-
-    // If no products are found, return a proper message
-    if ($products->isEmpty()) {
-        return response()->json(['message' => 'No products found'], 404);
+    if (!$category) {
+        return response()->json(['message' => 'Category not found'], 404);
     }
 
-    // Return the found products
-    return response()->json($products);
+    $query = Product::where('category_id', $category->id);
+
+    // Optional sorting
+    $allowedSortFields = ['price', 'name', 'created_at'];
+    if ($request->has('sort') && in_array($request->input('sort'), $allowedSortFields)) {
+        $query->orderBy($request->input('sort'), $request->input('order', 'asc'));
+    }
+
+    // Optional filtering by price range
+    if ($request->has('min_price') && $request->has('max_price')) {
+        $query->whereBetween('price', [$request->input('min_price'), $request->input('max_price')]);
+    }
+
+    // Optional filtering by discount
+    if ($request->has('discounted') && $request->input('discounted') == 'true') {
+        $query->whereNotNull('discount_price');
+    }
+
+    // Optional filtering by stock availability
+    if ($request->has('in_stock') && $request->input('in_stock') == 'true') {
+        $query->where('stock', '>', 0);
+    }
+
+    // Optional search within category products
+    if ($request->has('search')) {
+        $query->where('title', 'like', '%' . $request->input('search') . '%')
+              ->orWhere('description', 'like', '%' . $request->input('search') . '%');
+    }
+
+    // Paginate results
+    $perPage = $request->input('per_page', 8);
+    $products = $query->paginate($perPage);
+
+    return response()->json([
+        'category' => $category->only(['id', 'categoryName']),
+        'data' => $products->items(),
+        'pagination' => [
+            'current_page' => $products->currentPage(),
+            'last_page' => $products->lastPage(),
+            'per_page' => $products->perPage(),
+            'total' => $products->total(),
+        ],
+    ]);
 }
 
 
