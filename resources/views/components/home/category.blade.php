@@ -25,7 +25,7 @@
                             <h3 class="category-item-title">${item['categoryName']}</h3>
                             <p class="category-item-amount">(53)</p>
                         </div>
-                        <a href="#" class="category-btn">Show all</a>
+                        <a href="/product-category/${item['categoryName']}" class="category-btn">Show all</a>
                     </div>
                 </div>
             `;

@@ -73,7 +73,7 @@
         <div class="product-box">
             <h2 class="title">
                 <a href="{{ url('/') }}">Home</a> /
-                <a href="{{ url('/product-category/' . $category->categoryName) }}">{{ $category->categoryName }}</a>
+                <a href="{{ url('/product/' . $remark) }}">{{ $remark}}</a>
             </h2>
             
 
@@ -106,6 +106,7 @@
                             <button class="btn btn-success">Add to Card</button>
                         </div>
                     @endforeach
+                    
                 </div>
                 {{ $products->links() }}
 

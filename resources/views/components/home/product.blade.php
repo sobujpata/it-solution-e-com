@@ -26,7 +26,7 @@
                         </div>
 
                     </div>
-                    <a href="#" style="text-align: right">See All</a>
+                    <a href="url('/products-remark/New')" style="text-align: right">See All</a>
 
                 </div>
 
@@ -45,7 +45,7 @@
                         </div>
 
                     </div>
-                    <a href="#" style="text-align: right">See All</a>
+                    <a href="{{ url('/products-remark/Trending') }}" style="text-align: right">See All</a>
                 </div>
 
                 <div class="product-showcase">
@@ -63,7 +63,7 @@
                         </div>
 
                     </div>
-                    <a href="#" style="text-align: right">See All</a>
+                    <a href="{{ url('/products-remark/Top') }}" style="text-align: right">See All</a>
                 </div>
 
             </div>
@@ -93,7 +93,7 @@
                 <div class="product-grid" id="newProductsList">
 
                 </div>
-                <a href="#" style="text-align: right">See All</a>
+                <a href="/products/${item['id']}" style="text-align: right">See All</a>
             </div>
 
         </div>
@@ -110,17 +110,17 @@
         //new arraivals
         try {
             let res = await axios.get("new-arrivals");
-
+// console.log(res)
                     // Clear existing items for both newArrivals and newArrivals2
                     document.getElementById("newArrivals").innerHTML = '';
                     document.getElementById("newArrivals2").innerHTML = '';
 
-                    // Loop through the first batch of new arrivals and append to #newArrivals
+                    // Loop through the first batch of new arrivals and append to /products/${item['id']}newArrivals
                     res.data.first_batch.forEach(function(item) {
                         let div = `
                             <div class="showcase">
 
-                                <a href="#" class="showcase-img-box">
+                                <a href="/products/${item['id']}" class="showcase-img-box">
                                     <img src="${item['image']}"
                                         alt="${item['title']}" width="70"
                                         class="showcase-img">
@@ -128,11 +128,11 @@
 
                                 <div class="showcase-content">
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h4 class="showcase-title">${item['title']}</h4>
                                     </a>
 
-                                    <a href="#" class="showcase-category">${item['category_id']}</a>
+                                    <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
                                         <p class="price">${item['discount_price']}</p>
@@ -144,16 +144,16 @@
                             </div>
                         `;
 
-                        // Append the constructed HTML to the #newArrivals element
+                        // Append the constructed HTML to the /products/${item['id']}newArrivals element
                         document.getElementById("newArrivals").innerHTML += div;
                     });
 
-                    // Loop through the second batch of new arrivals and append to #newArrivals2
+                    // Loop through the second batch of new arrivals and append to /products/${item['id']}newArrivals2
                     res.data.second_batch.forEach(function(item) {
                         let div = `
                             <div class="showcase">
 
-                                <a href="#" class="showcase-img-box">
+                                <a href="/products/${item['id']}" class="showcase-img-box">
                                     <img src="${item['image']}"
                                         alt="${item['title']}" width="70"
                                         class="showcase-img">
@@ -161,11 +161,11 @@
 
                                 <div class="showcase-content">
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h4 class="showcase-title">${item['title']}</h4>
                                     </a>
 
-                                    <a href="#" class="showcase-category">${item['category_id']}</a>
+                                    <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
                                         <p class="price">${item['discount_price']}</p>
@@ -177,7 +177,7 @@
                             </div>
                         `;
 
-                        // Append the constructed HTML to the #newArrivals2 element
+                        // Append the constructed HTML to the /products/${item['id']}newArrivals2 element
                         document.getElementById("newArrivals2").innerHTML += div;
                     });
 
@@ -194,12 +194,12 @@
                     document.getElementById("trending").innerHTML = '';
                     document.getElementById("trending2").innerHTML = '';
 
-                    // Loop through the first trending of new arrivals and append to #trending
+                    // Loop through the first trending of new arrivals and append to /products/${item['id']}trending
                     restrending.data.first_trending.forEach(function(item) {
                         let div = `
                             <div class="showcase">
 
-                                <a href="#" class="showcase-img-box">
+                                <a href="/products/${item['id']}" class="showcase-img-box">
                                     <img src="${item['image']}"
                                         alt="${item['title']}" width="70"
                                         class="showcase-img">
@@ -207,11 +207,11 @@
 
                                 <div class="showcase-content">
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h4 class="showcase-title">${item['title']}</h4>
                                     </a>
 
-                                    <a href="#" class="showcase-category">${item['category_id']}</a>
+                                    <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
                                         <p class="price">${item['discount_price']}</p>
@@ -223,16 +223,16 @@
                             </div>
                         `;
 
-                        // Append the constructed HTML to the #trending element
+                        // Append the constructed HTML to the /products/${item['id']}trending element
                         document.getElementById("trending").innerHTML += div;
                     });
 
-                    // Loop through the second trending of new arrivals and append to #trending2
+                    // Loop through the second trending of new arrivals and append to /products/${item['id']}trending2
                     restrending.data.second_trending.forEach(function(item) {
                         let div = `
                             <div class="showcase">
 
-                                <a href="#" class="showcase-img-box">
+                                <a href="/products/${item['id']}" class="showcase-img-box">
                                     <img src="${item['image']}"
                                         alt="${item['title']}" width="70"
                                         class="showcase-img">
@@ -240,11 +240,11 @@
 
                                 <div class="showcase-content">
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h4 class="showcase-title">${item['title']}</h4>
                                     </a>
 
-                                    <a href="#" class="showcase-category">${item['category_id']}</a>
+                                    <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
                                         <p class="price">${item['discount_price']}</p>
@@ -256,7 +256,7 @@
                             </div>
                         `;
 
-                        // Append the constructed HTML to the #trending2 element
+                        // Append the constructed HTML to the /products/${item['id']}trending2 element
                         document.getElementById("trending2").innerHTML += div;
                     });
 
@@ -273,12 +273,12 @@
                     document.getElementById("topRate").innerHTML = '';
                     document.getElementById("topRate2").innerHTML = '';
 
-                    // Loop through the first topRate of new arrivals and append to #topRate
+                    // Loop through the first topRate of new arrivals and append to /products/${item['id']}topRate
                     restopRate.data.first_top.forEach(function(item) {
                         let div = `
                             <div class="showcase">
 
-                                <a href="#" class="showcase-img-box">
+                                <a href="/products/${item['id']}" class="showcase-img-box">
                                     <img src="${item['image']}"
                                         alt="${item['title']}" width="70"
                                         class="showcase-img">
@@ -286,11 +286,11 @@
 
                                 <div class="showcase-content">
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h4 class="showcase-title">${item['title']}</h4>
                                     </a>
 
-                                    <a href="#" class="showcase-category">${item['category_id']}</a>
+                                    <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
                                         <p class="price">${item['discount_price']}</p>
@@ -302,16 +302,16 @@
                             </div>
                         `;
 
-                        // Append the constructed HTML to the #top element
+                        // Append the constructed HTML to the /products/${item['id']}top element
                         document.getElementById("topRate").innerHTML += div;
                     });
 
-                    // Loop through the second topRate2 of new arrivals and append to #topRate2
+                    // Loop through the second topRate2 of new arrivals and append to /products/${item['id']}topRate2
                     restopRate.data.second_top.forEach(function(item) {
                         let div = `
                             <div class="showcase">
 
-                                <a href="#" class="showcase-img-box">
+                                <a href="/products/${item['id']}" class="showcase-img-box">
                                     <img src="${item['image']}"
                                         alt="${item['title']}" width="70"
                                         class="showcase-img">
@@ -319,11 +319,11 @@
 
                                 <div class="showcase-content">
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h4 class="showcase-title">${item['title']}</h4>
                                     </a>
 
-                                    <a href="#" class="showcase-category">${item['category_id']}</a>
+                                    <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
                                         <p class="price">${item['discount_price']}</p>
@@ -335,7 +335,7 @@
                             </div>
                         `;
 
-                        // Append the constructed HTML to the #topRate2 element
+                        // Append the constructed HTML to the /products/${item['id']}topRate2 element
                         document.getElementById("topRate2").innerHTML += div;
                     });
 
@@ -367,7 +367,7 @@
                                 <div class="showcase-content">
                                     <div class="showcase-rating" id="rating-container-${productId}"></div> <!-- Unique ID here -->
 
-                                    <a href="#">
+                                    <a href="/products/${item['id']}">
                                         <h3 class="showcase-title">${item.products?.['title'] || 'No Title'}</h3>
                                     </a>
                                     <p class="showcase-desc">
@@ -473,33 +473,17 @@
                         <div class="showcase-banner">
                             <img src="${item['image']}" alt="Casual Men's Brown shoes"
                                 class="product-img default" width="300">
-                            <img src="{{ asset('images/laptop/rok1.jpg') }}" alt="Casual Men's Brown shoes"
+                            <img src="${item['image']}" alt="Casual Men's Brown shoes"
                                 class="product-img hover" width="300">
 
-                            <div class="showcase-actions">
-                                <button class="btn-action">
-                                    <ion-icon name="heart-outline"></ion-icon>
-                                </button>
-
-                                <button class="btn-action">
-                                    <ion-icon name="eye-outline"></ion-icon>
-                                </button>
-
-                                <button class="btn-action">
-                                    <ion-icon name="repeat-outline"></ion-icon>
-                                </button>
-
-                                <button class="btn-action">
-                                    <ion-icon name="bag-add-outline"></ion-icon>
-                                </button>
-                            </div>
+                            
                         </div>
 
                         <div class="showcase-content">
-                            <a href="#" class="showcase-category">${item.categories['categoryName']}</a>
+                            <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                             <h3>
-                                <a href="#" class="showcase-title">${item['title']}</a>
+                                <a href="/products/${item['id']}" class="showcase-title">${item['title']}</a>
                             </h3>
 
                             <div class="showcase-rating" id="rating-container-${productId}"></div> <!-- Unique ID here -->

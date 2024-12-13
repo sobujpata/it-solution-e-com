@@ -33,6 +33,7 @@
             </div>
 
         </div>
+        @push('custom-scripts')
         <script>
             getCategoryData();
 
@@ -62,7 +63,7 @@
                         mainCategory.categories.forEach(function(category) {
                             li += `
                                 <li class="sidebar-submenu-category">
-                                    <a href="javascript:void(0)" onclick="fetchProductsByCategory('${category["categoryName"]}')" class="sidebar-submenu-title">
+                                <a href="/product-category/${category["categoryName"]}" class="sidebar-submenu-title">
                                         <p class="product-name">${category["categoryName"]}</p>
                                         <data value="300" class="stock" title="Available Stock">300</data>
                                     </a>
@@ -97,14 +98,14 @@
                         let li = `
                             <div class="showcase">
 
-                            <a href="#" class="showcase-img-box">
+                            <a href="/products/${item['id']}" class="showcase-img-box">
                                 <img src="${item['image']}" alt="${item['title']}"
                                     width="75" height="75" class="showcase-img">
                             </a>
 
                             <div class="showcase-content">
 
-                                <a href="#">
+                                <a href="/products/${item['id']}">
                                     <h4 class="showcase-title">${item['title']}</h4>
                                 </a>
 
@@ -155,3 +156,5 @@
                 });
             }
         </script>
+        @endpush
+        

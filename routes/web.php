@@ -43,13 +43,15 @@ Route::get('/deal-of-day', [ProductController::class, 'DealOfDay']);
 Route::get('/new-products', [ProductController::class, "NewProducts"]);
 
 // Search products within a category
-Route::get('/product-category/search', [ProductController::class, 'searchCategoryProducts']);
-Route::get('/product-category/{category}', [ProductController::class, 'CategoryWise']);
+// Route::get('/product/category/search', [ProductController::class, 'searchCategoryProducts']);
+Route::get('/product-category/{categoryName}', [ProductController::class, 'CategoryWise']);
 
-Route::get('/category-products', [ProductController::class, 'CategoryProducts']);
+// Route::get('/category-products', [ProductController::class, 'CategoryProducts']);
 
 //product details
-Route::get('/products/product-details', [ProductController::class, 'ProductDetails']);
+Route::get('/products/{id}', [ProductController::class, 'ProductDetails']);
+
+Route::get('/products-remark/{remark}', [ProductController::class, 'ProductRemark'])->name('product.remark');
 
 
 
