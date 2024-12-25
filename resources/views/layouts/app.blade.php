@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/progress.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/login.css') }}" /> --}}
 
     <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
     <script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
@@ -55,8 +56,8 @@
     <!-- <script src="chat.js"></script> -->
 
     <!--- ionicon link-->
-    <script type="module" src="{{ asset('js/ionicons.js') }}"></script>
-    <script nomodule src="{{ asset('js/ionicons2.js') }}"></script>
+    {{-- <script type="module" src="{{ asset('js/ionicons.js') }}"></script> --}}
+    {{-- <script nomodule src="{{ asset('js/ionicons2.js') }}"></script> --}}
 </body>
 
 </html>

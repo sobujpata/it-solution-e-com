@@ -13,13 +13,13 @@ class Product extends Model
         "price",
         "discount",
         "discount_price",
-        "image",
         "stock",
         "star",
         "remark",
-        "main_category_id ",
-        "category_id ",
-        "brand_id "
+        "main_category_id",
+        "category_id",
+        "brand_id",
+        "image",
     ];
 
     public function categories()
@@ -29,6 +29,14 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+    public function main_category()
+    {
+        return $this->belongsTo(MainCategory::class);
     }
     
 }

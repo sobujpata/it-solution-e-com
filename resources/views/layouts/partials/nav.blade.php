@@ -88,12 +88,12 @@
                            <ion-icon name="heart-outline"></ion-icon>
                            <span class="count">0</span>
                        </button>
-
+                      <a href="/cart">
                        <button class="action-btn">
                            <ion-icon name="bag-handle-outline"></ion-icon>
                            <span class="count">0</span>
                        </button>
-
+                      </a>
                    </div>
 
                </div>
@@ -102,271 +102,275 @@
 
            <nav class="desktop-navigation-menu">
 
-               <div class="container">
-
-                   <ul class="desktop-menu-category-list">
-
-                       <li class="menu-category">
-                           <a class='menu-title' href='/'>Home</a>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Categories</a>
-
-                           <div class="dropdown-panel">
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title">
-                                       <a href="#">Electronics</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Desktop</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Laptop</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Camera</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Tablet</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Headphone</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/electronics-banner-1.jpg') }}"
-                                               alt="headphone collection" width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title">
-                                       <a href="#">Men's</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Formal</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Casual</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Sports</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Jacket</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Sunglasses</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/mens-banner.jpg') }}" alt="men's fashion"
-                                               width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title">
-                                       <a href="#">Phone</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Computer</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Casual</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Perfume</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Cosmetics</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Bags</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/womens-banner.jpg') }}" alt="women's fashion"
-                                               width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title">
-                                       <a href="#">Electronics</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Smart Watch</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Smart TV</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Keyboard</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Mouse</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Microphone</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/electronics-banner-2.jpg') }}"
-                                               alt="mouse collection" width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                           </div>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">MACBOOK</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Shirt</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Shorts & Jeans</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Safety Shoes</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Wallet</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Headphone</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Wear</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Wearless</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">EarBuds</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Earphone</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Phone</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Apple</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Samsung</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Asus</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Nokia</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Computer</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Keyboard</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Mouse</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Monitor</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">SSD</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Blog</a>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Hot Offers</a>
-                       </li>
-
-                   </ul>
-
-               </div>
-
-           </nav>
+            <div class="container">
+      
+              <ul class="desktop-menu-category-list">
+      
+                <li class="menu-category">
+                  <a href="{{"/"}}" class="menu-title">Home</a>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#" class="menu-title">Categories</a>
+      
+                  <div class="dropdown-panel">
+      
+                    <ul class="dropdown-panel-list">
+      
+                      <li class="menu-title">
+                        <a href="#">APPLE</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">MACBOOK</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">iPad</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Apple Watch</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">AirPods Pro</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Apple Vision Pro</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">
+                          <img src="{{ asset('images/apple.jpg') }}" alt="headphone collection" width="250"
+                            height="119">
+                        </a>
+                      </li>
+      
+                    </ul>
+      
+                    <ul class="dropdown-panel-list">
+      
+                      <li class="menu-title">
+                        <a href="#">HAVIT</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#"> USB CABLE</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Gaming MOUSE</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">KEYBOARD</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#"> Microphone</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Gamepad</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">
+                          <img src="{{ asset('images/havit.jpg') }}" alt="men's fashion" width="250" height="119">
+                        </a>
+                      </li>
+      
+                    </ul>
+      
+                    <ul class="dropdown-panel-list">
+      
+                      <li class="menu-title">
+                        <a href="#">Gedget</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Computer</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Laptop</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Gamepad</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Earbuds</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Watch</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">
+                          <img src="{{asset('images/gedget.jpg')}}" alt="women's fashion" width="250" height="119">
+                        </a>
+                      </li>
+      
+                    </ul>
+      
+                    <ul class="dropdown-panel-list">
+      
+                      <li class="menu-title">
+                        <a href="#">Electronics</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Smart Watch</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">𝗪𝗶𝗿𝗲𝗹𝗲𝘀𝘀 𝗦𝗽𝗲𝗮𝗸𝗲𝗿</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Keyboard</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Mouse</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">Microphone</a>
+                      </li>
+      
+                      <li class="panel-list-item">
+                        <a href="#">
+                          <img src="{{ asset('images/electronics-banner-2.jpg') }}" alt="mouse collection" width="250" height="119">
+                        </a>
+                      </li>
+      
+                    </ul>
+      
+                  </div>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#" class="menu-title">MACBOOK</a>
+      
+                  <ul class="dropdown-list">
+      
+                    <li class="dropdown-item">
+                      <a href="#">Macbook Air M1</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Macbook Air M2</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Macbook Air M3</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Macbook Air M4</a>
+                    </li>
+      
+                  </ul>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#" class="menu-title">Headphone</a>
+      
+                  <ul class="dropdown-list">
+      
+                    <li class="dropdown-item">
+                      <a href="#">Wear</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Wearless</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">EarBuds</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Earphone</a>
+                    </li>
+      
+                  </ul>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#" class="menu-title">Gedget</a>
+      
+                  <ul class="dropdown-list">
+      
+                    <li class="dropdown-item">
+                      <a href="#">Gamepad</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Watch</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Speakers</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Charger</a>
+                    </li>
+      
+                  </ul>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#" class="menu-title">Computer</a>
+      
+                  <ul class="dropdown-list">
+      
+                    <li class="dropdown-item">
+                      <a href="#">Keyboard</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Mouse</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">Monitor</a>
+                    </li>
+      
+                    <li class="dropdown-item">
+                      <a href="#">SSD</a>
+                    </li>
+      
+                  </ul>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#" class="menu-title">Blog</a>
+                </li>
+      
+                <li class="menu-category">
+                  <a href="#HotOffers" class="menu-title" >Hot Offers</a>
+                </li>
+
+                @if(Cookie::get('token') !== null)
+                    <li><a href="{{url("/profile")}}"> <i class="linearicons-user"></i> Account</a></li>
+                    <li><a class="btn btn-danger btn-sm" href="{{url("/logout")}}"> Logout</a></li>
+                @else
+                    <li><a class="btn btn-danger btn-sm" href="{{url("/login")}}">Login</a></li>
+                @endif
+      
+              </ul>
+      
+            </div>
+      
+          </nav>
 
            <div class="mobile-bottom-navigation">
 
@@ -555,6 +559,13 @@
                        <a href="#" class="menu-title">Hot Offers</a>
                    </li>
 
+                   @if(Cookie::get('token') !== null)
+                          <li><a href="{{url("/profile")}}"> <i class="linearicons-user"></i> Profile</a></li>
+                          <li><a class="btn btn-danger btn-sm" href="{{url("/logout")}}"> Logout</a></li>
+                      @else
+                          <li><a class="btn btn-danger btn-sm" href="{{url("/login")}}">Login</a></li>
+                    @endif
+
                </ul>
 
                <div class="menu-bottom">
@@ -575,13 +586,13 @@
                                    <a href="#" class="submenu-title">English</a>
                                </li>
 
-                               <li class="submenu-category">
+                               {{-- <li class="submenu-category">
                                    <a href="#" class="submenu-title">Espa&ntilde;ol</a>
                                </li>
 
                                <li class="submenu-category">
                                    <a href="#" class="submenu-title">Fren&ccedil;h</a>
-                               </li>
+                               </li> --}}
 
                            </ul>
 
@@ -594,9 +605,9 @@
                            </button>
 
                            <ul class="submenu-category-list" data-accordion>
-                               <li class="submenu-category">
+                               {{-- <li class="submenu-category">
                                    <a href="#" class="submenu-title">USD &dollar;</a>
-                               </li>
+                               </li> --}}
 
                                <li class="submenu-category">
                                    <a href="#" class="submenu-title">BDT &LeftAngleBracket;;</a>

@@ -146,27 +146,36 @@
                         <li>Shipping Area: <span>All over the Bangladesh</span></li>
                         <li>Shipping Fee: <span>Free</span></li>
                     </ul>
+                    <form action="" method="POST">
+                        @csrf
+                        
+                    
+                    <p>Color Select: 
+                        <select name="color" id="p_color" class="form-control form-select">
+                            @foreach ($colors as $color)
+                                <option value="{{ $color }}">{{ ucfirst($color) }}</option>
+                            @endforeach
+                        </select>
+                    </p>
+                    {{-- <input type="text" value="{{ $product->discount_price }}" style="display:none;" id="p_price"> --}}
+                    <input type="text" value="{{ $product->id }}" style="display:none;" id="p_id">
                 </div>
-
-                {{-- <div class = "purchase-info">
-                <input type = "number" min = "0" value = "1">
-                <button type = "button" class = "btn">
-                  Add to Cart <i class = "fas fa-shopping-cart"></i>
-                </button>
-                <a href="../Pmayent page/Pmayent-page.html"><button type = "button" class = "btn" style="background-color: rgb(0, 110, 255);">Shop Now</button></a>
-              </div> --}}
+                
                 <div class="purchase-info">
                     <!-- Inline Input and Button -->
+                    
                     <input type="number" min="0" value="1" name="quantity" step="1"
-                        class="quantity-input" aria-label="Quantity">
-                    <button type="button" class="btn add-to-cart-btn" aria-label="Add to Cart">
+                        class="quantity-input" aria-label="Quantity" id="p_qty">
+                    
+                    <button onclick="AddToCart()" type="button" class="btn add-to-cart-btn" aria-label="Add to Cart">
                         Add to Cart <i class="fas fa-shopping-cart"></i>
                     </button>
-                    <a href="../Pmayent page/Pmayent-page.html">
-                        <button type="button" class="btn shop-now-btn">
+                    <a href="">
+                        <button onclick="AddToWishList()" type="button" class="btn shop-now-btn">
                             Shop Now
                         </button>
                     </a>
+                </form>
                 </div>
 
 
@@ -190,12 +199,60 @@
                 </div>
             </div>
         </div>
-
-
-
-
         <script src="{{ asset('js/product-details.js') }}"></script>
-
-
     </div>
 </div>
+<script>
+    async function AddToCart() {
+        try {
+            // let p_size=document.getElementById('p_size').value;
+            let p_id=document.getElementById('p_id').value;
+            // let p_price=document.getElementById('p_price').value;
+            let p_color=document.getElementById('p_color').value;
+            let p_qty=document.getElementById('p_qty').value;
+
+            if(p_color.length===0){
+                alert("Product Color Required !");
+            }
+            else if(p_qty===0){
+                alert("Product Qty Required !");
+            }
+            else {
+                $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+                let res = await axios.post("/CreateCartList",{
+                    "product_id":p_id,
+                    // "price":p_price,
+                    "color":p_color,
+                    "qty":p_qty
+                });
+                $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+                if(res.status===200){
+                    alert("Request Successful")
+                }
+            }
+
+        } catch (e) {
+            if (e.response.status === 401) {
+                sessionStorage.setItem("last_location",window.location.href)
+                window.location.href = "/login"
+            }
+        }
+    }
+
+
+    async function AddToWishList() {
+        try{
+            $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+            let res = await axios.get("/CreateWishList/"+id);
+            $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+            if(res.status===200){
+                alert("Request Successful")
+            }
+        }catch (e) {
+            if(e.response.status===401){
+                sessionStorage.setItem("last_location",window.location.href)
+                window.location.href="/login"
+            }
+        }
+    }
+</script>

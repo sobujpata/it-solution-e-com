@@ -66,7 +66,7 @@
         //Testimonial
         try {
             let resTestimonial = await axios.get("testimonial");
-            console.log(resTestimonial)
+            // console.log(resTestimonial)
             // Clear existing items
             document.getElementById("testimonialCard").innerHTML = '';
 
@@ -102,7 +102,7 @@
         }
         try {
             let ressservices = await axios.get("services");
-            console.log(ressservices)
+            // console.log(ressservices)
             // Clear existing items
             document.getElementById("services").innerHTML = '';
 

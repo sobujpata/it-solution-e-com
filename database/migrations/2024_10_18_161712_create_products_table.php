@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title',200);
             $table->string('short_des',500);
             $table->string('price',50);
-            $table->boolean('discount');
+            $table->decimal('discount', 8, 2)->nullable();
             $table->string('discount_price',50);
             $table->string('image',200);
             $table->boolean('stock');
