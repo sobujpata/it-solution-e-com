@@ -34,7 +34,6 @@
                 </span>
                 
             </div>
-            <button type="reset" id="sub-category-form" class="black-70-button">Clear Form</button>
         </form>
         <button onclick="Update()" class="black-button" >Update sub Category</button>
 

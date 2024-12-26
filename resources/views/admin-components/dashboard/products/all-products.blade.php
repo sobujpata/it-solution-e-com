@@ -68,6 +68,8 @@
                      </tr>`
             tableList.append(row)
         })
+
+        
     
         document.querySelectorAll('.editBtn').forEach(button => {
             button.addEventListener('click', function () {

@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
@@ -101,7 +102,7 @@ Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCar
 
 //Dashboard Route
 Route::get('/dashboard', [DashboardController::class, 'DashboardPage']);
-Route::get('/dashboard/orders', [DashboardController::class, 'DashboardOrdersPage']);
+
 
 Route::get('/products-list', [DashboardController::class, 'DashboardProductsPage']);
 Route::get('/dashboard/product-add', [DashboardController::class, 'DashboardProductsAddPage']);
@@ -116,6 +117,17 @@ Route::post("/create-customer",[CustomerController::class,'CustomerCreate']);
 Route::post("/delete-customer",[CustomerController::class,'CustomerDelete']);
 Route::post("/update-customer",[CustomerController::class,'CustomerUpdate']);
 Route::post("/customer-by-id",[CustomerController::class,'CustomerByID']);
+
+
+//Invoice Route
+Route::get('/orders', [DashboardController::class, 'DashboardOrdersPage']);
+// Invoice API
+Route::post('/update-delivery-status', [InvoiceController::class, 'updateDeliveryStatus']);
+Route::get("/list-invoice",[InvoiceController::class,'InvoiceList'])->name('product.list');
+Route::post("/create-invoice",[InvoiceController::class,'InvoiceCreate']);
+Route::post("/delete-invoice",[InvoiceController::class,'InvoiceDelete']);
+Route::post("/update-invoice",[InvoiceController::class,'InvoiceUpdate']);
+Route::post("/invoice-by-id",[InvoiceController::class,'InvoiceByID']);
 
 
 // Product API

@@ -11,6 +11,7 @@
     <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" />
     <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
     <link href="{{asset('css/progress.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/modal.css')}}" rel="stylesheet" />
     {{-- <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" /> --}}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -28,6 +29,10 @@
     <script src="{{asset('js/dashboard.js')}}"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    {{-- <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" /> --}}
 
 
     <style>
