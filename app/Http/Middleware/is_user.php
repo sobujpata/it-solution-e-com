@@ -20,11 +20,11 @@ class is_user
         $result=JWTToken::VerifyToken($token);
 
         if($result == "unauthorized"){
-            return redirect('/');
+            return redirect('/login');
         }else if($result->userRole == 'customer'){
             return $next($request);
         }else{
-            return redirect('/');
+            return redirect('/login');
         }
     }
 }

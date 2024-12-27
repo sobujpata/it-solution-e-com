@@ -56,6 +56,7 @@
                 <div class="card-title">
                     <h2>Login Form</h2>
                 </div>
+                <hr>
                 <div class="card-body">
                     <form action="#">
                         <div class="row mb-3">

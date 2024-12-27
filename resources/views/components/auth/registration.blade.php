@@ -11,6 +11,9 @@
         background-color: #e3dfdf;
         border-radius: 8px;
     }
+    .card:hover{
+        background-color:aliceblue;
+    }
     .card-title {
         text-align: center;
     }
@@ -24,6 +27,10 @@
         margin-top: 15px;
         margin-bottom: 15px;
         border-radius: 5px;
+    }
+    .login-btn:hover{
+        background-color:#14a327;
+        color: #e925bf;
     }
     .forgot-btn{
         text-align: center;
@@ -47,27 +54,28 @@
                 <div class="card-title">
                     <h2>Registration Form</h2>
                 </div>
+                <hr>
                 <div class="card-body">
                     <form action="#">
                         <div class="form-group p-2">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" class="form-control" placeholder="Enter Your First Name">
+                            <input type="text" id="firstName" class="form-control" placeholder="First Name">
                         </div>
                         <div class="form-group p-2">
                             <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" class="form-control" placeholder="Enter Your Last Name">
+                            <input type="text" id="lastName" class="form-control" placeholder="Last Name">
                         </div>
                         <div class="form-group p-2">
                             <label for="email">Email Address</label>
-                            <input type="text" id="email" class="form-control" placeholder="Enter Your Email">
+                            <input type="text" id="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group p-2">
                             <label for="mobile">Mobile No</label>
-                            <input type="text" id="mobile" class="form-control" placeholder="Enter Your Phone number">
+                            <input type="text" id="mobile" class="form-control" placeholder="Phone number">
                         </div>
                         <div class="form-group p-2">
                             <label for="password">Password</label>
-                            <input type="password" id="password" class="form-control" placeholder="Enter Your Password">
+                            <input type="password" id="password" class="form-control" placeholder="Password">
                         </div>
                         <div class="check" style="display: flex; align-items: center; margin: 10px 0;">
                             <input 
