@@ -86,32 +86,28 @@ class UserController extends Controller
     //    }
 
     // }
-    function UserLogin(Request $request){
-        // Validate the request
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+    function UserLogin(Request $request)
+        {
+            // dd($request);
+            $user = User::where('email', $request->input('email'))->first();
 
-        // Find user by email
-        $user = User::where('email', $request->input('email'))->first();
-
-        // Check if user exists and password is correct
-        if ($user && Hash::check($request->input('password'), $user->password)) {
-            // User login successful, issue JWT token
-            $token = JWTToken::CreateToken($request->input('email'), $user->id);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'User Login Successful',
-                'token' => $token
-            ], 200)->cookie('token', $token, 60*60*60);  // Set JWT token in cookie
-        } else {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Unauthorized'
-            ], 401);  // Use 401 for unauthorized access
+            if ($user && Hash::check($request->input('password'), $user->password)) {
+                // Generate JWT token for authenticated user
+                $token = JWTToken::CreateToken($user->email, $user->id, $user->role);
+            
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Login successfully',
+                    'data' => $user->role,
+                ], 200)->cookie('token', $token, time() + 60 * 60 * 30); // Set token in cookie
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Unauthorized',
+                ], 401);
+            }
+    
         }
-    }
 
     function UserLogout(){
         return redirect('/')->cookie('token','',-1);
@@ -149,30 +145,30 @@ class UserController extends Controller
 
 
     function VerifyOTP(Request $request){
-        $email=$request->input('email');
-        $otp=$request->input('otp');
-        $count=User::where('email','=',$email)
-            ->where('otp','=',$otp)->count();
+        $email = $request->input('email');
+        $otp = $request->input('otp');
+        $count = User::where('email', '=', $email)
+                ->where('otp', '=', $otp)
+                ->count();
 
-        //
-        if($count==1){
-            // Database OTP Update
-            User::where('email','=',$email)->update(['otp'=>'0']);
+            if($count==1){
+                //Database update otp
+                User::where('email', '=', $email)->update(['otp'=>'0']);
 
-            // Pass Reset Token Issue
-            $token=JWTToken::CreateTokenForSetPassword($request->input('email'));
-            return response()->json([
-                'status' => 'success',
-                'message' => 'OTP Verification Successful',
-            ],200)->cookie('token',$token,60*24*30);
+                //Pass reset token issue
+                $token = JWTToken::CreateTokenForPassword($request->input('email'));
 
-        }
-        else{
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'unauthorized'
-            ],200);
-        }
+                return response()->json([
+                    'status'=>'success',
+                    'message'=>'OTP Verified',
+                    'token'=>$token
+                ], 200)->cookie('token',$token,60*24*30);
+            }else{
+                return response()->json([
+                    'status'=>'fsiled',
+                    'message'=>'unauthorized'
+                ], 401);
+            }
     }
 
 

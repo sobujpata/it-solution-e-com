@@ -24,13 +24,15 @@ class User extends Authenticatable
         'email',
         'mobile',
         'password',
-        'otp'
+        'otp',
+        'role'
     ];
 
     
 
     protected $attributes = [
-        'otp' => '0'
+        'otp' => '0',
+        'role' => 'customer'
     ];
 
     /**

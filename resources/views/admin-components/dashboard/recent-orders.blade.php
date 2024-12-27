@@ -29,7 +29,7 @@
         showLoader();
         let res=await axios.get("/list-invoice");
         hideLoader();
-        console.log(res);
+        // console.log(res);
         let tableList=$("#tableList");
         let tableData=$("#tableData");
     

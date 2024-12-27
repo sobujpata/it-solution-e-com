@@ -40,8 +40,7 @@
 <body>
     <!-- chat div -->
     <div class="overlay" data-overlay></div>
-    @include('components.home.model')
-    @include('components.home.notification-toast')
+    
     @include('layouts.partials.nav')
 
     <main>

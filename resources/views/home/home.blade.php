@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+        @include('components.home.model')
+        @include('components.home.notification-toast')
         <!--BANNER-->
         @include('components.home.banner')
 
