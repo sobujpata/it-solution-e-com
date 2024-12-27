@@ -141,13 +141,13 @@ async function onRegistration() {
             button.disabled = false;
 
             if (res.status === 200 && res.data['status'] === 'success') {
-                successToast(res.data['message']);
+                alert(res.data['message']);
                 setTimeout(() => window.location.href = '/login', 2000);
             } else {
-                errorToast(res.data['message']);
+                alert(res.data['message']);
             }
         } catch (error) {
-            errorToast('Something went wrong. Please try again later.');
+            alert('Something went wrong. Please try again later.');
         }
     }
 }
