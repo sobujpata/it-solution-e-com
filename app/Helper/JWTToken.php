@@ -12,7 +12,7 @@ class JWTToken {
         $payload = [
             'iss'=>'larvel-token',
             'iat'=>time(),
-            'exp'=>time()+36*36,
+            'exp'=>time()+60*60*24,
             'userEmail'=>$userEmail,
             'userID'=>$userID,
             'userRole'=>$userRole

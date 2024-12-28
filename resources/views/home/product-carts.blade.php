@@ -1,5 +1,5 @@
 @extends('layouts.app')
 @section('content')
-        <!--BANNER-->
+        <!--product to carts-->
         @include('components.carts.carts-list')
 @endsection

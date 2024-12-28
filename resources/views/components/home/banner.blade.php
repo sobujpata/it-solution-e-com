@@ -10,7 +10,9 @@
     getBanner()
 
     async function getBanner(){
+        showLoader()
         let resbanner = await axios.get("product-banner");
+        hideLoader()       
 
         resbanner.data.forEach(function(item) {
             let div = `

@@ -1,11 +1,7 @@
 <div class="product-container">
     <hr>
     <div class="container" style="padding-top: 10px">
-        {{-- @include('layouts.partials.sidebar') --}}
-
-
         <link rel="stylesheet" href="{{ asset('css/product-details.css') }}">
-        {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" /> --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nova+Square&display=swap');
@@ -79,9 +75,6 @@
                 width: 150px;
             }
         </style>
-
-
-
         <div class = "card">
             <!-- card left -->
             <div class = "product-imgs">
@@ -204,40 +197,59 @@
 </div>
 <script>
     async function AddToCart() {
-        try {
-            // let p_size=document.getElementById('p_size').value;
-            let p_id=document.getElementById('p_id').value;
-            // let p_price=document.getElementById('p_price').value;
-            let p_color=document.getElementById('p_color').value;
-            let p_qty=document.getElementById('p_qty').value;
+    try {
+        // Fetch inputs
+        const p_id = document.getElementById('p_id').value;
+        const p_color = document.getElementById('p_color').value;
+        const p_qty = parseInt(document.getElementById('p_qty').value, 10);
 
-            if(p_color.length===0){
-                alert("Product Color Required !");
-            }
-            else if(p_qty===0){
-                alert("Product Qty Required !");
-            }
-            else {
-                $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-                let res = await axios.post("/CreateCartList",{
-                    "product_id":p_id,
-                    // "price":p_price,
-                    "color":p_color,
-                    "qty":p_qty
-                });
-                $(".preloader").delay(90).fadeOut(100).addClass('loaded');
-                if(res.status===200){
-                    alert("Request Successful")
-                }
-            }
+        // Input validation
+        if (!p_color || p_color.trim().length === 0) {
+            alert("Product color is required!");
+            return;
+        }
+        if (!p_qty || p_qty <= 0) {
+            alert("Product quantity is required and must be greater than 0!");
+            return;
+        }
 
+        // Show loader
+        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+        showLoader();
+
+        // Send request
+        const response = await axios.post("/CreateCartList", {
+            product_id: p_id,
+            color: p_color,
+            qty: p_qty
+        });
+
+        // Hide loader
+        hideLoader();
+        $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+        console.log(response);
+        // Handle response
+        if (response.status === 201 && response.data['status']==='success') {
+            successToast(response.data['message']);
+        } else {
+            errorToast("Unexpected error occurred. Please try again.");
+            sessionStorage.setItem("last_location", window.location.href);
+            window.location.href = "/login";
+        }
         } catch (e) {
-            if (e.response.status === 401) {
-                sessionStorage.setItem("last_location",window.location.href)
-                window.location.href = "/login"
+            hideLoader();
+            $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+
+            // Handle unauthorized error
+            if (e.response && e.response.status === 401) {
+                sessionStorage.setItem("last_location", window.location.href);
+                window.location.href = "/login";
+            } else {
+                errorToast("Something went wrong. Please try again later.");
             }
         }
     }
+
 
 
     async function AddToWishList() {

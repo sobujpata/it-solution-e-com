@@ -12,7 +12,6 @@
     
     async function getCategoryList(){
         let resCategory = await axios.get("Category-header-list");
-
         resCategory.data.forEach(function(item) {
             let div = `
                 <div class="category-item">

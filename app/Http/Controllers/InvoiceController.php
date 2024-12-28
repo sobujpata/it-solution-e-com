@@ -13,6 +13,12 @@ class InvoiceController extends Controller
         return response()->json($invoices);
     }
 
+    public function InvoicePage(Request $request){
+        $user_id = $request->header('id');
+
+        dd("Under Development");
+    }
+
     public function updateDeliveryStatus(Request $request)
     {
         // Validate the incoming request

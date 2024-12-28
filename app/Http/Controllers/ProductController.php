@@ -145,51 +145,61 @@ class ProductController extends Controller
         return view('home.products-remark', compact('products', 'remark'));
     }
 
-    public function CreateCartList(Request $request){
+    public function CreateCartList(Request $request)
+    {
+        $user_id = $request->header('id');
 
-        
-
-        $user_id=1;
-        // $user_id=$request->header('id');
-        $product_id =$request->input('product_id');
-        $color=$request->input('color');
-        // $size=$request->input('size');
-        $qty=$request->input('qty');
-
-        $UnitPrice=0;
-
-        $productDetails=Product::where('id','=',$product_id)->first();
-        if($productDetails->discount==1){
-            $UnitPrice=$productDetails->discount_price;
+        if (!$user_id) {
+            return response()->json([
+                'message' => "Please log in first.",
+            ], 401);
         }
-        else{
-            $UnitPrice=$productDetails->price;
-        }
-        $totalPrice=$qty*$UnitPrice;
 
-        // dd($color);
-        $data=ProductCart::updateOrCreate(
-            ['user_id' => $user_id,'product_id'=>$product_id],
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'color' => 'nullable|string',
+            'qty' => 'required|integer|min:1',
+        ]);
+
+        $product_id = $validatedData['product_id'];
+        $color = $validatedData['color'];
+        $qty = $validatedData['qty'];
+
+        $productDetails = Product::find($product_id);
+
+        if (!$productDetails) {
+            return response()->json([
+                'message' => "Product not found."
+            ], 404);
+        }
+
+        $unitPrice = $productDetails->discount ? $productDetails->discount_price : $productDetails->price;
+        $totalPrice = $qty * $unitPrice;
+
+        $data = ProductCart::updateOrCreate(
+            ['user_id' => $user_id, 'product_id' => $product_id],
             [
                 'user_id' => $user_id,
-                'product_id'=>$product_id,
-                'color'=>$color,
-                // 'size'=>$size,
-                'qty'=>$qty,
-                'price'=>$totalPrice
+                'product_id' => $product_id,
+                'color' => $color,
+                'qty' => $qty,
+                'price' => $totalPrice,
             ]
         );
 
-        return ResponseHelper::Out('success',$data,200);
+        return response()->json([
+            "message" => "Product added to cart. Please check your cart.",
+            'status' => "success",
+        ], 201);
     }
+
 
     public function CartListPage(){
         return view('home.product-carts');
     }
 
     public function CartList(Request $request){
-        // $user_id=$request->header('id');
-        $user_id = 1;
+        $user_id=$request->header('id');
         $data=ProductCart::where('user_id',$user_id)->with('product')->get();
         return ResponseHelper::Out('success',$data,200);
     }
@@ -197,8 +207,7 @@ class ProductController extends Controller
 
 
     public function DeleteCartList(Request $request){
-        $user_id=1;
-        // $user_id=$request->header('id');
+        $user_id=$request->header('id');
         $data=ProductCart::where('user_id','=',$user_id)->where('product_id','=',$request->product_id)->delete();
         return ResponseHelper::Out('success',$data,200);
     }

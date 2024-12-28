@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="{{ asset('images/icons/apple.png') }}" type="image/x-icon">
 
     <!--- custom css link-->
+    <link href="{{ asset('css/toastify.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/style-prefix.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
@@ -23,8 +24,8 @@
 
 
     <script src="{{asset('js/toastify-js.js')}}"></script>
-    <script src="{{asset('js/axios.min.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
+    <script src="{{asset('js/axios.min.js')}}"></script>
     <!--- google font link-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,12 +35,25 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
       
+    <style>
+        .d-none {
+            display: none;
+        }
 
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
     <!-- chat div -->
     <div class="overlay" data-overlay></div>
+    <div id="loader" class="LoadingOverlay d-none">
+        <div class="Line-Progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
     
     @include('layouts.partials.nav')
 
@@ -53,10 +67,6 @@
     <!--- custom js link-->
     <script src="{{asset('js/script.js')}}"></script>
     <!-- <script src="chat.js"></script> -->
-
-    <!--- ionicon link-->
-    {{-- <script type="module" src="{{ asset('js/ionicons.js') }}"></script> --}}
-    {{-- <script nomodule src="{{ asset('js/ionicons2.js') }}"></script> --}}
 </body>
 
 </html>
