@@ -138,7 +138,8 @@ Route::middleware(['admin'])->group(function () {
     
     // Product API
     Route::post("/create-product", [ProductController::class, 'CreateProduct'])->middleware([TokenVerificationMiddleware::class]);
-    Route::post("/delete-product", [ProductController::class, 'DeleteProduct'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/delete-product", [ProductController::class, 'ProductDelete'])->middleware([TokenVerificationMiddleware::class]);
+
     Route::post('/update-product', [ProductController::class, 'UpdateProduct'])->name('update-product')->middleware([TokenVerificationMiddleware::class]);
     Route::get("/list-product", [ProductController::class, 'ProductList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/dashboard/product-edit', [ProductController::class, 'editProduct'])->name('product.edit')->middleware([TokenVerificationMiddleware::class]);

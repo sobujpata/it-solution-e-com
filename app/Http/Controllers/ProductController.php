@@ -11,6 +11,7 @@ use App\Models\ProductDetail;
 use App\Helper\ResponseHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -399,5 +400,53 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product update failed', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function ProductDelete(Request $request)
+    {
+        $product_id = $request->query('id');
+        $product_details = ProductDetail::where('product_id', $product_id)->first();
+        // dd($product_details);
+        $product_id=$product_details->product_id;
+        
+        if (!$product_details) {
+            return redirect()->back()->with('error', 'Product not found');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Deleting images if they exist
+            $img_paths = [
+                $product_details->img1 ?? '',
+                $product_details->img2 ?? '',
+                $product_details->img3 ?? '',
+                $product_details->img4 ?? '',
+            ];
+
+            foreach ($img_paths as $path) {
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
+            }
+
+            // Deleting product records
+            $product_details->delete(); // Deletes from `ProductDetail`
+            Product::where('id', $product_id)->delete(); // Deletes from `Product`
+
+            DB::commit();
+
+            return redirect()->back()->with('message', 'Product Deleted');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Log the error for debugging
+            Log::error('Product delete failed: ' . $e->getMessage());
+
+            // Return error response
+            return redirect()->back()->with('error', 'Failed to delete product. Please try again later.');
+        }
+    }
+
+
 
  }

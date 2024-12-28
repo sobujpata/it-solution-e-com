@@ -5,7 +5,7 @@
         <div class="cardHeader">
             <h2>Manage Products</h2>
         </div>
-
+        
         <table class="table" id="tableData">
             <thead>
                 <tr>
@@ -63,7 +63,9 @@
                             <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
-                            <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                            <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </td>
                      </tr>`
             tableList.append(row)
@@ -75,23 +77,34 @@
                 window.location.href = `/dashboard/product-edit?id=${productId}`;
             });
         });
-    
-        $('.deleteBtn').on('click',function () {
-            let id= $(this).data('id');
-            let path= $(this).data('path');
-    
-            $("#delete-modal").modal('show');
-            $("#deleteID").val(id);
-            $("#deleteFilePath").val(path)
-    
-        })
+        document.querySelectorAll('.deleteBtn').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-id');
+                window.location.href = `/delete-product?id=${productId}`;
+            });
+        });
     
         new DataTable('#tableData',{
             // order:[[0,'desc']],
             lengthMenu:[20,30,50,100,500]
         });
-    
+        
+
     }
     </script>
     
-    
+    @if (session('error'))
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    errorToast("{{ session('error') }}");
+                });
+        </script>
+    @endif
+
+    @if (session('message'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                successToast("{{ session('message') }}");
+            });
+        </script>
+    @endif

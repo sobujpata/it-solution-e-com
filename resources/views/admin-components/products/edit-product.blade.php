@@ -93,22 +93,22 @@
                 </span>
                 <span>
                     <p>Color</p>
-                    <input type="text" value="{{ $product_detail->color }}" name="color" id="color">
+                    <input type="text" value="{{ $product_detail->color ?? '' }}" name="color" id="color">
                 </span>
                 <span>
                     <p>Size</p>
-                    <input type="text" value="{{ $product_detail->size }}" name="size" id="size">
+                    <input type="text" value="{{ $product_detail->size ?? ''  }}" name="size" id="size">
                 </span>
             </div>
             <span class="bio">
                 <p>Description*</p>
-                <textarea id="description" name="bio">{{ $product_detail->des}}</textarea>
+                <textarea id="description" name="bio">{{ $product_detail->des ?? '' }}</textarea>
             </span>
             <div class="input-grid">
                 @for ($i = 1; $i <= 4; $i++)
                     <span>
                         <p>Image {{ $i }}</p>
-                        <img class="preview-img" id="previewImg{{ $i }}" src="{{ asset($product_detail->{'img'.$i}) }}" alt="Image {{ $i }}" />
+                        <img class="preview-img" id="previewImg{{ $i }}" src="{{ asset($product_detail->{'img'.$i} ?? '' ) }}" alt="Image {{ $i }}" />
                         <input 
                             type="file" 
                             name="img{{ $i }}" 
@@ -120,10 +120,10 @@
                 @endfor
             </div>
             
-            <input type="hidden" id="old_img1" value="{{ $product_detail->img1 }}">
-            <input type="hidden" id="old_img2" value="{{ $product_detail->img2 }}">
-            <input type="hidden" id="old_img3" value="{{ $product_detail->img3 }}">
-            <input type="hidden" id="old_img4" value="{{ $product_detail->img4 }}">
+            <input type="hidden" id="old_img1" value="{{ $product_detail->img1 ?? ''  }}">
+            <input type="hidden" id="old_img2" value="{{ $product_detail->img2 ?? ''  }}">
+            <input type="hidden" id="old_img3" value="{{ $product_detail->img3 ?? ''  }}">
+            <input type="hidden" id="old_img4" value="{{ $product_detail->img4 ?? ''  }}">
 
         </form>
         <button onclick="Update()" class="black-button" >Update Product</button>
@@ -228,7 +228,7 @@
         hideLoader();
         if (res.status === 200) {
             successToast('Product Updated Successfully!');
-            window.location.href = '/dashboard/products';
+            window.location.href = '/products-list';
         } else {
             errorToast("Failed to Update Product");
         }

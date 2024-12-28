@@ -38,5 +38,9 @@ class Product extends Model
     {
         return $this->belongsTo(MainCategory::class);
     }
+    public function product_details()
+    {
+        return $this->belongsTo(ProductDetail::class);
+    }
     
 }
