@@ -211,5 +211,4 @@
     </div>
 
 </footer>
-<div id="loading-indicator" style="display:none;">Loading...</div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+

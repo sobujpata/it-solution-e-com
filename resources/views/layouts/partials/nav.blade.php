@@ -100,7 +100,7 @@
 
            </div>
 
-           <nav class="desktop-navigation-menu">
+          <nav class="desktop-navigation-menu">
 
             <div class="container">
       
@@ -371,10 +371,61 @@
             </div>
       
           </nav>
+          <style>
+            body {
+              font-family: "Lato", sans-serif;
+            }
+            
+            .sidenav {
+              height: 100%;
+              width: 0;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: 0;
+              background-color: #111;
+              overflow-x: hidden;
+              transition: 0.5s;
+              padding-top: 60px;
+            }
+            
+            .sidenav a {
+              padding: 8px 8px 8px 32px;
+              text-decoration: none;
+              font-size: 25px;
+              color: #818181;
+              display: block;
+              transition: 0.3s;
+            }
+            
+            .sidenav a:hover {
+              color: #f1f1f1;
+            }
+            
+            .sidenav .closebtn {
+              position: absolute;
+              top: 0;
+              right: 25px;
+              font-size: 36px;
+              margin-left: 50px;
+            }
+            
+            @media screen and (max-height: 450px) {
+              .sidenav {padding-top: 15px;}
+              .sidenav a {font-size: 18px;}
+            }
+            </style>
+          <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a>
+          </div>
 
            <div class="mobile-bottom-navigation">
 
-               <button class="action-btn" data-mobile-menu-open-btn>
+               <button class="action-btn" onclick="openNav()">
                    <ion-icon name="menu-outline"></ion-icon>
                </button>
 
@@ -403,7 +454,22 @@
 
            </div>
 
-           <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
+           
+
+   </header>
+
+  <script>
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+      }
+      
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+  </script>
+
+
+{{-- <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
 
                <div class="menu-top">
                    <h2 class="menu-title">Menu</h2>
@@ -586,67 +652,57 @@
                                    <a href="#" class="submenu-title">English</a>
                                </li>
 
-                               {{-- <li class="submenu-category">
-                                   <a href="#" class="submenu-title">Espa&ntilde;ol</a>
-                               </li>
+                               
 
-                               <li class="submenu-category">
-                                   <a href="#" class="submenu-title">Fren&ccedil;h</a>
-                               </li> --}}
+                              </ul>
 
-                           </ul>
-
-                       </li>
-
-                       <li class="menu-category">
-                           <button class="accordion-menu" data-accordion-btn>
-                               <p class="menu-title">Currency</p>
-                               <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-                           </button>
-
-                           <ul class="submenu-category-list" data-accordion>
-                               {{-- <li class="submenu-category">
-                                   <a href="#" class="submenu-title">USD &dollar;</a>
-                               </li> --}}
-
-                               <li class="submenu-category">
-                                   <a href="#" class="submenu-title">BDT &LeftAngleBracket;;</a>
-                               </li>
-                           </ul>
-                       </li>
-
-                   </ul>
-
-                   <ul class="menu-social-container">
-
-                       <li>
-                           <a href="#" class="social-link">
-                               <ion-icon name="logo-facebook"></ion-icon>
-                           </a>
-                       </li>
-
-                       <li>
-                           <a href="#" class="social-link">
-                               <ion-icon name="logo-twitter"></ion-icon>
-                           </a>
-                       </li>
-
-                       <li>
-                           <a href="#" class="social-link">
-                               <ion-icon name="logo-instag"></ion-icon>
-                           </a>
-                       </li>
-
-                       <li>
-                           <a href="#" class="social-link">
-                               <ion-icon name="logo-linkedin"></ion-icon>
-                           </a>
-                       </li>
-
-                   </ul>
-
-               </div>
-
-           </nav>
-
-   </header>
+                            </li>
+     
+                            <li class="menu-category">
+                                <button class="accordion-menu" data-accordion-btn>
+                                    <p class="menu-title">Currency</p>
+                                    <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+                                </button>
+     
+                                <ul class="submenu-category-list" data-accordion>
+                                    
+     
+                                    <li class="submenu-category">
+                                        <a href="#" class="submenu-title">BDT &LeftAngleBracket;;</a>
+                                    </li>
+                                </ul>
+                            </li>
+     
+                        </ul>
+     
+                        <ul class="menu-social-container">
+     
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-facebook"></ion-icon>
+                                </a>
+                            </li>
+     
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-twitter"></ion-icon>
+                                </a>
+                            </li>
+     
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-instag"></ion-icon>
+                                </a>
+                            </li>
+     
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-linkedin"></ion-icon>
+                                </a>
+                            </li>
+     
+                        </ul>
+     
+                    </div>
+     
+                </nav> --}}

@@ -1,7 +1,9 @@
 <div class="banner">
 
     <div class="container">
-        <div class="slider-container has-scrollbar" id="productBanner"></div>
+        <div class="slider-container has-scrollbar" id="productBanner">
+            
+        </div>
     </div>
 
 </div>

@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\DealOfDay;
 use App\Models\ProductCart;
+use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use App\Models\ProductDetail;
 use App\Helper\ResponseHelper;
@@ -125,7 +126,12 @@ class ProductController extends Controller
 
         $products = Product::where('category_id', $category->id)->paginate(8);
 
-        return view('home.category-wise-product', compact('products', 'category'));
+        // Fetch all main categories with their related categories (subcategories)
+        $mainCategories = MainCategory::with('categories')->get();
+
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+
+        return view('home.category-wise-product', compact('products', 'category', 'mainCategories','bestSale'));
     }
 
     public function ProductDetails(Request $request, $id)
@@ -142,8 +148,11 @@ class ProductController extends Controller
     {
         // dd( $remark);
         $products = Product::where('remark', $remark)->paginate(8);
+        $mainCategories = MainCategory::with('categories')->get();
 
-        return view('home.products-remark', compact('products', 'remark'));
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+
+        return view('home.products-remark', compact('products', 'remark','mainCategories','bestSale'));
     }
 
     public function CreateCartList(Request $request)

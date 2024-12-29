@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="{{ asset('css/progress.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/login.css') }}" /> --}}
 
-    <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
+    {{-- <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
     <script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
-    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script> --}}
 
 
     <script src="{{asset('js/toastify-js.js')}}"></script>
@@ -32,8 +32,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="chat.css"> -->
     
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        {{-- <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> --}}
       
     <style>
         .d-none {
@@ -61,11 +61,14 @@
         @yield('content')
     </main>
     @include('layouts.partials.footer')
+    <script src="{{asset('js/script.js')}}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     
+
     @stack('custom-scripts')
 
     <!--- custom js link-->
-    <script src="{{asset('js/script.js')}}"></script>
     <!-- <script src="chat.js"></script> -->
 </body>
 

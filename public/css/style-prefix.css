@@ -2173,7 +2173,7 @@ footer {
  * responsive larger than 480px screen
  */
 
-@media (min-width: 480px) {
+@media (min-width: 350px) {
 
   /**
    * #CUSTOM PROPERTY
@@ -2220,7 +2220,6 @@ footer {
     -webkit-border-top-right-radius: var(--border-radius-md);
             border-top-right-radius: var(--border-radius-md);
   }
-
 
 
   /**

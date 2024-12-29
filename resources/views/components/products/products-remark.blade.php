@@ -68,7 +68,7 @@
 <div class="product-container">
     <hr>
     <div class="container" style="padding-top: 10px">
-        {{-- @include('layouts.partials.sidebar') --}}
+        @include('layouts.partials.sidebar2')
 
         <div class="product-box">
             <h2 class="title">
@@ -102,8 +102,14 @@
                                     <del>Tk {{ $product->price }}</del>
                                 </div>
                             </div>
-                            <button class="btn btn-primary">Buy Now</button>
-                            <button class="btn btn-success">Add to Card</button>
+                            <div class="row p-1">
+                                <div class="col-6">
+                                    <button class="btn btn-success" style="width: 100%; font-size: 11px;">Add to Card</button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-primary" style="width: 100%; font-size: 11px;">Buy Now</button>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                     

@@ -26,7 +26,7 @@
                         </div>
 
                     </div>
-                    <a href="url('/products-remark/New')" style="text-align: right">See All</a>
+                    <a href="{{ url('/products-remark/New') }}" style="text-align: right">See All</a>
 
                 </div>
 
