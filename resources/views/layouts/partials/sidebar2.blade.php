@@ -27,7 +27,7 @@
                     @if ($item->categories->isNotEmpty())
                         <ul>
                             @foreach ($item->categories as $subcategory)
-                                <li>{{ $subcategory->categoryName }}</li>
+                                <li><a href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }}</a></li>
                             @endforeach
                         </ul>
                     @else
