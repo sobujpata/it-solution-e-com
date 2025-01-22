@@ -4,7 +4,7 @@
     <div class="recentCustomers">
         <div class="cardHeader">
             <h2>Sub Category List</h2>
-            <button type="button" class="black-70-button"><a href="{{ url('/sub-category-add') }}">Sub Category Add</a></button>
+            <button type="button" class="black-70-button" style="margin-bottom:10px;"><a href="{{ url('/sub-category-add') }}">Sub Category Add</a></button>
 
         </div>
 
@@ -48,10 +48,10 @@
                         <td>${item['main_category_id']}</td>
                         
                         <td>
-                            <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }">
+                            <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }" style="padding:5px; background-color:black; border-radius:5px; color:white; ">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
-                            <button data-path="${item['categoryImg']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                            <button data-path="${item['categoryImg']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger" style="padding:5px; background-color:red; border-radius:5px; color:white; "><i class="fa-solid fa-trash"></i></button>
                         </td>
                      </tr>`
             tableList.append(row)

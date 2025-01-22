@@ -60,10 +60,10 @@
                         <td>${item['discount_price']}</td>
                         <td>${item['remark']}</td>
                         <td>
-                            <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }">
+                            <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }" style="padding:5px; background-color:black; border-radius:5px; color:white; ">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
-                            <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">
+                            <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger" style="padding:5px; background-color:red; border-radius:5px; color:white; ">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>

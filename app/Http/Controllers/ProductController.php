@@ -208,11 +208,48 @@ class ProductController extends Controller
         return view('home.product-carts');
     }
 
-    public function CartList(Request $request){
-        $user_id=$request->header('id');
-        $data=ProductCart::where('user_id',$user_id)->with('product')->get();
-        return ResponseHelper::Out('success',$data,200);
+    public function CartList(Request $request)
+{
+    try {
+        // Validate user_id header
+        $user_id = $request->header('id');
+        if (!$user_id) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User ID is required.',
+            ], 400);
+        }
+
+        // Fetch cart items with product details
+        $data = ProductCart::where('user_id', $user_id)
+            ->with(['product:id,title,image,price']) // Optimize query with selected fields
+            ->get();
+
+        // Check if the cart is empty
+        if ($data->isEmpty()) {
+            return response()->json([
+                'data' => [],
+                'status' => 'success',
+                'message' => 'Your cart is empty. Start shopping now!',
+            ], 200);
+        }
+
+        // Return cart items
+        return response()->json([
+            'data' => $data,
+            'status' => 'success',
+        ], 200);
+    } catch (\Exception $e) {
+        // Log the error and return a generic message
+        // \Log::error('CartList Error: ' . $e->getMessage());
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Failed to fetch cart items. Please try again later.',
+        ], 500);
     }
+}
+
 
 
 

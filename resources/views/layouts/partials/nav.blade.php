@@ -383,23 +383,23 @@
               z-index: 1;
               top: 0;
               left: 0;
-              background-color: #111;
+              background-color: #fcfcfc;
               overflow-x: hidden;
               transition: 0.5s;
               padding-top: 60px;
             }
             
             .sidenav a {
-              padding: 8px 8px 8px 32px;
+              padding: 2px 8px 2px 32px;
               text-decoration: none;
               font-size: 25px;
-              color: #818181;
+              color: #0e0d0d;
               display: block;
               transition: 0.3s;
             }
             
             .sidenav a:hover {
-              color: #f1f1f1;
+              color: #b7f0b0;
             }
             
             .sidenav .closebtn {
@@ -460,7 +460,7 @@
 
   <script>
       function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("mySidenav").style.width = "330px";
       }
       
       function closeNav() {

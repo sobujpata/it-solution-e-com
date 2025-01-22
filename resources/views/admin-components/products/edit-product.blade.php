@@ -12,7 +12,7 @@
 <div class="all-Orders-Details">
     <div class="head-newProduct">
         <h1>Update a Product</h1>
-        <button type="button" class="black-70-button"><a href="{{ url('/dashboard/products') }}">Product List</a></button>
+        <button type="button" class="black-70-button" style="background-color: #c232af; "><a href="{{ url('/products-list') }}" style="color:white;">Product List</a></button>
 
     </div>
 

@@ -4,7 +4,7 @@
         <li>
             <a href="{{url('/dashboard')}}">
                 <span class="icon">
-                    <ion-icon name="logo-apple"></ion-icon>
+                    <img src="{{asset('/images/logo/it-logo.jpg')}}" alt="" style="width:40px; border-radius: 8px;;">
                 </span>
                 <span class="title">The it Solution Bd</span>
             </a>

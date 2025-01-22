@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="{{ asset('css/progress.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/login.css') }}" /> --}}
 
-    {{-- <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
     <script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
-    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script> --}}
+    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
 
 
     <script src="{{asset('js/toastify-js.js')}}"></script>

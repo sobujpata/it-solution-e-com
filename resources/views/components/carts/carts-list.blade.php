@@ -2,17 +2,20 @@
     a {
         text-decoration: none;
     }
-    .remove{
+
+    .remove {
         background-color: rgb(236, 41, 100);
         color: white;
         padding: 5px;
         border-radius: 5px;
         width: 70px;
     }
+
     .remove:hover {
         background-color: #f7f0ef;
         color: rgb(231, 12, 12);
     }
+
     .check-out-btn {
         background-color: blueviolet;
         color: white;
@@ -29,21 +32,39 @@
         width: 100%;
         text-align: center;
     }
-    .page-title{
+
+    .page-title {
         text-align: center;
     }
-    hr{
-        margin-bottom: 10px; margin-top:10px
+
+    hr {
+        margin-bottom: 10px;
+        margin-top: 10px
     }
-    thead{
+
+    thead {
         background-color: #303233;
-        color:white;
+        color: white;
     }
-    th{
+
+    th {
         padding: 10px;
     }
-    tr:hover{
+
+    tr:hover {
         background-color: #b4b4b4;
+    }
+    .text-decoration-underline{
+        text-decoration:underline;
+    }
+    @media only screen and (max-width: 600px) {
+        th, td {
+            font-size:12px;
+        }
+        .container-table{
+            padding:0px;
+        }
+
     }
 </style>
 <!-- START SECTION BREADCRUMB -->
@@ -52,18 +73,19 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="page-title">
-                    <h1>Cart List</h1>
+                    <h1 class="text-decoration-underline">Cart List</h1>
                 </div>
             </div>
             <div class="col-md-6">
-                <span><a href="{{ url('/') }}">Home</a></span>/<span><a href="{{ url('/cart') }}">Cart List</a></span>
+                <span><a href="{{ url('/') }}">Home</a></span>/<span><a href="{{ url('/cart') }}">Cart
+                        List</a></span>
             </div>
         </div>
     </div><!-- END CONTAINER-->
 </div>
 <hr>
 <div class="mt-5">
-    <div class="container my-5">
+    <div class="container my-5 container-table">
         <div class="row">
             <div class="col-12">
                 <div class="table-responsive shop_cart_table">
@@ -85,8 +107,9 @@
                                 <td>Total:</td>
                                 <td><span id="total"></span>Tk</td>
                                 <td align="center">
-                                    <button class="check-out-btn" type="submit"
-                                        style=""><a href="{{ url('/payment-form') }}" style="color:white;">Check Out</a></button>
+                                    <button class="check-out-btn" type="submit" style=""><a
+                                            href="{{ url('/payment-form') }}" style="color:white;">Check
+                                            Out</a></button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -97,86 +120,98 @@
     </div>
     <hr style="">
 </div>
+
 <script>
-    CartList();
-    async function CartList() {
-        showLoader();
-        let res = await axios.get(`/CartList`);
-        hideLoader();
-        $("#byList").empty();
+async function CartList() {
+    try {
+        showLoader(); // Display loader
+        const res = await axios.get('/CartList');
+        hideLoader(); // Hide loader
 
-        res.data['data'].forEach((item, i) => {
-            let EachItem = `<tr>
-                            <td class="product-thumbnail" align="center"><img src=${item['product']['image']} alt="product" style="width:60px"></td>
-                            <td class="product-name" >${item['product']['title']} </td>
-                            <td class="product-quantity"> ${item['qty']} </td>
-                            <td class="product-subtotal">${item['price']}Tk</td>
-                            <td class="product-remove" align="center"><a class="remove btn btn-danger" data-id="${item['product_id']}">Delete</a></td>
-                        </tr>`
-            $("#byList").append(EachItem);
-        })
+        const cartItems = res.data['data'];
+        const cartContainer = $("#byList");
+        // console.log(cartItems)
+        // Clear existing cart items
+        cartContainer.empty();
 
-        await CartTotal(res.data['data']);
-
-        $(".remove").on('click', function() {
-            let id = $(this).data('id');
-            console.log(id);
-            RemoveCartList(id);
-        })
-
-
-    }
-
-
-    async function CartTotal(data) {
-        let Total = 0;
-        data.forEach((item, i) => {
-            Total = Total + parseFloat(item['price']);
-        })
-        $("#total").text(Total);
-    }
-
-
-
-    async function RemoveCartList(id) {
-        $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-        let res = await axios.get("/DeleteCartList/" + id);
-        $(".preloader").delay(90).fadeOut(100).addClass('loaded');
-        if (res.status === 200) {
-            successToast("Product remove from cart.")
-            await CartList();
-        } else {
-            errorToast("Request Fail")
+        // Handle empty cart
+        if (cartItems.length === 0) {
+            cartContainer.append('<tr><td colspan="5">Your cart is empty. Start shopping now!</td></tr>');
+            $("#total").text(0);
+            return;
         }
+
+        // Render cart items
+        cartItems.forEach(item => {
+            cartContainer.append(renderCartRow(item));
+        });
+
+        // Calculate and display total price
+        calculateTotal(cartItems);
+
+        // Attach remove event listener
+        $(".remove").on('click', function () {
+            const productId = $(this).data('id');
+            confirmRemoval(productId);
+        });
+
+    } catch (error) {
+        hideLoader();
+        console.error(error);
+        errorToast("Failed to fetch cart items. Please try again.");
     }
+}
 
+// Helper to render a cart row
+function renderCartRow(item) {
+    return `
+        <tr>
+            <td class="product-thumbnail" align="center">
+                <img src="${item.product.image}" alt="product" style="width:60px; border-radius:5px;">
+            </td>
+            <td class="product-name">${item.product.title}</td>
+            <td class="product-quantity">${item.qty}</td>
+            <td class="product-subtotal">${item.price} Tk</td>
+            <td class="product-remove" align="center">
+                <a class="remove btn btn-danger" data-id="${item.product_id}">Delete</a>
+            </td>
+        </tr>`;
+}
 
-    // async function CheckOut() {
-    //     $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
+// Helper to calculate and display total price
+function calculateTotal(cartItems) {
+    const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    $("#total").text(total.toFixed(2)); // Display total with 2 decimal points
+}
 
-    //     $("#paymentList").empty();
-    //     showLoader();
-    //     let res = await axios.get("/InvoiceCreate");
-    //     hideLoader();
-    //     $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+// Handle product removal
+async function confirmRemoval(productId) {
+    if (confirm("Are you sure you want to remove this item?")) {
+        await removeCartItem(productId);
+    }
+}
 
-    //     console.log(res);
-    //     if (res.status === 200) {
+// Send a request to remove the item from the cart
+async function removeCartItem(productId) {
+    try {
+        showLoader();
+        const res = await axios.get(`/DeleteCartList/${productId}`);
+        hideLoader();
 
-    //         $("#paymentMethodModal").modal('show');
+        if (res.status === 200) {
+            successToast("Product removed from cart.");
+            await CartList(); // Refresh cart
+        } else {
+            errorToast("Failed to remove product. Please try again.");
+        }
+    } catch (error) {
+        hideLoader();
+        console.error(error);
+        errorToast("Failed to remove product. Please try again.");
+    }
+}
 
-    //         res.data['data'][0]['paymentMethod'].forEach((item, i) => {
-    //             let EachItem = `<tr>
-    //                             <td><img class="w-50" src=${item['logo']} alt="product"></td>
-    //                             <td><p>${item['name']}</p></td>
-    //                             <td><a class="btn btn-danger btn-sm" href="${item['redirectGatewayURL']}">Pay</a></td>
-    //                         </tr>`
-    //             $("#paymentList").append(EachItem);
-    //         })
+// Initial call to load the cart
+CartList();
 
-    //     } else {
-    //         alert("Request Fail");
-    //     }
-
-    // }
 </script>
