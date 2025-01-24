@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Invoice;
+use App\Models\ProductCart;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -15,8 +17,21 @@ class InvoiceController extends Controller
 
     public function InvoicePage(Request $request){
         $user_id = $request->header('id');
+        $user = User::findOrFail($user_id);
 
-        dd("Under Development");
+        $products = ProductCart::where('user_id', $user_id)->with('product')->get();
+        $total_product_price_r = ProductCart::where('user_id', $user_id)->sum('price');
+        $total_product_price = round($total_product_price_r, 2);
+        $shipping_charge = round(40, 2);
+        $total_pay = round($total_product_price + $shipping_charge, 2);
+        // dd($products);
+        return view('home.payment-page', compact(
+            'user', 
+            'products', 
+            'total_product_price',
+            'shipping_charge',
+            'total_pay'
+        ));
     }
 
     public function updateDeliveryStatus(Request $request)

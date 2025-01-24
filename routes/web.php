@@ -94,7 +94,10 @@ Route::middleware(['user'])->group(function () {
     Route::post('/CreateCartList', [ProductController::class, 'CreateCartList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/CartList', [ProductController::class, 'CartList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCartList'])->middleware([TokenVerificationMiddleware::class]);
-
+    
+    //Wish API Route
+    Route::post('/CreateWishList', [ProductController::class, 'WishlistCreate']);
+    
     //invoice Route
     Route::get('/payment-form', [InvoiceController::class, 'InvoicePage'])->middleware([TokenVerificationMiddleware::class]);
     //invoice API

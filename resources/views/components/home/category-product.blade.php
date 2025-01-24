@@ -50,20 +50,23 @@
     a {
         text-decoration: none !important;
     }
+
     .title a {
-    display: inline; /* Ensure links are inline */
-    text-decoration: none; /* Optional: Remove underline */
-    margin: 0 5px; /* Adjust spacing */
+        display: inline;
+        /* Ensure links are inline */
+        text-decoration: none;
+        /* Optional: Remove underline */
+        margin: 0 5px;
+        /* Adjust spacing */
     }
 
     .title {
-        font-size: 1.5rem; /* Optional: Adjust title size */
+        font-size: 1.5rem;
+        /* Optional: Adjust title size */
     }
+    
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-</script>
+
 <div class="product-container">
     <hr>
     <div class="container" style="padding-top: 10px">
@@ -74,7 +77,7 @@
                 <a href="{{ url('/') }}">Home</a> /
                 <a href="{{ url('/product-category/' . $category->categoryName) }}">{{ $category->categoryName }}</a>
             </h2>
-            
+
 
             <div class="header-search-container">
                 <input type="search" name="search-category-product" id="category-search" class="search-field"
@@ -87,31 +90,21 @@
                 <div class="product-grid" id="product-list">
                     <!-- Products will be dynamically loaded here -->
                     @foreach ($products as $product)
+                    
                         <div class="showcase pb-1">
+                            <a href="{{ url('products/' . $product->id) }}" class="showcase-title">
                             <div class="showcase-banner">
-                                <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="product-img"
-                                    width="300">
+                                <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="product-img p-1" style="border-radius:15px; width: 100%;">
                             </div>
                             <div class="showcase-content">
-                                <h3>
-                                    <a href="{{ url('products/'.$product->id) }}" class="showcase-title">{{ $product->title }}</a>
-                                </h3>
+                                <h5>{{ $product->title }}</h5>
                                 <div class="price-box">
-                                    <p class="price">Tk {{ $product->discount_price }}</p>
-                                    <del>Tk {{ $product->price }}</del>
+                                    <p class="price" style="font-size: 11px;"><del>{{ $product->price }}Tk</del> | {{ $product->discount_price }}Tk</p>
                                 </div>
                             </div>
-                            <div class="row p-1">
-                                <div class="col-6">
-                                    <button class="btn btn-success" style="width: 100%; font-size: 11px;">Add to Card</button>
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn btn-primary" style="width: 100%; font-size: 11px;">Buy Now</button>
-                                </div>
-                            </div>
-                            
-                            
+                            </a>
                         </div>
+                    
                     @endforeach
                 </div>
                 {{ $products->links() }}

@@ -63,7 +63,7 @@ class ProductController extends Controller
     public function DealOfDay()
     {
         $deals = DealOfDay::take(2)->with('products')->get();
-
+        
         return response()->json($deals);
     }
 
@@ -138,8 +138,9 @@ class ProductController extends Controller
     {
         $product = Product::where('id', $id)->with('categories')->first();
         $product_details= ProductDetail::where('product_id', $id)->first();
-        $p_color = $product_details->color;
-        $colors = explode(',', $p_color); // Split the string into an array
+        $p_color = $product_details->color ?? '';
+        $colors = array_filter(explode(',', $p_color)); // Remove empty values from the array
+        
         // dd($colors);
         return view('home.product-details', compact('product', 'product_details', 'colors'));
     }

@@ -3,7 +3,7 @@
     <div class="container">
 
 
-        @include('layouts.partials.sidebar')
+        @include('layouts.partials.sidebar2')
 
         <div class="product-box">
 
@@ -93,7 +93,7 @@
                 <div class="product-grid" id="newProductsList">
 
                 </div>
-                <a href="/products/${item['id']}" style="text-align: right">See All</a>
+                <a href="{{ url('/products-remark/new') }}" style="text-align: right">See All</a>
             </div>
 
         </div>
@@ -135,8 +135,9 @@
                                     <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
-                                        <p class="price">${item['discount_price']}</p>
-                                        <del>${item['price']}</del>
+                                      <p><strong><del>${item['price']}</del></strong></p>  
+                                      <p class="price"><strong>${item['discount_price']}</strong></p>
+                                        
                                     </div>
 
                                 </div>
@@ -168,8 +169,8 @@
                                     <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
-                                        <p class="price">${item['discount_price']}</p>
-                                        <del>${item['price']}</del>
+                                        <p><strong><del>${item['price']}</del></strong></p>  
+                                      <p class="price"><strong>${item['discount_price']}</strong></p>
                                     </div>
 
                                 </div>
@@ -214,8 +215,8 @@
                                     <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
-                                        <p class="price">${item['discount_price']}</p>
-                                        <del>${item['price']}</del>
+                                        <p><strong><del>${item['price']}</del></strong></p>  
+                                      <p class="price"><strong>${item['discount_price']}</strong></p>
                                     </div>
 
                                 </div>
@@ -247,8 +248,8 @@
                                     <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
-                                        <p class="price">${item['discount_price']}</p>
-                                        <del>${item['price']}</del>
+                                        <p><strong><del>${item['price']}</del></strong></p>  
+                                      <p class="price"><strong>${item['discount_price']}</strong></p>
                                     </div>
 
                                 </div>
@@ -293,8 +294,8 @@
                                     <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
-                                        <p class="price">${item['discount_price']}</p>
-                                        <del>${item['price']}</del>
+                                        <p><strong><del>${item['price']}</del></strong></p>  
+                                      <p class="price"><strong>${item['discount_price']}</strong></p>
                                     </div>
 
                                 </div>
@@ -326,8 +327,8 @@
                                     <a href="/products/${item['id']}" class="showcase-category">${item.categories['categoryName']}</a>
 
                                     <div class="price-box">
-                                        <p class="price">${item['discount_price']}</p>
-                                        <del>${item['price']}</del>
+                                        <p><strong><del>${item['price']}</del></strong></p>  
+                                      <p class="price"><strong>${item['discount_price']}</strong></p>
                                     </div>
 
                                 </div>
@@ -347,7 +348,7 @@
         //Deal Of The Day
         try {
             let restDeal = await axios.get("deal-of-day");
-            // console.log(restDeal);
+            console.log(restDeal);
 
             // Clear existing items
             document.getElementById("dealOfDay").innerHTML = '';
@@ -377,8 +378,16 @@
                                         <p class="price">Tk ${item.products?.['descount_price'] || 0}</p>
                                         <del>Tk ${item.products?.['price'] || 0}</del>
                                     </div>
-                                    <button class="add-cart-btn">add to cart</button>
+                                    <form action="" method="POST">
+                                        @csrf
+                                        <div class="row my-2">
+                                            <input type="text" value="Black, Golden, White" id="p_color" class="form-control mx-2" style="width:50%;">
+                                            <input type="number" min="0" value="1" name="quantity" step="1" class="form-control mx-2" style="width:40%; float:right;" aria-label="Quantity" id="p_qty">
+                                        </div>
+                                        <input type="text" value="${item['id']}" class="d-none" id="p_id">
 
+                                    </form>
+                                    <button onclick="AddToCart()" class="add-cart-btn">add to cart</button>
                                     <div class="showcase-status">
                                         <div class="wrapper">
                                             <p>Already sold: <b>${item['sold']}</b></p>
@@ -489,8 +498,8 @@
                             <div class="showcase-rating" id="rating-container-${productId}"></div> <!-- Unique ID here -->
 
                             <div class="price-box">
-                                <p class="price">Tk ${item['discount_price']}</p>
-                                <del>Tk ${item['price']}</del>
+                                <p><strong><del>${item['price']}</del></strong></p>  
+                                <p class="price"><strong>${item['discount_price']}</strong></p>
                             </div>
 
                         </div>

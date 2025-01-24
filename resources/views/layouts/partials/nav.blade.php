@@ -421,6 +421,12 @@
             <a href="#">Services</a>
             <a href="#">Clients</a>
             <a href="#">Contact</a>
+            @if(Cookie::get('token') !== null)
+                    <a href="{{url("/profile")}}"> <i class="linearicons-user"></i> Account</a>
+                    <a class="btn btn-danger btn-sm" href="{{url("/logout")}}"> Logout</a>
+                @else
+                    <a class="btn btn-danger btn-sm" href="{{url("/login")}}">Login</a>
+                @endif
           </div>
 
            <div class="mobile-bottom-navigation">
@@ -428,13 +434,13 @@
                <button class="action-btn" onclick="openNav()">
                    <ion-icon name="menu-outline"></ion-icon>
                </button>
-
+               <a href="{{ url('/cart') }}">
                <button class="action-btn">
                    <ion-icon name="bag-handle-outline"></ion-icon>
 
                    <span class="count">10</span>
                </button>
-
+              </a>
                <a href='/'>
                    <button class="action-btn">
                        <ion-icon name="home-outline">

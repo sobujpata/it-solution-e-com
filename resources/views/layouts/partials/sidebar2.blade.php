@@ -1,5 +1,4 @@
 <!--- SIDEBAR-->
-
 <div class="sidebar  has-scrollbar" data-mobile-menu>
 
     <div class="sidebar-category">
@@ -15,7 +14,6 @@
         <ul class="sidebar-menu-category-list" id="category-list">
             @foreach ($mainCategories as $item)
                 <p>
-
                     <a data-bs-toggle="collapse" href="#collapse-{{ $item->id }}" role="button" aria-expanded="false"
                         aria-controls="collapse-{{ $item->id }}">
                         <span><img src="{{ asset($item->categoryImg) }}" alt="clothes" width="20" height="20"
@@ -27,7 +25,7 @@
                     @if ($item->categories->isNotEmpty())
                         <ul>
                             @foreach ($item->categories as $subcategory)
-                                <li><a href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }}</a></li>
+                                <li><a href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
                             @endforeach
                         </ul>
                     @else

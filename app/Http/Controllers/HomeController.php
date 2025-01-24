@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\MainCategory;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index(){
-        return view('home.home');
+        // dd( $remark);
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.home', compact('mainCategories', 'bestSale'));
     }
 }
