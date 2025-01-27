@@ -74,8 +74,8 @@
 
         <div class="product-box">
             <h2 class="title">
-                <a href="{{ url('/') }}">Home</a> /
-                <a href="{{ url('/product-category/' . $category->categoryName) }}">{{ $category->categoryName }}</a>
+                <a href="{{ url('/') }}" class="text-dark">Home</a> /
+                <a class="text-dark" href="{{ url('/product-category/' . $category->categoryName) }}">{{ $category->categoryName }}</a>
             </h2>
 
 

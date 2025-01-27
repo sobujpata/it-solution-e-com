@@ -86,7 +86,7 @@ class InvoiceController extends Controller
             DB::beginTransaction();
 
             // Create customer and shipping details as strings
-            $details = implode(',', [
+            $details = implode(', ', [
                 $request->firstName,
                 $request->lastName,
                 $request->email,

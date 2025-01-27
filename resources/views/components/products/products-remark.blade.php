@@ -69,8 +69,8 @@
 
         <div class="product-box">
             <h2 class="title">
-                <a href="{{ url('/') }}">Home</a> /
-                <a href="{{ url('/product/' . $remark) }}">{{ $remark}}</a>
+                <a href="{{ url('/') }}" class="text-dark">Home</a> /
+                <a class="text-dark" href="{{ url('/product/' . $remark) }}">{{ $remark}}</a>
             </h2>
             
 

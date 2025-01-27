@@ -92,8 +92,43 @@
         <div class="row justify-content-center">
             <div class="col-md-8 col-sm-12">
                 <div class="card">
-                    <div class="card-body" id="orderProduct">
-                        
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h5 class="text-decoration-underline title">Amount</h5>
+                                    </div>
+                                    
+                                    <div class="col-6">Subtotal</div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-5"><span style="float: right;">150000.00</span></div>
+
+                                    <div class="col-6">Shipping Charge</div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-5"><span style="float: right;">150.00</span></div>
+                                    <hr>
+                                    <div class="col-6"><strong>Payable</strong></div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-5"><strong style="float: right;">150150.00</strong></div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h5 class="text-decoration-underline text-center title">Shipping Address:</h5>
+                                        <p>Rahim, Uddin, customer@gmail.com, 01739871705, Cantonment, Dhaka, Dhaka, 1206, Bangladesh</p>
+                                        
+                                    </div>
+                                    <div class="col-md-2 mt-4 text-center">
+                                        <button class="btn btn-primary btn-sm">Print</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                        </div>
                         
 
                     </div>
@@ -140,52 +175,18 @@ async function orderList() {
 
 // Helper to render a order row
 function renderorderRow(item) {
-    let div = `
-                  <div class="row">
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <div class="col-12 text-center">
-                                        <h5 class="text-decoration-underline title">Invoice: #INV${item.id}</h5>
-                                    </div>
-                                    
-                                    <div class="col-6">Subtotal</div>
-                                    <div class="col-1">:</div>
-                                    <div class="col-5"><span style="float: right;">${item.total}</span></div>
-
-                                    <div class="col-6">Shipping Charge</div>
-                                    <div class="col-1">:</div>
-                                    <div class="col-5"><span style="float: right;">${item.shipping_charge}</span></div>
-                                    <hr>
-                                    <div class="col-6"><strong>Payable</strong></div>
-                                    <div class="col-1">:</div>
-                                    <div class="col-5"><strong style="float: right;">${item.payable}</strong></div>
-                                    <hr>
-                                    <div class="col-12 text-center bg-dark text-white rounded-3"><strong> ${item.delivery_status}</strong></div>
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <h5 class="text-decoration-underline text-center title">Shipping Address:</h5>
-                                        <p>${item.ship_details}</p>
-                                    </div>
-                                    <div class="col-md-2 mt-4 text-center">
-                                        <button class="btn btn-primary btn-sm">Print</button>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-
-                        </div>
-                        
-                    <hr>          
-        `;
-
-        // Append the constructed HTML to the /products/${item['id']}topRate2 element
-        document.getElementById("orderProduct").innerHTML += div;
-
-    
+    return `
+        <tr>
+            <td class="product-thumbnail" align="center">
+              ${item.total}
+            </td>
+            <td class="product-name">${item.shipping_charge}</td>
+            <td class="product-quantity">${item.payable}</td>
+            <td class="product-subtotal">${item.ship_details}</td>
+            <td class="product-remove" align="center">
+                <a class="remove btn btn-success" data-id="${item.id}">Details</a>
+            </td>
+        </tr>`;
 }
 
 // Helper to calculate and display total price

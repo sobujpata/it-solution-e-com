@@ -91,21 +91,78 @@
     <div class="container my-5 container-table">
         <div class="row">
             <div class="col-md-8">
-                <div class="card" id="cartProduct">
-                    
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3 mb-2">
+                                <img src="{{ asset('images/default.jpg') }}" alt="" style="width: 60px;">
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h5>Iphone 16 pro</h5>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <strong>BDT 150000</strong>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="">Qty: 1</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="#" class="btn"><i class="fa fa-trash text-danger"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <p><span>Subtotal:</span><span style="float:right;">150000</span></p> --}}
-                    <p><span>Total:</span><span style="float:right;" id="total"></span></p>
+                        <p><span>Subtotal:</span><span style="float:right;">150000</span></p>
+                    <p><span>Total:</span><span style="float:right;">150000</span></p>
                         <a href="{{ url('/payment-form') }}" class="btn btn-success w-100">Checkout</a>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive shop_cart_table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Product Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody id="byList">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td>Total:</td>
+                                <td><span id="total"></span>Tk</td>
+                                <td align="center">
+                                    <button class="check-out-btn" type="submit" style=""><a
+                                            href="{{ url('/payment-form') }}" style="color:white;">Check
+                                            Out</a></button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <hr style="">
 </div>
@@ -153,46 +210,18 @@ async function CartList() {
 
 // Helper to render a cart row
 function renderCartRow(item) {
-    let div = `
-                  <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="row"> 
-                                    <div class="col-3 mb-2">
-                                        <img src="${item.product.image}" alt="" style="width: 60px; border-radius:7px;">
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <h5 style="float:left;">${item.product.title}</h5>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <strong>BDT ${item.price}</strong>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div> 
-                            </div>
-                            <div class="col-md-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h6 class="">Qty: ${item.qty}</h6>
-                                    </div>
-                                    <div class="col-6">
-                                        <a class="btn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>          
-        `;
-
-        // Append the constructed HTML to the /products/${item['id']}topRate2 element
-        document.getElementById("cartProduct").innerHTML += div;
-
-    
+    return `
+        <tr>
+            <td class="product-thumbnail" align="center">
+                <img src="${item.product.image}" alt="product" style="width:60px; border-radius:5px;">
+            </td>
+            <td class="product-name">${item.product.title}</td>
+            <td class="product-quantity">${item.qty}</td>
+            <td class="product-subtotal">${item.price} Tk</td>
+            <td class="product-remove" align="center">
+                <a class="remove btn btn-danger" data-id="${item.product_id}">Delete</a>
+            </td>
+        </tr>`;
 }
 
 // Helper to calculate and display total price

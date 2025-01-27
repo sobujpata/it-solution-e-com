@@ -15,7 +15,7 @@
             @foreach ($mainCategories as $item)
                 <p>
                     <a data-bs-toggle="collapse" href="#collapse-{{ $item->id }}" role="button" aria-expanded="false"
-                        aria-controls="collapse-{{ $item->id }}">
+                        aria-controls="collapse-{{ $item->id }}" class="text-dark">
                         <span><img src="{{ asset($item->categoryImg) }}" alt="clothes" width="20" height="20"
                                 class="menu-title-img"></span> {{ $item->categoryName }} <span style="float:right;"
                             class="text-bold">+</span>
@@ -25,7 +25,7 @@
                     @if ($item->categories->isNotEmpty())
                         <ul>
                             @foreach ($item->categories as $subcategory)
-                                <li><a href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
+                                <li><a class="text-dark" href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
                             @endforeach
                         </ul>
                     @else

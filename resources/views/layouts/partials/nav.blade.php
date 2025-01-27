@@ -360,10 +360,11 @@
                 </li>
 
                 @if(Cookie::get('token') !== null)
-                    <li><a href="{{url("/profile")}}"> <i class="linearicons-user"></i> Account</a></li>
-                    <li><a class="btn btn-danger btn-sm" href="{{url("/logout")}}"> Logout</a></li>
+                    <li class="menu-category"><a href="{{url("/invoices")}}" class="menu-title">Orders</a></li>
+                    <li class="menu-category"><a href="{{url("/profile")}}" class="menu-title">Account</a></li>
+                    <li class="menu-category"><a href="{{url("/logout")}}" class="menu-title">Logout</a></li>
                 @else
-                    <li><a class="btn btn-danger btn-sm" href="{{url("/login")}}">Login</a></li>
+                    <li class="menu-category"><a href="{{url("/login")}}" class="menu-title">Login</a></li>
                 @endif
       
               </ul>
