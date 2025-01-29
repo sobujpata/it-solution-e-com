@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use App\Mail\OTPMail;
+use App\Models\Product;
 use App\Helper\JWTToken;
 use Illuminate\View\View;
+use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -15,24 +17,36 @@ class UserController extends Controller
 {
     public function LoginPage()
     {
-        return view('home.auth.login-page');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.auth.login-page', compact('mainCategories', 'bestSale'));
     }
     public function RegistrationPage()
     {
-        return view('home.auth.reg-page');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.auth.reg-page', compact('mainCategories', 'bestSale'));
     }
 
     function SendOtpPage():View{
-        return view('home.auth.send-otp-page');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.auth.send-otp-page', compact('mainCategories', 'bestSale'));
     }
     function VerifyOTPPage():View{
-        return view('home.auth.verify-otp-page');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.auth.verify-otp-page', compact('mainCategories', 'bestSale'));
     }
     function ResetPasswordPage():View{
-        return view('home.auth.reset-pass-page');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.auth.reset-pass-page', compact('mainCategories', 'bestSale'));
     }
     function ProfilePage():View{
-        return view('home.dashboard.profile-page');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.dashboard.profile-page', compact('mainCategories', 'bestSale'));
     }
 
 

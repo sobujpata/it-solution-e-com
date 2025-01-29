@@ -140,9 +140,10 @@ class ProductController extends Controller
         $product_details= ProductDetail::where('product_id', $id)->first();
         $p_color = $product_details->color ?? '';
         $colors = array_filter(explode(',', $p_color)); // Remove empty values from the array
-        
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
         // dd($colors);
-        return view('home.product-details', compact('product', 'product_details', 'colors'));
+        return view('home.product-details', compact('product', 'product_details', 'colors', 'mainCategories', 'bestSale'));
     }
 
     public function ProductRemark(Request $request, $remark)
@@ -206,7 +207,9 @@ class ProductController extends Controller
 
 
     public function CartListPage(){
-        return view('home.product-carts');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.product-carts', compact('mainCategories', 'bestSale'));
     }
 
     public function CartList(Request $request)

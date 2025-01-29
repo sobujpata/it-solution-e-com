@@ -14,4 +14,10 @@ class HomeController extends Controller
         $bestSale = Product::where("remark", "popular")->take(4)->get();
         return view('home.home', compact('mainCategories', 'bestSale'));
     }
+    public function navBar(){
+        // dd( $remark);
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('layouts.partials.nav', compact('mainCategories', 'bestSale'));
+    }
 }

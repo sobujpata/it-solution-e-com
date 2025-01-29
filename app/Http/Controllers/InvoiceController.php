@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Invoice;
-use App\Models\InvoiceProduct;
+use App\Models\Product;
 use App\Models\ProductCart;
+use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use App\Models\ProductDetail;
+use App\Models\InvoiceProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
     public function InvoicesCustomer(){
-        return view('home.orders');
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.orders', compact('mainCategories', 'bestSale'));
     }
     public function InvoiceList(){
         $invoices = Invoice::all();
@@ -31,13 +35,18 @@ class InvoiceController extends Controller
         $total_product_price = round($total_product_price_r, 2);
         $shipping_charge = round(40, 2);
         $total_pay = round($total_product_price + $shipping_charge, 2);
+
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
         // dd($products);
         return view('home.payment-page', compact(
             'user', 
             'products', 
             'total_product_price',
             'shipping_charge',
-            'total_pay'
+            'total_pay',
+            'mainCategories',
+            'bestSale'
         ));
     }
 
