@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerProfile;
 use App\Models\User;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -49,6 +50,7 @@ class DashboardController extends Controller
         $user_role = $request->header('role');
 
         $product= Product::count();
+        // $customer= CustomerProfile::count();
         $Category= Category::count();
         $Customer=User::count();
         $Invoice= Invoice::count();

@@ -64,6 +64,7 @@
         if (res.status === 200) {
             successToast('Main Category Created Successfully!');
             document.getElementById("save-form").reset();
+            window.location.href="/main-category"
         } else {
             errorToast("Failed to Create main-category");
         }

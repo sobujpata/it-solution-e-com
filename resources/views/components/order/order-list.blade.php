@@ -70,8 +70,7 @@
 <!-- START SECTION BREADCRUMB -->
 <div class="breadcrumb_section bg_gray page-title-mini">
     <div class="container">
-        <div class="row align-items-center">
-            
+        <div class="row align-items-center px-4">
             <div class="col-md-2">
                 <h2 class="title">
                     <span><a href="{{ url('/') }}" class="text-dark bolder">Home</a></span> / <span><a href="{{ url('/order') }}" class="text-dark border-2">Order List</a></span>
@@ -79,30 +78,19 @@
             </div>
             <div class="col-md-8">
                 <div class="page-title">
-                    <h1 class="text-decoration-underline">Invoice List</h1>
+                    <h1 class="text-decoration-underline border-3">Invoice List</h1>
                 </div>
             </div>
             <div class="col-md-2"></div>
         </div>
-    </div><!-- END CONTAINER-->
-</div>
-<hr>
-<div class="mt-5">
-    <div class="container my-5 container-table">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-sm-12">
-                <div class="card">
-                    <div class="card-body" id="orderProduct">
-                        
-                        
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-12 " id="orderProduct">
 
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-    <hr style="">
 </div>
+<hr style="">
 
 <script>
 async function orderList() {
@@ -141,13 +129,16 @@ async function orderList() {
 // Helper to render a order row
 function renderorderRow(item) {
     let div = `
-                  <div class="row">
-                            <div class="col-md-5">
+            <div class="card m-2">
+                <div class="card-body ">
+                  <div class="row px-2">
+                            <div class="col-md-5 mb-3">
+                                
                                 <div class="row">
-                                    <div class="col-12 text-center">
-                                        <h5 class="text-decoration-underline title">Invoice: #INV${item.id}</h5>
-                                    </div>
-                                    
+                                    <div class="col-6"><h5 class="">Invoice</h5></div>
+                                    <div class="col-1">:</div>
+                                    <div class="col-5"><span style="float: right;">#INV${item.id}</span></div>
+
                                     <div class="col-6">Subtotal</div>
                                     <div class="col-1">:</div>
                                     <div class="col-5"><span style="float: right;">${item.total}</span></div>
@@ -159,18 +150,18 @@ function renderorderRow(item) {
                                     <div class="col-6"><strong>Payable</strong></div>
                                     <div class="col-1">:</div>
                                     <div class="col-5"><strong style="float: right;">${item.payable}</strong></div>
-                                    <hr>
-                                    <div class="col-12 text-center bg-dark text-white rounded-3"><strong> ${item.delivery_status}</strong></div>
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <h5 class="text-decoration-underline text-center title">Shipping Address:</h5>
-                                        <p>${item.ship_details}</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-9">
+                                        <span class="text-sm"><strong>Shipping Address: </strong>${item.ship_details}</span>
                                     </div>
-                                    <div class="col-md-2 mt-4 text-center">
-                                        <button class="btn btn-primary btn-sm">Print</button>
+                                    <div class="col-md-3 mt-4 text-center ">
+                                        <div class="col-12 text-center btn btn-info btn-sm mb-2 rounded-2"><strong> ${item.delivery_status}</strong></div>
+                                        <button class="col-12 btn btn-primary btn-sm rounded-2">Print</button>
                                     </div>
                                 </div>
                                 
@@ -178,8 +169,8 @@ function renderorderRow(item) {
                             
 
                         </div>
-                        
-                    <hr>          
+                    </div>
+                </div>
         `;
 
         // Append the constructed HTML to the /products/${item['id']}topRate2 element

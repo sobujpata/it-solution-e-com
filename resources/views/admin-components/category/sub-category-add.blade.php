@@ -88,6 +88,7 @@
         if (res.status === 200) {
             successToast('Sub Category Created Successfully!');
             document.getElementById("save-form").reset();
+            window.location.href="/sub-category"
         } else {
             errorToast("Failed to Create Sub-category");
         }

@@ -74,9 +74,7 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    // public function CategoryProducts() {
-    //     return view('home.category-wise-product');
-    // }
+   
     public function searchCategoryProducts(Request $request)
     {
         $searchQuery = $request->query('query');

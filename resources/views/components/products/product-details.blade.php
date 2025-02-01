@@ -1,90 +1,120 @@
+<link rel="stylesheet" href="{{ asset('css/product-details.css') }}">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nova+Square&display=swap');
+
+    .bebas-neue-regular {
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .nova-square-regular {
+        font-family: "Nova Square", serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .product-detail ul li {
+        margin: 0;
+        list-style: none;
+        background: url({{ asset('images/shoes_images/checked.png') }}) left center no-repeat;
+        background-size: 18px;
+        padding-left: 1.7rem;
+        margin: 0.4rem 0;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+
+    .purchase-info {
+        display: flex;
+        /* Makes child elements align horizontally */
+        gap: 10px;
+        /* Adds space between elements */
+        align-items: center;
+        /* Aligns elements vertically */
+    }
+
+    .quantity-input {
+        width: 60px;
+        /* Adjust the width as needed */
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    /* .add-to-cart-btn {
+        background-color: #f39c12 !important;
+        color: white;
+    } */
+
+    .add-to-cart-btn:hover {
+        background-color: #e67e22 !important;
+    }
+
+    .shop-now-btn {
+        background-color: #0528d5 !important;
+        color: white;
+    }
+
+    .shop-now-btn:hover {
+        background-color: rgb(188, 209, 240) !important;
+        color:black !important;
+    }
+
+    .product-img {
+        width: 150px;
+        border: 1px solid #c7c7c7;
+        border-radius: 8px;
+        transition: 1s ease;
+    }
+    .product-img:hover{
+        -webkit-transform: scale(0.8);
+        -ms-transform: scale(0.8);
+        transform: scale(0.8);
+        transition: 1s ease;
+    }
+    .img-product-big{
+        -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+    }
+    .img-product-big:hover{
+        -webkit-transform: scale(1.3);
+        transform: scale(1.3);
+    }
+    @media only screen and (max-width: 600px) {
+        .product-content {
+            font-size: 11px !important;
+        }
+
+        .product-img {
+            width: 73px;
+        }
+        .add-to-cart-btn{
+            font-size:12px !important;
+        }
+        .shop-now-btn{
+            font-size:12px !important;
+        }
+        .product-title{
+            font-size: 1.5rem !important;
+        }
+
+    }
+</style>
+
 <div class="product-container">
     <div class="container" style="padding-top: 10px">
-        <link rel="stylesheet" href="{{ asset('css/product-details.css') }}">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nova+Square&display=swap');
-
-            .bebas-neue-regular {
-                font-family: "Bebas Neue", sans-serif;
-                font-weight: 400;
-                font-style: normal;
-            }
-
-            .nova-square-regular {
-                font-family: "Nova Square", serif;
-                font-weight: 400;
-                font-style: normal;
-            }
-
-            .product-detail ul li {
-                margin: 0;
-                list-style: none;
-                background: url({{ asset('images/shoes_images/checked.png') }}) left center no-repeat;
-                background-size: 18px;
-                padding-left: 1.7rem;
-                margin: 0.4rem 0;
-                font-weight: 600;
-                opacity: 0.9;
-            }
-
-            .purchase-info {
-                display: flex;
-                /* Makes child elements align horizontally */
-                gap: 10px;
-                /* Adds space between elements */
-                align-items: center;
-                /* Aligns elements vertically */
-            }
-
-            .quantity-input {
-                width: 60px;
-                /* Adjust the width as needed */
-                padding: 5px;
-                font-size: 16px;
-            }
-
-            .btn {
-                padding: 8px 16px;
-                border: none;
-                cursor: pointer;
-                font-size: 16px;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
-
-            .add-to-cart-btn {
-                background-color: #f39c12;
-                color: white;
-            }
-
-            .add-to-cart-btn:hover {
-                background-color: #e67e22;
-            }
-
-            .shop-now-btn {
-                background-color: rgb(0, 110, 255);
-                color: white;
-            }
-
-            .shop-now-btn:hover {
-                background-color: rgb(0, 80, 200);
-            }
-
-            .product-img {
-                width: 150px;
-            }
-
-            @media only screen and (max-width: 600px) {
-                .product-content {
-                    font-size: 12px;
-                }
-
-                .product-img {
-                    width: 70px;
-                }
-
-            }
-        </style>
+        
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -95,7 +125,7 @@
                                 @if ($product_details)
                                     @foreach (['img1', 'img2', 'img3', 'img4'] as $img)
                                         <img src="{{ isset($product_details->$img) && $product_details->$img ? asset($product_details->$img) : asset('images/default-image.jpg') }}"
-                                            alt="{{ $product->title }}">
+                                            alt="{{ $product->title }}" class="img img-product-big">
                                     @endforeach
                                 @else
                                     <p>No product images available.</p>
@@ -115,7 +145,7 @@
                                     </div>
                                 @endforeach
                             @else
-                                <p>No product details available.</p>
+                                <p>No product Image available.</p>
                             @endif
                         </div>
 
@@ -126,8 +156,8 @@
             <div class="col-md-6">
                 <!-- card right -->
                 <div class="product-content">
-                    <h2 class="product-title">{{ $product->title }}</h2>
-                    <a href="{{ $product->remark }}" class="product-link">visit our store</a>
+                    <h3 class="product-title">{{ $product->title }}</h3>
+                    <a href="{{ url('/products-remark/'.$product->remark) }}" class="product-link">visit our store</a>
                     <div class="product-rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -143,9 +173,9 @@
                     </div>
 
                     <div class="product-detail">
-                        <h2>About this products: </h2>
-                        <p>{{ $product->short_des }}</p>
-                        <p>{{ $product_details->des ?? 'No description available.' }}</p>
+                        <h3>Product Description:</h3>
+                        <p style="text-align: justify;">{{ $product->short_des }}</p>
+                        <p style="text-align: justify;">{{ $product_details->des ?? 'No description available.' }}</p>
                         <ul>
                             <li>Color: <span>{{ $product_details->color ?? 'No color available.' }}</span></li>
                             <li>Available: <span>in stock</span></li>
@@ -157,30 +187,45 @@
                             @csrf
 
 
-                            <p>Color Select:
-                                <select name="color" id="p_color" class="form-control form-select">
-                                    @foreach ($colors as $color)
-                                        <option value="{{ $color }}">{{ ucfirst($color) }}</option>
-                                    @endforeach
-                                </select>
+                            <p>
                             </p>
-                            {{-- <input type="text" value="{{ $product->discount_price }}" style="display:none;"
-                                id="p_price"> --}}
-                            <input type="text" value="{{ $product->id }}" style="display:none;" id="p_id">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Color Select:
+                                        </div>
+                                        <div class="col-7">
+                                            <select name="color" id="p_color" class="form-control form-select">
+                                                @foreach ($colors as $color)
+                                                    <option value="{{ $color }}">{{ ucfirst($color) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                
+                                    <input type="text" value="{{ $product->id }}" style="display:none;" id="p_id">
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" min="0" value="1" name="quantity" step="1" class="quantity-input form-control"
+                                    aria-label="Quantity" id="p_qty">
+                                </div>
+                            </div>
+                            
                     </div>
 
                     <div class="purchase-info">
                         <!-- Inline Input and Button -->
 
-                        <input type="number" min="0" value="1" name="quantity" step="1" class="quantity-input"
-                            aria-label="Quantity" id="p_qty">
+                        
 
-                        <button onclick="AddToCart()" type="button" class="btn add-to-cart-btn"
+                        <button onclick="AddToCart()" type="button" class="btn add-to-cart-btn btn-sm"
                             aria-label="Add to Cart">
                             Add to Cart <i class="fas fa-shopping-cart"></i>
                         </button>
                         <a href="">
-                            <button onclick="AddToWishList()" type="button" class="btn shop-now-btn">
+                            <button onclick="AddToWishList()" type="button" class="btn shop-now-btn btn-sm">
                                 Add to Wish <i class="fa fa-heart" aria-hidden="true"></i>
                             </button>
                         </a>

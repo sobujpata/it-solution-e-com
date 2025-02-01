@@ -527,82 +527,82 @@
                </div>
                <!--- SIDEBAR-->
 
-  <div class="sidebar-category">
+                <div class="sidebar-category">
 
-      <div class="sidebar-top">
-          <h2 class="mt-2 text-decoration-underline">Category</h2>
-      </div>
+                    <div class="sidebar-top">
+                        <h2 class="mt-4 mx-4">Product Categories</h2>
+                    </div>
 
-      <ul class="sidebar-menu-category-list" id="category-list">
-          @foreach ($mainCategories as $item)
-              <p>
-                  <a data-bs-toggle="collapse" href="#collapse-{{ $item->id }}" role="button" aria-expanded="false"
-                      aria-controls="collapse-{{ $item->id }}" class="text-dark">
-                      <span><img src="{{ asset($item->categoryImg) }}" alt="clothes" width="20" height="20"
-                              class="menu-title-img"></span> {{ $item->categoryName }} <span style="float:right;"
-                          class="text-bold">+</span>
-                  </a>
-              </p>
-              <div class="collapse" id="collapse-{{ $item->id }}">
-                  @if ($item->categories->isNotEmpty())
-                      <ul>
-                          @foreach ($item->categories as $subcategory)
-                              <li><a class="text-dark" href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
-                          @endforeach
-                      </ul>
-                  @else
-                      <p>No subcategories available.</p>
-                  @endif
-              </div>
-          @endforeach
+                    <ul class="sidebar-menu-category-list" id="category-list">
+                        @foreach ($mainCategories as $item)
+                            <p>
+                                <a data-bs-toggle="collapse" href="#collapse-{{ $item->id }}" role="button" aria-expanded="false"
+                                    aria-controls="collapse-{{ $item->id }}" class="text-dark">
+                                    <span><img src="{{ asset($item->categoryImg) }}" alt="clothes" width="20" height="20"
+                                            class="menu-title-img"></span> {{ $item->categoryName }} <span style="float:right;"
+                                        class="text-bold">+</span>
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapse-{{ $item->id }}">
+                                @if ($item->categories->isNotEmpty())
+                                    <ul>
+                                        @foreach ($item->categories as $subcategory)
+                                            <li><a class="text-dark" href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p>No subcategories available.</p>
+                                @endif
+                            </div>
+                        @endforeach
 
 
-      </ul>
+                    </ul>
 
-  </div>
+                </div>
 
-  <div class="product-showcase">
+                <div class="product-showcase">
 
-      <h3 class="showcase-heading">best sellers</h3>
+                    <h3 class="showcase-heading">best sellers</h3>
 
-      <div class="showcase-wrapper">
+                    <div class="showcase-wrapper">
 
-          <div class="showcase-container" id="BestSale">
-              {{-- @dd($bestSale) --}}
-              @foreach ($bestSale as $item)
-              <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-4">
-                            <a href="#" class="">
-                                <img src="{{ asset($item->image) }}" alt="baby fabric shoes" width="75" height="75" class="showcase-img">
-                            </a>
-                        </div>
-                        <div class="col-8">
+                        <div class="showcase-container" id="BestSale">
+                            {{-- @dd($bestSale) --}}
+                            @foreach ($bestSale as $item)
                             <div class="row">
-                                <div class="col-12 text-left">
-                                    <a href="#" class="">
-                                        {{ $item->title }}
-                                    </a>
-                                </div>
                                 <div class="col-12">
-                                    <div class="price-box">
-                                        <del>{{ $item->price }}</del>
-                                        <p class="price">{{ $item->discount_price }}</p>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#" class="">
+                                                <img src="{{ asset($item->image) }}" alt="baby fabric shoes" width="75" height="75" class="showcase-img">
+                                            </a>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-12 text-left">
+                                                    <a href="#" class="p-0">
+                                                        {{ $item->title }}
+                                                    </a>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="price-box">
+                                                        <del>{{ $item->price }}</del>
+                                                        <p class="price">{{ $item->discount_price }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
+                            
                         </div>
+                        <a href="#" style="text-align: right">See All</a>
                     </div>
-                </div>
-              </div>
-              @endforeach
-              
-          </div>
-          <a href="#" style="text-align: right">See All</a>
-      </div>
 
-  </div>
+                </div>
 
 
                
@@ -656,242 +656,3 @@
            document.getElementById("categoryManu").style.width = "0";
        }
    </script>
-
-
-   {{-- <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
-
-               <div class="menu-top">
-                   <h2 class="menu-title">Menu</h2>
-
-                   <button class="menu-close-btn" data-mobile-menu-close-btn>
-                       <ion-icon name="close-outline"></ion-icon>
-                   </button>
-               </div>
-
-               <ul class="mobile-menu-category-list">
-
-                   <li class="menu-category">
-                       <a class='menu-title' href='/'>Home</a>
-                   </li>
-
-                   <li class="menu-category">
-
-                       <button class="accordion-menu" data-accordion-btn>
-                           <p class="menu-title">Men's</p>
-
-                           <div>
-                               <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                               <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                           </div>
-                       </button>
-
-                       <ul class="submenu-category-list" data-accordion>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Shirt</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Shorts & Jeans</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Safety Shoes</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Wallet</a>
-                           </li>
-
-                       </ul>
-
-                   </li>
-
-                   <li class="menu-category">
-
-                       <button class="accordion-menu" data-accordion-btn>
-                           <p class="menu-title">Women's</p>
-
-                           <div>
-                               <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                               <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                           </div>
-                       </button>
-
-                       <ul class="submenu-category-list" data-accordion>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Dress & Frock</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Earrings</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Necklace</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Makeup Kit</a>
-                           </li>
-
-                       </ul>
-
-                   </li>
-
-                   <li class="menu-category">
-
-                       <button class="accordion-menu" data-accordion-btn>
-                           <p class="menu-title">Jewelry</p>
-
-                           <div>
-                               <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                               <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                           </div>
-                       </button>
-
-                       <ul class="submenu-category-list" data-accordion>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Earrings</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Couple Rings</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Necklace</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Bracelets</a>
-                           </li>
-
-                       </ul>
-
-                   </li>
-
-                   <li class="menu-category">
-
-                       <button class="accordion-menu" data-accordion-btn>
-                           <p class="menu-title">Perfume</p>
-
-                           <div>
-                               <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                               <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                           </div>
-                       </button>
-
-                       <ul class="submenu-category-list" data-accordion>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Clothes Perfume</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Deodorant</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Flower Fragrance</a>
-                           </li>
-
-                           <li class="submenu-category">
-                               <a href="#" class="submenu-title">Air Freshener</a>
-                           </li>
-
-                       </ul>
-
-                   </li>
-
-                   <li class="menu-category">
-                       <a href="#" class="menu-title">Blog</a>
-                   </li>
-
-                   <li class="menu-category">
-                       <a href="#" class="menu-title">Hot Offers</a>
-                   </li>
-
-                   @if (Cookie::get('token') !== null)
-                          <li><a href="{{url("/profile")}}"> <i class="linearicons-user"></i> Profile</a></li>
-                          <li><a class="btn btn-danger btn-sm" href="{{url("/logout")}}"> Logout</a></li>
-                      @else
-                          <li><a class="btn btn-danger btn-sm" href="{{url("/login")}}">Login</a></li>
-                    @endif
-
-               </ul>
-
-               <div class="menu-bottom">
-
-                   <ul class="menu-category-list">
-
-                       <li class="menu-category">
-
-                           <button class="accordion-menu" data-accordion-btn>
-                               <p class="menu-title">Language</p>
-
-                               <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-                           </button>
-
-                           <ul class="submenu-category-list" data-accordion>
-
-                               <li class="submenu-category">
-                                   <a href="#" class="submenu-title">English</a>
-                               </li>
-
-                               
-
-                              </ul>
-
-                            </li>
-     
-                            <li class="menu-category">
-                                <button class="accordion-menu" data-accordion-btn>
-                                    <p class="menu-title">Currency</p>
-                                    <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
-                                </button>
-     
-                                <ul class="submenu-category-list" data-accordion>
-                                    
-     
-                                    <li class="submenu-category">
-                                        <a href="#" class="submenu-title">BDT &LeftAngleBracket;;</a>
-                                    </li>
-                                </ul>
-                            </li>
-     
-                        </ul>
-     
-                        <ul class="menu-social-container">
-     
-                            <li>
-                                <a href="#" class="social-link">
-                                    <ion-icon name="logo-facebook"></ion-icon>
-                                </a>
-                            </li>
-     
-                            <li>
-                                <a href="#" class="social-link">
-                                    <ion-icon name="logo-twitter"></ion-icon>
-                                </a>
-                            </li>
-     
-                            <li>
-                                <a href="#" class="social-link">
-                                    <ion-icon name="logo-instag"></ion-icon>
-                                </a>
-                            </li>
-     
-                            <li>
-                                <a href="#" class="social-link">
-                                    <ion-icon name="logo-linkedin"></ion-icon>
-                                </a>
-                            </li>
-     
-                        </ul>
-     
-                    </div>
-     
-                </nav> --}}

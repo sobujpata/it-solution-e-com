@@ -13,7 +13,7 @@
 
     <div class="card">
         <div>
-            <div class="numbers">324</div>
+            <div class="numbers"><span id="customer"></span></div>
             <div class="cardName">Total customer</div>
         </div>
 
@@ -22,3 +22,15 @@
         </div>
     </div>
 </div>
+<script>
+    getSummar();
+    async function getSummar() {
+        showLoader();
+        let res=await axios.get("/summary");
+        hideLoader();
+        // console.log(res);
+        //General Info
+        document.getElementById('customer').innerText=res.data['customer']
+       
+    }
+</script>
