@@ -83,13 +83,13 @@
     }
     .img-product-big{
         -webkit-transform: scale(1);
-	transform: scale(1);
-	-webkit-transition: .3s ease-in-out;
-	transition: .3s ease-in-out;
+        transform: scale(1);
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
     }
     .img-product-big:hover{
-        -webkit-transform: scale(1.3);
-        transform: scale(1.3);
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
     }
     @media only screen and (max-width: 600px) {
         .product-content {
