@@ -355,9 +355,9 @@
                            </ul>
                        </li>
 
-                       <li class="menu-category">
+                       {{-- <li class="menu-category">
                            <a href="#" class="menu-title">Blog</a>
-                       </li>
+                       </li> --}}
 
                        <li class="menu-category">
                            <a href="#HotOffers" class="menu-title">Hot Offers</a>

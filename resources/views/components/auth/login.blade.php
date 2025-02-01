@@ -1,20 +1,29 @@
+<style>
+     @media only screen and (max-width: 600px) {
+        .card{
+            padding: 2px !important;
+            margin: 2px !important;
+        }
+    }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card p-4 m-3 text-center">
-                <div class="card-title">
-                    <h2>Login Form</h2>
-                </div>
-                <hr>
                 <div class="card-body">
+                    <div class="">
+                        <h2>Login Form</h2>
+                    </div>
+                    <hr>
                     <form action="#">
-                        
-                        <input type="text" id="email" placeholder="Email Address" required class="form-control my-2" />
-                    
-                        <input type="password" id="password" placeholder="Password" required class="form-control my-2" />
-                            
+                        <div class="form-group mb-3">
+                            <input type="text" id="email" placeholder="Email Address" required class="form-control"/>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="password" id="password" placeholder="Password" required class="form-control"/>
+                        </div>
                     </form>
-                    <button onclick="SubmitLogin()" class="login-btn w-25 btn btn-success">Next</button>
+                    <button onclick="SubmitLogin()" class="login-btn btn btn-primary w-100">Next</button>
                     <div class="forgot-btn p-2 m-2"><a href="{{ url('/sendOtp') }}">Forgot password?</a></div>
                     <hr>
                     <div class="signup-link"> 

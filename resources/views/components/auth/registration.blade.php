@@ -1,12 +1,21 @@
+<style>
+    @media only screen and (max-width: 600px) {
+       .card{
+           padding: 2px !important;
+           margin: 2px !important;
+       }
+   }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card p-3 m-3 text-center">
-                <div class="card-title">
-                    <h2>Registration Form</h2>
-                </div>
-                <hr>
+                
                 <div class="card-body">
+                    <div class="">
+                        <h2>Registration Form</h2>
+                    </div>
+                    <hr>
                     <form action="#">
                         <div class="form-group p-2">
                             <input type="text" id="firstName" class="form-control" placeholder="First Name">
@@ -32,12 +41,10 @@
                             </label>
                         </div>
 
-                        <button onclick="onRegistration()" class="login-btn btn mt-3 w-25  bg-success text-white">Sign
-                            Up</button>
+                        <button onclick="onRegistration()" class="login-btn btn mt-3 w-100  bg-success text-white">Sign Up</button>
                     </form>
                     <hr>
-                    <div class="signup-link">Already have an account? <span><a href="{{ url('/login') }}">Login
-                                now</a></span> </div>
+                    <div class="signup-link">Already have an account? <span><a href="{{ url('/login') }}">Login now</a></span> </div>
                 </div>
             </div>
         </div>

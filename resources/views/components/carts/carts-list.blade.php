@@ -3,15 +3,15 @@
         text-decoration: none;
     }
 
-    .remove {
-        background-color: rgb(236, 41, 100);
+    .remove-btn {
+        /* background-color: rgb(236, 41, 100); */
         color: white;
         padding: 5px;
         border-radius: 5px;
         width: 70px;
     }
 
-    .remove:hover {
+    .remove-btn:hover {
         background-color: #f7f0ef;
         color: rgb(231, 12, 12);
     }
@@ -138,9 +138,10 @@ async function CartList() {
         // Calculate and display total price
         calculateTotal(cartItems);
 
-        // Attach remove event listener
-        $(".remove").on('click', function () {
+        // Attach remove-btn event listener
+        $(".remove-btn").on('click', function () {
             const productId = $(this).data('id');
+            console.log(productId);
             confirmRemoval(productId);
         });
 
@@ -180,7 +181,7 @@ function renderCartRow(item) {
                                         <h6 class="">Qty: ${item.qty}</h6>
                                     </div>
                                     <div class="col-6">
-                                        <a class="btn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></a>
+                                        <a class="btn remove-btn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +209,7 @@ async function confirmRemoval(productId) {
     }
 }
 
-// Send a request to remove the item from the cart
+// Send a request to remove-btn the item from the cart
 async function removeCartItem(productId) {
     try {
         showLoader();
@@ -218,6 +219,7 @@ async function removeCartItem(productId) {
         if (res.status === 200) {
             successToast("Product removed from cart.");
             await CartList(); // Refresh cart
+            window.location.href='/cart'
         } else {
             errorToast("Failed to remove product. Please try again.");
         }
