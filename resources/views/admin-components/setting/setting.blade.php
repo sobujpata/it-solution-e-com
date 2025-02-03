@@ -3,7 +3,9 @@
 
     <div class="card">
         <div>
-            <div class="numbers">Help</div>
+            <div class="numbers">
+                <a href="{{ url('/add-main-menu') }}">Add Main Menu</a>
+            </div>
         </div>
 
         <div class="iconBx">

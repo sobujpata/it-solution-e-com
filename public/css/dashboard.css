@@ -174,7 +174,7 @@ body {
 
 .main {
   position: absolute;
-  width: calc(100% - 200px);
+  width: calc(100% - 300px);
   left: 300px;
   min-height: 100vh;
   background: var(--white);

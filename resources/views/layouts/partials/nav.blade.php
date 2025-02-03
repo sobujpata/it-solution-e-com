@@ -114,11 +114,13 @@
                        <li class="menu-category">
                            <a href="#" class="menu-title">Categories</a>
 
-                           <div class="dropdown-panel">
+                           <div id="category-dropdown" class="dropdown-panel"></div>
+
+                           {{-- <div class="dropdown-panel">
 
                                <ul class="dropdown-panel-list">
 
-                                   <li class="menu-title">
+                                   <li class="menu-title" id="mainCategory1">
                                        <a href="#">APPLE</a>
                                    </li>
 
@@ -153,7 +155,7 @@
 
                                <ul class="dropdown-panel-list">
 
-                                   <li class="menu-title">
+                                   <li class="menu-title" id="mainCategory2">
                                        <a href="#">HAVIT</a>
                                    </li>
 
@@ -188,7 +190,7 @@
 
                                <ul class="dropdown-panel-list">
 
-                                   <li class="menu-title">
+                                   <li class="menu-title" id="mainCategory2">
                                        <a href="#">Gedget</a>
                                    </li>
 
@@ -223,7 +225,7 @@
 
                                <ul class="dropdown-panel-list">
 
-                                   <li class="menu-title">
+                                   <li class="menu-title" id="mainCategory2">
                                        <a href="#">Electronics</a>
                                    </li>
 
@@ -256,7 +258,7 @@
 
                                </ul>
 
-                           </div>
+                           </div> --}}
                        </li>
 
                        <li class="menu-category">
@@ -656,3 +658,40 @@
            document.getElementById("categoryManu").style.width = "0";
        }
    </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        axios.get("{{ url('/category-main-nav') }}")
+            .then(response => {
+                const data = response.data;
+                const categoryContainer = document.getElementById("category-dropdown");
+                categoryContainer.innerHTML = ""; // Clear previous data
+
+                data.mainCategories.forEach(mainCategory => {
+                    let subCategoriesHtml = "";
+
+                    if (data.subCategories[mainCategory.id]) {
+                        data.subCategories[mainCategory.id].forEach(subCategory => {
+                            subCategoriesHtml += `<li class="panel-list-item">
+                                <a href="/product-category/${subCategory.categoryName}">${subCategory.categoryName}</a>
+                            </li>`;
+                        });
+                    }
+
+                    categoryContainer.innerHTML += `
+                        <ul class="dropdown-panel-list">
+                            <li class="menu-title">
+                                <a href="#">${mainCategory.categoryName}</a>
+                            </li>
+                            ${subCategoriesHtml}
+                            <li class="panel-list-item">
+                                <a href="#">
+                                    <img src="{{ asset('images/apple${mainCategory.id}.jpg') }}" alt="${mainCategory.categoryName}" width="250" height="119">
+                                </a>
+                            </li>
+                        </ul>
+                    `;
+                });
+            })
+            .catch(error => console.error("Error fetching categories:", error));
+    });
+</script>

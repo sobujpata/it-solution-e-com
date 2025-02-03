@@ -10,26 +10,9 @@
                 <li class="footer-nav-item">
                     <h2 class="nav-title">Popular Categories</h2>
                 </li>
+                <div id="footerCategory">
 
-                <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Computer</a>
-                </li>
-
-                <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Electronic</a>
-                </li>
-
-                <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Mobile Phone</a>
-                </li>
-
-                <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Apple 16</a>
-                </li>
-
-                <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Watches</a>
-                </li>
+                </div>
 
             </ul>
 
@@ -40,19 +23,19 @@
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Prices drop</a>
+                    <a href="{{ url('/products-remarks/new') }}" class="footer-nav-link">New Arrivals</a>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">New products</a>
+                    <a href="{{ url('/products-remarks/Trending') }}" class="footer-nav-link">Trending</a>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Best sales</a>
+                    <a href="{{ url('/products-remarks/Top') }}" class="footer-nav-link">Top Rated</a>
                 </li>
 
                 <li class="footer-nav-item">
-                    <a href="#" class="footer-nav-link">Contact us</a>
+                    <a href="#" class="footer-nav-link">Best Sale</a>
                 </li>
 
                 <li class="footer-nav-item">
@@ -201,7 +184,7 @@
             <img src="{{ asset('images/payment.png') }}" alt="payment method" class="payment-img">
 
             <p class="copyright">
-                Copyright &copy; <a href="https://www.localbazer.com" target="_blank">Localbazer.com</a> all
+                Copyright &copy; <a href="https://sobujpata.github.io/info/" target="_blank">Md Salim Reza</a> all
                 rights reserved.
             </p>
 
@@ -212,3 +195,22 @@
 
 </footer>
 
+<script>
+    getCategoryFooter();
+    async function getCategoryFooter(){
+        let res = await axios.get('/category-footer');
+
+        console.log(res);
+        res.data.forEach(function(item){
+            let div = `
+                <li class="footer-nav-item">
+                    <a href="#" class="footer-nav-link">${item['categoryName']}</a>
+                </li>
+
+            </div>
+            `;
+            // Use innerHTML to append the string as HTML
+            document.getElementById('footerCategory').innerHTML += div;
+        })
+    }
+</script>

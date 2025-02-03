@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\MainMenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TestimonialController;
@@ -53,6 +54,8 @@ Route::get('/new-products', [ProductController::class, "NewProducts"]);
 Route::get('/product-category/{categoryName}', [ProductController::class, 'CategoryWise']);
 
 // Route::get('/category-products', [ProductController::class, 'CategoryProducts']);
+Route::get('/category-footer', [CategoryController::class, 'CategoryFooter']);
+Route::get('/category-main-nav', [CategoryController::class, 'CategoryMainNav']);
 
 //product details
 Route::get('/products/{id}', [ProductController::class, 'ProductDetails']);
@@ -64,7 +67,7 @@ Route::get('/testimonial', [TestimonialController::class, 'Testimonial']);
 Route::get('/services', [ServiceController::class, 'index']);
 //demo
 Route::get('/blogs-card', [BlogController::class, 'BlogCard']);
-//demo
+//brand category
 Route::get('/brand-category', [BrandController::class, 'BrandWithCategory']);
 
 //Auth Route
@@ -179,6 +182,19 @@ Route::middleware(['admin'])->group(function () {
     Route::get("/sub-category-edit", [CategoryController::class, 'SubCategoryEdit'])->middleware([TokenVerificationMiddleware::class]);
     Route::post("/update-sub-category", [CategoryController::class, 'SubCategoryUpdate'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/sub-category-delete", [CategoryController::class, 'SubCategoryDelete'])->middleware([TokenVerificationMiddleware::class]);
+    
+    //Main menu Route
+    Route::get("/add-main-menu", [MainMenuController::class, 'MainMenuPage'])->middleware([TokenVerificationMiddleware::class]);
+    //main menu API
+    Route::post('/menu-create', [MainMenuController::class, "StoreMenu"])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/menu-list', [MainMenuController::class, "ListMenu"])->middleware([TokenVerificationMiddleware::class]);
+    
+    //Sub menu
+    Route::get('/add-dropdown-menu', [MainMenuController::class, "SubMenuPage"])->middleware([TokenVerificationMiddleware::class]);
+    //Sub menu API
+    Route::post('/sub-menu-create', [MainMenuController::class, "SubMenuCreate"])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/sub-menu-list', [MainMenuController::class, "ListSubMenu"])->middleware([TokenVerificationMiddleware::class]);
+
 
     Route::get("/summary", [DashboardController::class, 'Summary'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/visitors", [DashboardController::class, 'VisitorCount'])->middleware([TokenVerificationMiddleware::class]);

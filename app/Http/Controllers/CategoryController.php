@@ -197,5 +197,29 @@ class CategoryController extends Controller
 
         return response()->json($Categories);
     }
+    public function CategoryFooter(){
+        $Categories = Category::take(5)->get();
+
+        return response()->json($Categories);
+    }
+    public function CategoryMainNav()
+    {
+        // Fetch first 4 main categories in one query
+        $mainCategories = MainCategory::take(4)->get();
+
+        // Create an array to store subcategories
+        $subCategories = [];
+
+        foreach ($mainCategories as $mainCategory) {
+            $subCategories[$mainCategory->id] = Category::where('main_category_id', $mainCategory->id)->take(5)->get();
+        }
+
+        return response()->json([
+            'mainCategories' => $mainCategories,
+            'subCategories'  => $subCategories,
+        ]);
+    }
+
+
     
 }
