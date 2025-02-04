@@ -56,6 +56,7 @@ Route::get('/product-category/{categoryName}', [ProductController::class, 'Categ
 // Route::get('/category-products', [ProductController::class, 'CategoryProducts']);
 Route::get('/category-footer', [CategoryController::class, 'CategoryFooter']);
 Route::get('/category-main-nav', [CategoryController::class, 'CategoryMainNav']);
+Route::get('/nav-menu', [CategoryController::class, 'MainNav']);
 
 //product details
 Route::get('/products/{id}', [ProductController::class, 'ProductDetails']);

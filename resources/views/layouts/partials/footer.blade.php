@@ -200,7 +200,7 @@
     async function getCategoryFooter(){
         let res = await axios.get('/category-footer');
 
-        console.log(res);
+        // console.log(res);
         res.data.forEach(function(item){
             let div = `
                 <li class="footer-nav-item">

@@ -1,5 +1,17 @@
    <!--- HEADER-->
+<style>
+    .menu-container {
+    display: flex; /* Aligns menu items horizontally */
+    list-style: none; /* Removes default list bullets */
+    padding: 0;
+    margin: 0;
+    gap: 20px; /* Space between menu items */
+}
 
+.menu-category {
+    position: relative !important;
+}
+</style>
    <header>
        <div class="header-top">
 
@@ -115,253 +127,12 @@
                            <a href="#" class="menu-title">Categories</a>
 
                            <div id="category-dropdown" class="dropdown-panel"></div>
-
-                           {{-- <div class="dropdown-panel">
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title" id="mainCategory1">
-                                       <a href="#">APPLE</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">MACBOOK</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">iPad</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Apple Watch</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">AirPods Pro</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Apple Vision Pro</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/apple.jpg') }}" alt="headphone collection"
-                                               width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title" id="mainCategory2">
-                                       <a href="#">HAVIT</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#"> USB CABLE</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Gaming MOUSE</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">KEYBOARD</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#"> Microphone</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Gamepad</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/havit.jpg') }}" alt="men's fashion" width="250"
-                                               height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title" id="mainCategory2">
-                                       <a href="#">Gedget</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Computer</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Laptop</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Gamepad</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Earbuds</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Watch</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/gedget.jpg') }}" alt="women's fashion"
-                                               width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                               <ul class="dropdown-panel-list">
-
-                                   <li class="menu-title" id="mainCategory2">
-                                       <a href="#">Electronics</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Smart Watch</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">𝗪𝗶𝗿𝗲𝗹𝗲𝘀𝘀 𝗦𝗽𝗲𝗮𝗸𝗲𝗿</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Keyboard</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Mouse</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">Microphone</a>
-                                   </li>
-
-                                   <li class="panel-list-item">
-                                       <a href="#">
-                                           <img src="{{ asset('images/electronics-banner-2.jpg') }}"
-                                               alt="mouse collection" width="250" height="119">
-                                       </a>
-                                   </li>
-
-                               </ul>
-
-                           </div> --}}
                        </li>
+                       {{-- main nav push --}}
+                       <span id="menuList" class="menu-container"></span>
+                        
 
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">MACBOOK</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Macbook Air M1</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Macbook Air M2</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Macbook Air M3</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Macbook Air M4</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Headphone</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Wear</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Wearless</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">EarBuds</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Earphone</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Gedget</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Gamepad</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Watch</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Speakers</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Charger</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       <li class="menu-category">
-                           <a href="#" class="menu-title">Computer</a>
-
-                           <ul class="dropdown-list">
-
-                               <li class="dropdown-item">
-                                   <a href="#">Keyboard</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Mouse</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">Monitor</a>
-                               </li>
-
-                               <li class="dropdown-item">
-                                   <a href="#">SSD</a>
-                               </li>
-
-                           </ul>
-                       </li>
-
-                       {{-- <li class="menu-category">
-                           <a href="#" class="menu-title">Blog</a>
-                       </li> --}}
-
-                       <li class="menu-category">
+                       <li class="menu-category menu-category-nav">
                            <a href="#HotOffers" class="menu-title">Hot Offers</a>
                        </li>
 
@@ -694,4 +465,55 @@
             })
             .catch(error => console.error("Error fetching categories:", error));
     });
+
+    
+    async function getNav() {
+        try {
+            let res = await axios.get('/nav-menu');
+
+            let menuList = $("#menuList");
+            menuList.html(''); // Clear previous menu items
+
+            let menuMap = {}; // To group submenus under their respective main menu
+
+            res.data.forEach(item => {
+                let mainMenuId = item['main_menu']['id'];
+                let mainMenuName = item['main_menu']['name'];
+                let subMenuName = item['name'];
+
+                // If main menu doesn't exist, create it
+                if (!menuMap[mainMenuId]) {
+                    menuMap[mainMenuId] = {
+                        name: mainMenuName,
+                        subMenus: []
+                    };
+                }
+                menuMap[mainMenuId].subMenus.push(subMenuName);
+            });
+
+            // Render the menu items
+            Object.values(menuMap).forEach(menu => {
+                let mainMenuLi = $(`
+                    <li class="menu-category">
+                        <a href="#" class="menu-title px-2">${menu.name}</a>
+                        <ul class="dropdown-list"></ul>
+                    </li>
+                `);
+
+                let dropdownList = mainMenuLi.find(".dropdown-list");
+
+                menu.subMenus.forEach(subMenu => {
+                    dropdownList.append(`<li class="dropdown-item"><a href="#">${subMenu}</a></li>`);
+                });
+
+                menuList.append(mainMenuLi);
+            });
+
+        } catch (error) {
+            console.error("Failed to fetch navigation menu:", error);
+            alert("Error loading menu. Please try again.");
+        }
+    }
+
+    getNav();
 </script>

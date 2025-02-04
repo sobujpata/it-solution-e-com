@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\MainCategory;
+use App\Models\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -218,6 +219,12 @@ class CategoryController extends Controller
             'mainCategories' => $mainCategories,
             'subCategories'  => $subCategories,
         ]);
+    }
+
+    public function MainNav(){
+        $data = SubMenu::with("main_menu")->get();
+
+        return response()->json($data);
     }
 
 

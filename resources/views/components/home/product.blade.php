@@ -348,7 +348,7 @@
         //Deal Of The Day
         try {
             let restDeal = await axios.get("deal-of-day");
-            console.log(restDeal);
+            // console.log(restDeal);
 
             // Clear existing items
             document.getElementById("dealOfDay").innerHTML = '';
