@@ -32,9 +32,9 @@
                 </span>
                 
             </div>
-            <button type="reset" id="sub-category-form" class="black-70-button">Clear Form</button>
-            <button onclick="Save()" class="black-button" >Publish Sub Category</button>
+            {{-- <button type="reset" id="sub-category-form" class="black-70-button">Clear Form</button> --}}
         </form>
+        <button onclick="Save()" class="black-button" >Publish Sub Category</button>
 
 
        

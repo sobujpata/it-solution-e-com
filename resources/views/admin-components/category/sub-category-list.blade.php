@@ -35,6 +35,7 @@
         showLoader();
         let res=await axios.get("/list-sub-category");
         hideLoader();
+        // console.log(res)
         let tableList=$("#tableList");
         let tableData=$("#tableData");
     
@@ -45,7 +46,7 @@
                         <td>${index+1}</td>
                         <td><img src="${item['categoryImg']}" style="width: 70px; height: 80px;" alt="No Image"/></td>
                         <td>${item['categoryName']}</td>
-                        <td>${item['main_category_id']}</td>
+                        <td>${item['main_category']['categoryName']}</td>
                         
                         <td>
                             <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }" style="padding:5px; background-color:black; border-radius:5px; color:white; ">

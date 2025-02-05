@@ -194,7 +194,7 @@ class CategoryController extends Controller
 
 
     public function SubCategoryList(){
-        $Categories = Category::get();
+        $Categories = Category::with('mainCategory')->get();
 
         return response()->json($Categories);
     }

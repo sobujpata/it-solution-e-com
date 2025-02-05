@@ -26,9 +26,9 @@
                 </span>
                 
             </div>
-            <button type="reset" id="sub-category-form" class="black-70-button">Clear Form</button>
-            <button onclick="Save()" class="black-button" >Publish Brand</button>
         </form>
+            {{-- <button type="reset" id="sub-category-form" class="black-70-button">Clear Form</button> --}}
+            <button onclick="Save()" class="black-button" >Publish Brand</button>
 
 
        
@@ -64,6 +64,7 @@
         if (res.status === 200) {
             successToast('Brand Created Successfully!');
             document.getElementById("save-form").reset();
+            window.location.href="/brand-list"
         } else {
             errorToast("Failed to Create brand");
         }

@@ -26,9 +26,9 @@
                 </span>
                 
             </div>
-            <button type="reset" id="main-category-form" class="black-70-button">Clear Form</button>
-            <button onclick="Save()" class="black-button" >Publish Main Category</button>
         </form>
+        {{-- <button type="reset" id="main-category-form" class="black-70-button">Clear Form</button> --}}
+        <button onclick="Save()" class="black-button" >Publish Main Category</button>
 
 
        
