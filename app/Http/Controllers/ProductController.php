@@ -252,6 +252,13 @@ class ProductController extends Controller
     }
 }
 
+    public function CartCount(Request $request){
+        $user_id = $request->header('id');
+        $data = ProductCart::where('user_id',$user_id)->count();
+
+        return response()->json($data);
+    }
+
 
 
 

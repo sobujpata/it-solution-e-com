@@ -103,6 +103,7 @@
     
                 if (response.status === 201 && response.data.status === 'success') {
                     successToast(response.data.message);
+                    await CountCart();
                 } else {
                     errorToast("Failed to add to cart. Please login.");
                     window.location.href = "/login";

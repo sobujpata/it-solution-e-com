@@ -1,3 +1,4 @@
+
 <div class="navigation">
     <ul>
         <!-- <li style="position: fixed; border-color: black;"> -->
@@ -11,7 +12,7 @@
         </li>
 
         <li>
-            <a href="{{url('/dashboard')}}">
+            <a class="{{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}" href="{{url('/dashboard')}}">
                 <span class="icon">
                     <ion-icon name="home-outline"></ion-icon>
                 </span>
@@ -20,7 +21,7 @@
         </li>
 
         <li>
-            <a href="{{ url('/orders') }}">
+            <a href="{{ url('/orders') }}" class="{{ Route::currentRouteName() == 'orders' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="gift-outline"></ion-icon>
                 </span>
@@ -29,7 +30,7 @@
         </li>
 
         <li>
-            <a href="{{ url('/customers') }}">
+            <a href="{{ url('/customers') }}" class="{{ Route::currentRouteName() == 'customers' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="people-outline"></ion-icon>
                 </span>
@@ -38,7 +39,7 @@
         </li>
 
         <li>
-            <a href="{{ url('/products-list') }}">
+            <a href="{{ url('/products-list') }}" class="{{ Route::currentRouteName() == 'products-list' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="cube-outline"></ion-icon>
                 </span>
@@ -46,17 +47,17 @@
             </a>
         </li>
 
-        <li>
+        {{-- <li>
             <a href="{{ url('/dashboard/product-add') }}">
                 <span class="icon">
                     <ion-icon name="add-circle-outline"></ion-icon>
                 </span>
                 <span class="title">Add Product</span>
             </a>
-        </li>
+        </li> --}}
 
         <li>
-            <a href="{{url('/main-category')}}">
+            <a href="{{url('/main-category')}}" class="{{ Route::currentRouteName() == 'main-category' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="add-circle-outline"></ion-icon>
                 </span>
@@ -64,7 +65,7 @@
             </a>
         </li> 
         <li>
-            <a href="{{url('/sub-category')}}">
+            <a href="{{url('/sub-category')}}" class="{{ Route::currentRouteName() == 'sub-category' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="add-circle-outline"></ion-icon>
                 </span>
@@ -72,7 +73,7 @@
             </a>
         </li> 
         <li>
-            <a href="{{url('/brand-list')}}">
+            <a href="{{url('/brand-list')}}" class="{{ Route::currentRouteName() == 'brand-list' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="add-circle-outline"></ion-icon>
                 </span>
@@ -81,7 +82,7 @@
         </li> 
 
         <li>
-            <a href="{{ url('/dashboard/setting') }}">
+            <a href="{{ url('/setting') }}" class="{{ Route::currentRouteName() == 'setting' ? 'active' : '' }}">
                 <span class="icon">
                     <ion-icon name="settings-outline"></ion-icon>
                 </span>

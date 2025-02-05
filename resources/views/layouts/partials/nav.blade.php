@@ -104,7 +104,7 @@
                        <a href="/cart">
                            <button class="action-btn">
                                <ion-icon name="bag-handle-outline"></ion-icon>
-                               <span class="count">0</span>
+                               <span class="count" id="countCart"></span>
                            </button>
                        </a>
                    </div>
@@ -390,7 +390,7 @@
                    <button class="action-btn">
                        <ion-icon name="bag-handle-outline"></ion-icon>
 
-                       <span class="count">10</span>
+                       <span class="count" id="countCartMobile"></span>
                    </button>
                </a>
                <a href='/'>
@@ -470,6 +470,7 @@
     async function getNav() {
         try {
             let res = await axios.get('/nav-menu');
+            
 
             let menuList = $("#menuList");
             menuList.html(''); // Clear previous menu items
@@ -513,7 +514,20 @@
             console.error("Failed to fetch navigation menu:", error);
             alert("Error loading menu. Please try again.");
         }
+
+        
     }
 
     getNav();
+
+
+    CountCart()
+    async function CountCart(){
+        let countRes = await axios.get('/cart-count');
+            // console.log(countRes.data)
+
+            document.getElementById('countCart').innerHTML=countRes.data;
+            document.getElementById('countCartMobile').innerHTML=countRes.data;
+    }
+
 </script>

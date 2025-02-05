@@ -97,7 +97,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body m-2 rounded-2" style="background-color:#f0f0f0">
                         {{-- <p><span>Subtotal:</span><span style="float:right;">150000</span></p> --}}
                     <p><span>Total:</span><span style="float:right;" id="total"></span></p>
                         <a href="{{ url('/payment-form') }}" class="btn btn-success w-100">Checkout</a>
@@ -109,24 +109,20 @@
     </div>
     <hr style="">
 </div>
-
 <script>
 async function CartList() {
     try {
-        showLoader(); // Display loader
+        showLoader(); // Show loader
         const res = await axios.get('/CartList');
         hideLoader(); // Hide loader
 
         const cartItems = res.data['data'];
-        const cartContainer = $("#byList");
-        // console.log(cartItems)
-        // Clear existing cart items
-        cartContainer.empty();
+        const cartContainer = $("#cartProduct"); 
+        cartContainer.empty(); // Clear previous items
 
-        // Handle empty cart
         if (cartItems.length === 0) {
             cartContainer.append('<tr><td colspan="5">Your cart is empty. Start shopping now!</td></tr>');
-            $("#total").text(0);
+            $("#total").text("0.00");
             return;
         }
 
@@ -135,14 +131,23 @@ async function CartList() {
             cartContainer.append(renderCartRow(item));
         });
 
-        // Calculate and display total price
+        // Update total price
         calculateTotal(cartItems);
 
-        // Attach remove-btn event listener
-        $(".remove-btn").on('click', function () {
+        // Delegate event listeners
+        $(document).on('click', '.remove-btn', function () {
             const productId = $(this).data('id');
-            console.log(productId);
             confirmRemoval(productId);
+        });
+
+        $(document).on('click', '.increment', function () {
+            const input = $(this).siblings('input');
+            updateQuantity(input, 1);
+        });
+
+        $(document).on('click', '.decrement', function () {
+            const input = $(this).siblings('input');
+            updateQuantity(input, -1);
         });
 
     } catch (error) {
@@ -152,64 +157,60 @@ async function CartList() {
     }
 }
 
-// Helper to render a cart row
+// Render cart row dynamically
 function renderCartRow(item) {
-    let div = `
-                  <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="row"> 
-                                    <div class="col-3 mb-2">
-                                        <img src="${item.product.image}" alt="" style="width: 60px; border-radius:7px;">
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <h5 style="float:left;">${item.product.title}</h5>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <strong>BDT ${item.price}</strong>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div> 
+    return `
+        <div class="card-body m-2 rounded-2" style="background-color:#f0f0f0">
+            <div class="row">
+                <div class="col-md-2 col-3">
+                    <img src="${item.product.image}" alt="" style="width: 65px; border-radius:6px;">
+                </div>
+                <div class="col-md-10 col-9">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h5 style="float:left;">${item.product.title}</h5>
+                                </div>
+                                <div class="col-sm-4">
+                                    <strong>BDT ${item.price}</strong>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h6 class="">Qty: ${item.qty}</h6>
-                                    </div>
-                                    <div class="col-6">
-                                        <a class="btn remove-btn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></a>
-                                    </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-9">
+                                    <button class="decrement btn btn-secondary">-</button>
+                                    <input type="text" name="quantity" value="${item.qty}" maxlength="2" max="10" size="1" class="quantity-input btn btn-info" style="width:40px !important;" data-id="${item.product_id}" readonly />
+                                    <button class="increment btn btn-secondary">+</button>
+                                </div>
+                                <div class="col-3">
+                                    <a class="btn remove-btn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>          
-        `;
-
-        // Append the constructed HTML to the /products/${item['id']}topRate2 element
-        document.getElementById("cartProduct").innerHTML += div;
-
-    
+                </div>
+                
+            </div>
+        </div>
+    `;
 }
 
-// Helper to calculate and display total price
+// Update total price
 function calculateTotal(cartItems) {
-    const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
-    $("#total").text(total.toFixed(2)); // Display total with 2 decimal points
+    const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price) * item.qty, 0);
+    $("#total").text(total.toFixed(2)); 
 }
 
-// Handle product removal
+// Confirm product removal
 async function confirmRemoval(productId) {
     if (confirm("Are you sure you want to remove this item?")) {
         await removeCartItem(productId);
     }
 }
 
-// Send a request to remove-btn the item from the cart
+// Remove product from cart
 async function removeCartItem(productId) {
     try {
         showLoader();
@@ -218,8 +219,7 @@ async function removeCartItem(productId) {
 
         if (res.status === 200) {
             successToast("Product removed from cart.");
-            await CartList(); // Refresh cart
-            window.location.href='/cart'
+            CartList(); // Refresh cart
         } else {
             errorToast("Failed to remove product. Please try again.");
         }
@@ -230,7 +230,25 @@ async function removeCartItem(productId) {
     }
 }
 
-// Initial call to load the cart
+// Update quantity and sync with backend
+async function updateQuantity(input, change) {
+    let currentQty = parseInt(input.val(), 10);
+    let newQty = currentQty + change;
+
+    if (newQty < 1 || newQty > 10) return;
+
+    input.val(newQty);
+
+    try {
+        const productId = input.data('id');
+        await axios.post(`/UpdateCartQuantity`, { product_id: productId, quantity: newQty });
+        CartList(); // Refresh cart
+    } catch (error) {
+        console.error("Failed to update quantity:", error);
+    }
+}
+
+// Initial call
 CartList();
 
 </script>

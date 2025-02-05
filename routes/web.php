@@ -98,7 +98,9 @@ Route::middleware(['user'])->group(function () {
     Route::post('/CreateCartList', [ProductController::class, 'CreateCartList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/CartList', [ProductController::class, 'CartList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCartList'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/cart-count', [ProductController::class, 'CartCount'])->middleware([TokenVerificationMiddleware::class]);
     
+
     //Wish API Route
     Route::post('/CreateWishList', [ProductController::class, 'WishlistCreate']);
     
@@ -123,14 +125,14 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'DashboardPage'])->middleware([TokenVerificationMiddleware::class]);
 
     //Dashboard Route
-    Route::get('/dashboard', [DashboardController::class, 'DashboardPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/dashboard', [DashboardController::class, 'DashboardPage'])->name('dashboard')->middleware([TokenVerificationMiddleware::class]);
 
-    Route::get('/products-list', [DashboardController::class, 'DashboardProductsPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/products-list', [DashboardController::class, 'DashboardProductsPage'])->name('products-list')->middleware([TokenVerificationMiddleware::class]);
     Route::get('/dashboard/product-add', [DashboardController::class, 'DashboardProductsAddPage'])->middleware([TokenVerificationMiddleware::class]);
-    Route::get('/dashboard/setting', [DashboardController::class, 'SettingPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/setting', [DashboardController::class, 'SettingPage'])->name('setting')->middleware([TokenVerificationMiddleware::class]);
 
     //customer Route
-    Route::get('customers', [DashboardController::class, 'DashboardCustomersPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('customers', [DashboardController::class, 'DashboardCustomersPage'])->name('customers')->middleware([TokenVerificationMiddleware::class]);
 
     // Customer API
     Route::get("/list-customer", [CustomerController::class, 'CustomerList'])->name('product.list')->middleware([TokenVerificationMiddleware::class]);
@@ -140,7 +142,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post("/customer-by-id", [CustomerController::class, 'CustomerByID'])->middleware([TokenVerificationMiddleware::class]);
 
     //Invoice Route
-    Route::get('/orders', [DashboardController::class, 'DashboardOrdersPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/orders', [DashboardController::class, 'DashboardOrdersPage'])->name('orders')->middleware([TokenVerificationMiddleware::class]);
     // Invoice API
     Route::post('/update-delivery-status', [InvoiceController::class, 'updateDeliveryStatus'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/list-invoice", [InvoiceController::class, 'InvoiceList'])->name('product.list')->middleware([TokenVerificationMiddleware::class]);
@@ -161,7 +163,9 @@ Route::middleware(['admin'])->group(function () {
 
     //Brand API
     Route::get("/list-brand", [BrandController::class, 'BrandList'])->middleware([TokenVerificationMiddleware::class]);
-    Route::get("/brand-list", [BrandController::class, 'BrandPage'])->middleware([TokenVerificationMiddleware::class]);
+    //brand Route
+    Route::get("/brand-list", [BrandController::class, 'BrandPage'])->name('brand-list')->middleware([TokenVerificationMiddleware::class]);
+    //brand API
     Route::get("/brand-add", [BrandController::class, 'BrandAddPage'])->middleware([TokenVerificationMiddleware::class]);
     Route::POST("/create-brand", [BrandController::class, 'BrandCreate'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/brand-edit", [BrandController::class, 'BrandEdit'])->middleware([TokenVerificationMiddleware::class]);
@@ -169,7 +173,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get("/brand-delete", [BrandController::class, 'BrandDelete'])->middleware([TokenVerificationMiddleware::class]);
 
     //main Category
-    Route::get("/main-category", [CategoryController::class, 'MainCategoryPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/main-category", [CategoryController::class, 'MainCategoryPage'])->name('main-category')->middleware([TokenVerificationMiddleware::class]);
     Route::get("/main-category-add", [CategoryController::class, 'MainCategoryAddPage'])->middleware([TokenVerificationMiddleware::class]);
     Route::POST("/create-main-category", [CategoryController::class, 'MainCategoryCreate'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/main-category-edit", [CategoryController::class, 'MainCategoryEdit'])->middleware([TokenVerificationMiddleware::class]);
@@ -177,7 +181,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get("/main-category-delete", [CategoryController::class, 'MainCategoryDelete'])->middleware([TokenVerificationMiddleware::class]);
 
     //Sub Category
-    Route::get("/sub-category", [CategoryController::class, 'SubCategoryPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/sub-category", [CategoryController::class, 'SubCategoryPage'])->name('sub-category')->middleware([TokenVerificationMiddleware::class]);
     Route::get("/sub-category-add", [CategoryController::class, 'SubCategoryAddPage'])->middleware([TokenVerificationMiddleware::class]);
     Route::POST("/create-sub-category", [CategoryController::class, 'SubCategoryCreate'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/sub-category-edit", [CategoryController::class, 'SubCategoryEdit'])->middleware([TokenVerificationMiddleware::class]);
