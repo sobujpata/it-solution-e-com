@@ -6,6 +6,35 @@
         }
     }
 </style>
+<style>
+    body {
+        font: 14px sans-serif;
+    }
+
+    .wrapper {
+        width: 360px;
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    input.form-control {
+        padding: 14px;
+    }
+    .password-wrapper {
+        position: relative;
+        /* display: inline-block; */
+    }
+    .toggle-icon {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -20,7 +49,11 @@
                             <input type="text" id="email" placeholder="Email Address" required class="form-control"/>
                         </div>
                         <div class="form-group mb-3">
-                            <input type="password" id="password" placeholder="Password" required class="form-control"/>
+                            <div class="password-wrapper">
+                                <input id="password" placeholder="Password" class="form-control" type="password"
+                                autofocus />
+                                <span id="togglePassword" class="toggle-icon">👁️</span>
+                            </div>
                         </div>
                     </form>
                     <button onclick="SubmitLogin()" class="login-btn btn btn-primary w-100">Next</button>
@@ -79,4 +112,19 @@
 
         }
     }
+</script>
+<script>
+    // Get password input and toggle icon
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+
+    // Add click event to toggle icon
+    togglePassword.addEventListener('click', function () {
+        // Toggle password visibility
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+
+        // Change icon (optional)
+        this.textContent = type === 'password' ? '👁️' : '🙈';
+    });
 </script>

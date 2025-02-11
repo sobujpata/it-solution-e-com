@@ -33,7 +33,7 @@ class InvoiceController extends Controller
         $products = ProductCart::where('user_id', $user_id)->with('product')->get();
         $total_product_price_r = ProductCart::where('user_id', $user_id)->sum('price');
         $total_product_price = round($total_product_price_r, 2);
-        $shipping_charge = round(40, 2);
+        $shipping_charge = round(00, 2);
         $total_pay = round($total_product_price + $shipping_charge, 2);
 
         $mainCategories = MainCategory::with('categories')->get();

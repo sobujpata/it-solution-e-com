@@ -84,7 +84,10 @@
     <!--- custom js link-->
     <!-- <script src="chat.js"></script> -->
     <script>
+        
         async function AddToCart() {
+            
+
             const p_id = document.getElementById('p_id').value;
             const p_color = document.getElementById('p_color').value;
             const p_qty = parseInt(document.getElementById('p_qty').value, 10);
@@ -103,7 +106,7 @@
     
                 if (response.status === 201 && response.data.status === 'success') {
                     successToast(response.data.message);
-                    await CountCart();
+                    // await CountCart();
                 } else {
                     errorToast("Failed to add to cart. Please login.");
                     window.location.href = "/login";
@@ -137,7 +140,11 @@
                 }
             }
         }
+        
+       
     </script>
+    
+    
 </body>
 
 </html>

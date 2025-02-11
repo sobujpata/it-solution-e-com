@@ -1,17 +1,34 @@
    <!--- HEADER-->
-<style>
-    .menu-container {
-    display: flex; /* Aligns menu items horizontally */
-    list-style: none; /* Removes default list bullets */
-    padding: 0;
-    margin: 0;
-    gap: 20px; /* Space between menu items */
-}
+   <style>
+       .menu-container {
+           display: flex;
+           /* Aligns menu items horizontally */
+           list-style: none;
+           /* Removes default list bullets */
+           padding: 0;
+           margin: 0;
+           gap: 20px;
+           /* Space between menu items */
+       }
 
-.menu-category {
-    position: relative !important;
-}
-</style>
+       .menu-category {
+           position: relative !important;
+       }
+   </style>
+   <script>
+    async function getCartCount() {
+        try {
+            // Include the user id in the headers if using the header approach:
+            const resCart = await axios.get('/cart-count');
+            document.getElementById('countCartDesktop').innerHTML = resCart.data;
+        } catch (error) {
+            console.error("Error fetching cart count:", error);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", getCartCount);
+
+    </script>
    <header>
        <div class="header-top">
 
@@ -99,12 +116,12 @@
 
                        <button class="action-btn">
                            <ion-icon name="heart-outline"></ion-icon>
-                           <span class="count">0</span>
+                           {{-- <span class="count" id="countCartDesktop">0</span> --}}
                        </button>
                        <a href="/cart">
                            <button class="action-btn">
                                <ion-icon name="bag-handle-outline"></ion-icon>
-                               <span class="count" id="countCart"></span>
+                               {{-- <span class="count"></span> --}}
                            </button>
                        </a>
                    </div>
@@ -112,7 +129,7 @@
                </div>
 
            </div>
-
+           
            <nav class="desktop-navigation-menu">
 
                <div class="container">
@@ -130,7 +147,7 @@
                        </li>
                        {{-- main nav push --}}
                        <span id="menuList" class="menu-container"></span>
-                        
+
 
                        <li class="menu-category menu-category-nav">
                            <a href="#HotOffers" class="menu-title">Hot Offers</a>
@@ -190,10 +207,14 @@
                    font-size: 36px;
                    margin-left: 50px;
                }
-
-               .mobile-hover-menu:hover {
-                   background-color: #A0C1B9;
+               .mobile-hover-menu{
+                padding:6px;
                }
+               .mobile-hover-menu:hover {
+                    background-color: #f7d9d9;
+                    border-radius: 8px;
+                    padding: 6px;
+                }
 
                @media screen and (max-height: 450px) {
                    .sidenav {
@@ -207,7 +228,7 @@
            </style>
            {{-- mobile side main menu bar --}}
            <div id="mySidenav" class="sidenav">
-               <div class="row">
+               <div class="row mb-3">
                    <div class="col-10">
                        <img src="{{ asset('images/logo/it-logo2.jpg') }}" alt="It Solution logo"
                            style="width: 150px; height:40px;">
@@ -217,56 +238,48 @@
                    </div>
                </div>
                <p class="mb-2 mobile-hover-menu ">
-                   <a href="/" class="text-dark">Home</a>
+                   <a href="/" class="text-dark ">Home</a>
                </p>
-               <p class="mb-2 mobile-hover-menu ">
+               <p class="mb-2 mobile-hover-menu">
                    <a data-bs-toggle="collapse" href="#collapse-category" role="button" aria-expanded="false"
                        aria-controls="collapse-category" class="text-dark">
                        Categories <span style="float:right;" class="text-bold">+</span>
                    </a>
                </p>
-               <div class="collapse" id="collapse-category">
-                   <ul>
-                       <li><a class="text-dark" href="">Category</a></li>
-                   </ul>
-               </div>
-               <p class="mb-2 mobile-hover-menu ">
-                   <a data-bs-toggle="collapse" href="#collapse-macbook" role="button" aria-expanded="false"
-                       aria-controls="collapse-macbook" class="text-dark">
-                       Macbook <span style="float:right;" class="text-bold">+</span>
-                   </a>
-               </p>
-               <div class="collapse" id="collapse-macbook">
-                   <ul>
-                       <li><a class="text-dark" href="">Macbook</a></li>
-                   </ul>
-               </div>
-               <p class="mb-2 mobile-hover-menu ">
-                   <a data-bs-toggle="collapse" href="#collapse-headphone" role="button" aria-expanded="false"
-                       aria-controls="collapse-headphone" class="text-dark">
-                       headphone <span style="float:right;" class="text-bold">+</span>
-                   </a>
-               </p>
-               <div class="collapse" id="collapse-headphone">
-                   <ul>
-                       <li><a class="text-dark" href="">Headphone</a></li>
-                   </ul>
-               </div>
-               <p class="mb-2 mobile-hover-menu ">
-                   <a data-bs-toggle="collapse" href="#collapse-gadget" role="button" aria-expanded="false"
-                       aria-controls="collapse-gadget" class="text-dark">
-                       Gadget <span style="float:right;" class="text-bold">+</span>
-                   </a>
-               </p>
-               <div class="collapse" id="collapse-gadget">
-                   <ul>
-                       <li><a class="text-dark" href="">Gadget</a></li>
-                   </ul>
-               </div>
-               <p class="mb-2 mobile-hover-menu ">
-                   <a href="/" class="text-dark">Blogs</a>
 
-               </p>
+               <div class="collapse" id="collapse-category">
+                @foreach ($mainCategories as $item)
+                   <ul>
+                        <li>
+                            <a data-bs-toggle="collapse" href="#sub-category-{{ $item->id }}" role="button" aria-expanded="false"
+                                aria-controls="sub-category-{{ $item->id }}" class="text-dark">
+                                {{ $item->categoryName }} <span style="float:right;" class="text-bold">+</span>
+                            </a>
+                            <div class="collapse" id="sub-category-{{ $item->id }}">
+                                @if ($item->categories->isNotEmpty())
+                                   <ul>
+                                       @foreach ($item->categories as $subcategory)
+                                           <li>
+                                                <a class="text-dark"
+                                                   href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }}
+                                                   <span style="float:right">300</span>
+                                                </a>
+                                            </li>
+                                       @endforeach
+                                   </ul>
+                               @else
+                                   <p>No subcategories available.</p>
+                               @endif
+                            </div>
+                        </li>
+                   </ul>
+                   @endforeach
+               </div>
+               <span id="menuListMobile" style="width:330px !important">
+               
+               
+
+            </span>
                <p class="mb-2 mobile-hover-menu ">
                    <a href="/" class="text-dark">Hot Offers</a>
                </p>
@@ -300,85 +313,92 @@
                </div>
                <!--- SIDEBAR-->
 
-                <div class="sidebar-category">
+               <div class="sidebar-category">
 
-                    <div class="sidebar-top">
-                        <h2 class="mt-4 mx-4">Product Categories</h2>
-                    </div>
+                   <div class="sidebar-top">
+                       <h2 class="mt-4 mx-4">Product Categories</h2>
+                   </div>
 
-                    <ul class="sidebar-menu-category-list" id="category-list">
-                        @foreach ($mainCategories as $item)
-                            <p>
-                                <a data-bs-toggle="collapse" href="#collapse-{{ $item->id }}" role="button" aria-expanded="false"
-                                    aria-controls="collapse-{{ $item->id }}" class="text-dark">
-                                    <span><img src="{{ asset($item->categoryImg) }}" alt="clothes" width="20" height="20"
-                                            class="menu-title-img"></span> {{ $item->categoryName }} <span style="float:right;"
-                                        class="text-bold">+</span>
-                                </a>
-                            </p>
-                            <div class="collapse" id="collapse-{{ $item->id }}">
-                                @if ($item->categories->isNotEmpty())
-                                    <ul>
-                                        @foreach ($item->categories as $subcategory)
-                                            <li><a class="text-dark" href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
-                                        @endforeach
-                                    </ul>
-                                @else
-                                    <p>No subcategories available.</p>
-                                @endif
-                            </div>
-                        @endforeach
-
-
-                    </ul>
-
-                </div>
-
-                <div class="product-showcase">
-
-                    <h3 class="showcase-heading">best sellers</h3>
-
-                    <div class="showcase-wrapper">
-
-                        <div class="showcase-container" id="BestSale">
-                            {{-- @dd($bestSale) --}}
-                            @foreach ($bestSale as $item)
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <a href="#" class="">
-                                                <img src="{{ asset($item->image) }}" alt="baby fabric shoes" width="75" height="75" class="showcase-img">
-                                            </a>
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="row">
-                                                <div class="col-12 text-left">
-                                                    <a href="#" class="p-0">
-                                                        {{ $item->title }}
-                                                    </a>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="price-box">
-                                                        <del>{{ $item->price }}</del>
-                                                        <p class="price">{{ $item->discount_price }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                            
-                        </div>
-                        <a href="#" style="text-align: right">See All</a>
-                    </div>
-
-                </div>
+                   <ul class="sidebar-menu-category-list" id="category-list">
+                       @foreach ($mainCategories as $item)
+                           <p>
+                               <a data-bs-toggle="collapse" href="#collapse-{{ $item->id }}" role="button"
+                                   aria-expanded="false" aria-controls="collapse-{{ $item->id }}"
+                                   class="text-dark">
+                                   <span><img src="{{ asset($item->categoryImg) }}" alt="clothes" width="20"
+                                           height="20" class="menu-title-img"></span> {{ $item->categoryName }}
+                                   <span style="float:right;" class="text-bold">+</span>
+                               </a>
+                           </p>
+                           <div class="collapse" id="collapse-{{ $item->id }}">
+                               @if ($item->categories->isNotEmpty())
+                                   <ul>
+                                       @foreach ($item->categories as $subcategory)
+                                           <li>
+                                                <a class="text-dark"
+                                                   href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }}
+                                                   <span style="float:right">300</span>
+                                                </a>
+                                            </li>
+                                       @endforeach
+                                   </ul>
+                               @else
+                                   <p>No subcategories available.</p>
+                               @endif
+                           </div>
+                       @endforeach
 
 
-               
+                   </ul>
+
+               </div>
+
+               <div class="product-showcase">
+
+                   <h3 class="showcase-heading">best sellers</h3>
+
+                   <div class="showcase-wrapper">
+
+                       <div class="showcase-container" id="BestSale">
+                           {{-- @dd($bestSale) --}}
+                           @foreach ($bestSale as $item)
+                               <div class="row">
+                                   <div class="col-12">
+                                       <div class="row">
+                                           <div class="col-4">
+                                               <a href="#" class="">
+                                                   <img src="{{ asset($item->image) }}" alt="baby fabric shoes"
+                                                       width="75" height="75" class="showcase-img">
+                                               </a>
+                                           </div>
+                                           <div class="col-8">
+                                               <div class="row">
+                                                   <div class="col-12 text-left">
+                                                       <a href="#" class="p-0">
+                                                           {{ $item->title }}
+                                                       </a>
+                                                   </div>
+                                                   <div class="col-12">
+                                                       <div class="price-box">
+                                                           <del>{{ $item->price }}</del>
+                                                           <p class="price">{{ $item->discount_price }}</p>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           @endforeach
+
+                       </div>
+                       <a href="#" style="text-align: right">See All</a>
+                   </div>
+
+               </div>
+
+
+
            </div>
 
            <div class="mobile-bottom-navigation">
@@ -390,7 +410,7 @@
                    <button class="action-btn">
                        <ion-icon name="bag-handle-outline"></ion-icon>
 
-                       <span class="count" id="countCartMobile"></span>
+                       {{-- <span class="count" id="countCartMobile"></span> --}}
                    </button>
                </a>
                <a href='/'>
@@ -403,7 +423,7 @@
                <button class="action-btn">
                    <ion-icon name="heart-outline"></ion-icon>
 
-                   <span class="count">0</span>
+                   {{-- <span class="count">0</span> --}}
                </button>
 
                <button class="action-btn" onclick="categorynNavOpen()">
@@ -420,6 +440,7 @@
        function openNav() {
            document.getElementById("mySidenav").style.width = "330px";
        }
+
        function categorynNavOpen() {
            document.getElementById("categoryManu").style.width = "330px";
        }
@@ -430,25 +451,25 @@
        }
    </script>
    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        axios.get("{{ url('/category-main-nav') }}")
-            .then(response => {
-                const data = response.data;
-                const categoryContainer = document.getElementById("category-dropdown");
-                categoryContainer.innerHTML = ""; // Clear previous data
+       document.addEventListener("DOMContentLoaded", function() {
+           axios.get("{{ url('/category-main-nav') }}")
+               .then(response => {
+                   const data = response.data;
+                   const categoryContainer = document.getElementById("category-dropdown");
+                   categoryContainer.innerHTML = ""; // Clear previous data
 
-                data.mainCategories.forEach(mainCategory => {
-                    let subCategoriesHtml = "";
+                   data.mainCategories.forEach(mainCategory => {
+                       let subCategoriesHtml = "";
 
-                    if (data.subCategories[mainCategory.id]) {
-                        data.subCategories[mainCategory.id].forEach(subCategory => {
-                            subCategoriesHtml += `<li class="panel-list-item">
+                       if (data.subCategories[mainCategory.id]) {
+                           data.subCategories[mainCategory.id].forEach(subCategory => {
+                               subCategoriesHtml += `<li class="panel-list-item">
                                 <a href="/product-category/${subCategory.categoryName}">${subCategory.categoryName}</a>
                             </li>`;
-                        });
-                    }
+                           });
+                       }
 
-                    categoryContainer.innerHTML += `
+                       categoryContainer.innerHTML += `
                         <ul class="dropdown-panel-list">
                             <li class="menu-title">
                                 <a href="#">${mainCategory.categoryName}</a>
@@ -461,73 +482,102 @@
                             </li>
                         </ul>
                     `;
-                });
-            })
-            .catch(error => console.error("Error fetching categories:", error));
-    });
+                   });
+               })
+               .catch(error => console.error("Error fetching categories:", error));
+       });
 
-    
-    async function getNav() {
-        try {
-            let res = await axios.get('/nav-menu');
-            
 
-            let menuList = $("#menuList");
-            menuList.html(''); // Clear previous menu items
+       async function getNav() {
+    try {
+        let res = await axios.get('/nav-menu');
 
-            let menuMap = {}; // To group submenus under their respective main menu
+        let menuList = $("#menuList");
+        menuList.html(''); // Clear previous menu items
+        let menuListMobile = $("#menuListMobile");
+        menuListMobile.html(''); // Clear previous menu items
 
-            res.data.forEach(item => {
-                let mainMenuId = item['main_menu']['id'];
-                let mainMenuName = item['main_menu']['name'];
-                let subMenuName = item['name'];
+        let menuMap = {}; // To group submenus under their respective main menu
 
-                // If main menu doesn't exist, create it
-                if (!menuMap[mainMenuId]) {
-                    menuMap[mainMenuId] = {
-                        name: mainMenuName,
-                        subMenus: []
-                    };
-                }
-                menuMap[mainMenuId].subMenus.push(subMenuName);
+        res.data.forEach(item => {
+            let mainMenuId = item['main_menu']['id'];
+            let mainMenuName = item['main_menu']['name'];
+            let subMenuName = item['name'];
+            let subMenuUrl = item['url'] || "#"; // Ensure a valid URL
+
+            // If main menu doesn't exist, create it
+            if (!menuMap[mainMenuId]) {
+                menuMap[mainMenuId] = {
+                    name: mainMenuName,
+                    subMenus: []
+                };
+            }
+            menuMap[mainMenuId].subMenus.push({ name: subMenuName, url: subMenuUrl });
+        });
+
+        // Render the desktop menu
+        Object.values(menuMap).forEach(menu => {
+            let mainMenuLi = $(`
+                <li class="menu-category">
+                    <a href="#" class="menu-title px-2">${menu.name}</a>
+                    <ul class="dropdown-list"></ul>
+                </li>
+            `);
+
+            let dropdownList = mainMenuLi.find(".dropdown-list");
+
+            menu.subMenus.forEach(subMenu => {
+                dropdownList.append(
+                    `<li class="dropdown-item"><a href="${subMenu.url}">${subMenu.name}</a></li>`
+                );
             });
 
-            // Render the menu items
-            Object.values(menuMap).forEach(menu => {
-                let mainMenuLi = $(`
-                    <li class="menu-category">
-                        <a href="#" class="menu-title px-2">${menu.name}</a>
+            menuList.append(mainMenuLi);
+        });
+
+        // Render the mobile menu
+        Object.values(menuMap).forEach(menu => {
+            let menuSlug = menu.name.replace(/\s+/g, '-').toLowerCase(); // Sanitize name for IDs
+            let mainMenuLiMobile = $(`
+                <li class="menu-category">
+                    <p class="mb-2 mobile-hover-menu">
+                        <a data-bs-toggle="collapse" href="#collapse-${menuSlug}" role="button" aria-expanded="false"
+                            aria-controls="collapse-${menuSlug}" class="text-dark">
+                            ${menu.name} <span style="float:right;" class="text-bold">+</span>
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapse-${menuSlug}">
                         <ul class="dropdown-list"></ul>
-                    </li>
-                `);
+                    </div>
+                </li>
+            `);
 
-                let dropdownList = mainMenuLi.find(".dropdown-list");
+            let dropdownList = mainMenuLiMobile.find(".dropdown-list");
 
-                menu.subMenus.forEach(subMenu => {
-                    dropdownList.append(`<li class="dropdown-item"><a href="#">${subMenu}</a></li>`);
-                });
-
-                menuList.append(mainMenuLi);
+            menu.subMenus.forEach(subMenu => {
+                dropdownList.append(
+                    `<li class="dropdown-item"><a href="${subMenu.url}" class="text-dark">${subMenu.name}</a></li>`
+                );
             });
 
-        } catch (error) {
-            console.error("Failed to fetch navigation menu:", error);
-            alert("Error loading menu. Please try again.");
-        }
+            menuListMobile.append(mainMenuLiMobile);
+        });
 
-        
+    } catch (error) {
+        console.error("Failed to fetch navigation menu:", error);
+        alert("Error loading menu. Please try again.");
     }
+}
 
-    getNav();
+getNav();
 
 
-    CountCart()
-    async function CountCart(){
-        let countRes = await axios.get('/cart-count');
-            // console.log(countRes.data)
 
-            document.getElementById('countCart').innerHTML=countRes.data;
-            document.getElementById('countCartMobile').innerHTML=countRes.data;
-    }
-
-</script>
+       async function getCartCount() {
+           let res = await axios.get('/cart-count');
+           // console.log(res)
+           // document.getElementById('countCart').innerHTML =res.data
+           // document.getElementById('countCartMobile').innerHTML =res.data
+       }
+       getCartCount()
+   </script>

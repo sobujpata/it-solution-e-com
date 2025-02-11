@@ -1,4 +1,3 @@
-
 <!--- MODAL-->
 <div class="modal" data-modal>
 

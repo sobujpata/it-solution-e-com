@@ -252,12 +252,19 @@ class ProductController extends Controller
     }
 }
 
-    public function CartCount(Request $request){
+public function CartCount(Request $request) {
+    try {
         $user_id = $request->header('id');
-        $data = ProductCart::where('user_id',$user_id)->count();
-
+        if (!$user_id) {
+            return response()->json(['error' => 'User ID header is missing'], 400);
+        }
+        $data = ProductCart::where('user_id', $user_id)->count();
         return response()->json($data);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'An error occurred'], 500);
     }
+}
+
 
 
 
@@ -500,6 +507,96 @@ class ProductController extends Controller
             // Return error response
             return redirect()->back()->with('error', 'Failed to delete product. Please try again later.');
         }
+    }
+
+
+    //Deal of the day list
+    public function DealOfTheDayPage(){
+        return view("admin-page.deal-of-day");
+    }
+    public function DealOfTheDayAddPage(){
+        $products = Product::all();
+        return view("admin-page.deal-of-day-add", compact('products'));
+    }
+    public function DealOfTheDayCreate(Request $request){
+        $dealsProductId = $request->input('dealsProductId');
+        $soldQty = $request->input('soldQty');
+        $OfferUpTo = $request->input('OfferUpTo');
+        // Prepare File Name & Path
+        $img = $request->file('img1');
+        $t = time();
+        $file_name = $img->getClientOriginalName();
+        $img_name = "{$t}-{$file_name}";
+        $img_url = "deal-of-the-day/{$img_name}";
+
+        // Upload File to the 'deal-of-the-day' folder in public
+        $img->move(public_path('deal-of-the-day'), $img_name);
+        DealOfDay::create([
+            'product_id'=>$dealsProductId,
+            'sold'=>$soldQty,
+            'count_down'=>$OfferUpTo,
+            'image_url'=>$img_url
+        ]);
+        return response()->json([
+            'status'=>"success",
+            'message'=>"Successfully Created",
+        ]);
+    }
+
+    public function DealOfTheDayList(){
+        $deals = DealOfDay::with('products')->get();
+
+        return response()->json($deals);
+    }
+    public function DealOfTheDayEdit(Request $request){
+        $id = $request->query('id');
+        $deals = DealOfDay::with('products')->findOrFail($id);
+        $products = Product::all();
+
+        return view("admin-page.deal-of-day-edit", compact('deals','products'));
+    }
+    public function DealOfTheDayUpdate(Request $request){
+        
+        $id = $request->input('id');
+        $dealsProductId = $request->input('dealsProductId');
+        $soldQty = $request->input('soldQty');
+        $OfferUpTo = $request->input('OfferUpTo');
+        $img = $request->file('img1');
+
+        if($img){
+            $t = time();
+            $file_name = $img->getClientOriginalName();
+            $img_name = "{$t}-{$file_name}";
+            $img_url = "deal-of-the-day/{$img_name}";
+
+            // Upload File to the 'deal-of-the-day' folder in public
+            $img->move(public_path('deal-of-the-day'), $img_name);
+            $dealOfDay=dealOfDay::where('id', $id)->update([
+                'product_id'=>$dealsProductId,
+                'sold'=>$soldQty,
+                'count_down'=>$OfferUpTo,
+                'image_url'=>$img_url
+            ]);
+            return response()->json($dealOfDay);
+
+        }else{
+            $dealOfDay=dealOfDay::where('id', $id)->update([
+                'product_id'=>$dealsProductId,
+                'sold'=>$soldQty,
+                'count_down'=>$OfferUpTo,
+            ]);
+            return response()->json($dealOfDay);
+        }
+    }
+
+    public function DealOfTheDayDelete(Request $request){
+        $id = $request->query('id');
+        $imagePath= $request->query('imgPath');
+
+        File::delete($imagePath);
+        DealOfDay::where('id',$id)->delete();
+
+        return redirect()->back()->with('message', 'Deal Of the day Deleted');
     }
 
 

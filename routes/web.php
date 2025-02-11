@@ -188,6 +188,16 @@ Route::middleware(['admin'])->group(function () {
     Route::post("/update-sub-category", [CategoryController::class, 'SubCategoryUpdate'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/sub-category-delete", [CategoryController::class, 'SubCategoryDelete'])->middleware([TokenVerificationMiddleware::class]);
     
+    //Deal of the day Route
+    Route::get("/deal-of-the-day-admin", [ProductController::class, 'DealOfTheDayPage'])->name('deal-of-the-day')->middleware([TokenVerificationMiddleware::class]);
+    //Deal of the day API
+    Route::get("/deal-of-the-day-list", [ProductController::class, 'DealOfTheDayList'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/deal-of-the-day-add", [ProductController::class, 'DealOfTheDayAddPage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::POST("/create-deal-of-the-day", [ProductController::class, 'DealOfTheDayCreate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/deal-of-the-day-edit", [ProductController::class, 'DealOfTheDayEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-deal-of-the-day", [ProductController::class, 'DealOfTheDayUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/deal-of-the-day-delete", [ProductController::class, 'DealOfTheDayDelete'])->middleware([TokenVerificationMiddleware::class]);
+    
     //Main menu Route
     Route::get("/add-main-menu", [MainMenuController::class, 'MainMenuPage'])->middleware([TokenVerificationMiddleware::class]);
     //main menu API

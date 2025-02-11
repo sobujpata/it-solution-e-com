@@ -47,15 +47,6 @@
             </a>
         </li>
 
-        {{-- <li>
-            <a href="{{ url('/dashboard/product-add') }}">
-                <span class="icon">
-                    <ion-icon name="add-circle-outline"></ion-icon>
-                </span>
-                <span class="title">Add Product</span>
-            </a>
-        </li> --}}
-
         <li>
             <a href="{{url('/main-category')}}" class="{{ Route::currentRouteName() == 'main-category' ? 'active' : '' }}">
                 <span class="icon">
@@ -78,6 +69,14 @@
                     <ion-icon name="add-circle-outline"></ion-icon>
                 </span>
                 <span class="title">Brand</span>
+            </a>
+        </li> 
+        <li>
+            <a href="{{url('/deal-of-the-day-admin')}}" class="{{ Route::currentRouteName() == 'deal-of-the-day' ? 'active' : '' }}">
+                <span class="icon">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                </span>
+                <span class="title">Deal Of The Day</span>
             </a>
         </li> 
 
