@@ -21,21 +21,9 @@
 
             <!--- CTA-->
 
-            <div class="cta-container">
+            <div class="cta-container" id="offerCard">
 
-                <img src="{{ asset('images/laptop/rok1.jpg') }}" alt="summer collection" class="cta-banner">
-
-                <a href="#" class="cta-content">
-
-                    <p class="discount">25% Discount</p>
-
-                    <h2 class="cta-title">Summer collection</h2>
-
-                    <p class="cta-text">Starting @ $10</p>
-
-                    <button class="cta-btn">Shop now</button>
-
-                </a>
+                
 
             </div>
 
@@ -75,21 +63,21 @@
             testimonialHTML += `
                        <div class="testimonial-card">
 
-                    <img src="${item['image']}" alt="${item['name']}" class="testimonial-banner"
-                        width="80" height="80">
+                        <img src="${item['image']}" alt="${item['name']}" class="testimonial-banner"
+                            width="80" height="80">
 
-                    <p class="testimonial-name">${item['name']}</p>
+                        <p class="testimonial-name">${item['name']}</p>
 
-                    <p class="testimonial-title">${item['position']}</p>
+                        <p class="testimonial-title">${item['position']}</p>
 
-                    <img src="${item['icon']}" alt="quotation" class="quotation-img"
-                        width="26">
+                        <img src="${item['icon']}" alt="quotation" class="quotation-img"
+                            width="26">
 
-                    <p class="testimonial-desc">
-                        ${item['testimonial']}
-                    </p>
+                        <p class="testimonial-desc">
+                            ${item['testimonial']}
+                        </p>
 
-                </div>
+                    </div>
                     `;
                 });
 
@@ -98,6 +86,38 @@
             
         } catch (error) {
             console.error('Error loading Testimonial:', error);
+        }
+        try {
+            let resOfferCard = await axios.get("/offer-card-home");
+            console.log(resOfferCard)
+            // Clear existing items
+            document.getElementById("offerCard").innerHTML = '';
+
+            let offerHTML = '';
+            resOfferCard.data.forEach(function(item) {
+            
+            offerHTML += `                       
+                    <img src="${item['image']}" alt="${item['title']}" class="cta-banner">
+
+                    <a href="{{ url('/products-remark/Special') }}" class="cta-content">
+
+                        <p class="discount">${item['discount']}</p>
+
+                        <h2 class="cta-title">${item['title']}</h2>
+
+                        <p class="cta-text">${item['short_des']}</p>
+
+                        <button class="cta-btn">Shop now</button>
+
+                    </a>
+                    `;
+                });
+
+            // Insert into DOM
+            document.getElementById("offerCard").innerHTML = offerHTML;
+            
+        } catch (error) {
+            console.error('Error loading offer card:', error);
         }
         try {
             let ressservices = await axios.get("services");

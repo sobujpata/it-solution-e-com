@@ -16,5 +16,5 @@
         @include('components.home.testimonial')
 
         <!--- BLOG-->
-        @include('components.home.blog')
+        {{-- @include('components.home.blog') --}}
 @endsection

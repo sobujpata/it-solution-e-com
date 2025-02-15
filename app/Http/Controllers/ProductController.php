@@ -9,6 +9,7 @@ use App\Models\ProductCart;
 use App\Models\MainCategory;
 use Illuminate\Http\Request;
 use App\Models\ProductDetail;
+use App\Models\ProductSlider;
 use App\Helper\ResponseHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +17,15 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+     //Deal of the day list
+     public function DealOfTheDayPage(){
+        return view("admin-page.deal-of-day");
+    }
+
+    //Product slider
+    public function productSliderPage(){
+        return view('admin-page.product-slider');
+    }
 
     public function bestSale()
     {
@@ -211,59 +221,59 @@ class ProductController extends Controller
     }
 
     public function CartList(Request $request)
-{
-    try {
-        // Validate user_id header
-        $user_id = $request->header('id');
-        if (!$user_id) {
+    {
+        try {
+            // Validate user_id header
+            $user_id = $request->header('id');
+            if (!$user_id) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User ID is required.',
+                ], 400);
+            }
+
+            // Fetch cart items with product details
+            $data = ProductCart::where('user_id', $user_id)
+                ->with(['product:id,title,image,price']) // Optimize query with selected fields
+                ->get();
+
+            // Check if the cart is empty
+            if ($data->isEmpty()) {
+                return response()->json([
+                    'data' => [],
+                    'status' => 'success',
+                    'message' => 'Your cart is empty. Start shopping now!',
+                ], 200);
+            }
+
+            // Return cart items
+            return response()->json([
+                'data' => $data,
+                'status' => 'success',
+            ], 200);
+        } catch (\Exception $e) {
+            // Log the error and return a generic message
+            // \Log::error('CartList Error: ' . $e->getMessage());
+
             return response()->json([
                 'status' => 'error',
-                'message' => 'User ID is required.',
-            ], 400);
+                'message' => 'Failed to fetch cart items. Please try again later.',
+            ], 500);
         }
-
-        // Fetch cart items with product details
-        $data = ProductCart::where('user_id', $user_id)
-            ->with(['product:id,title,image,price']) // Optimize query with selected fields
-            ->get();
-
-        // Check if the cart is empty
-        if ($data->isEmpty()) {
-            return response()->json([
-                'data' => [],
-                'status' => 'success',
-                'message' => 'Your cart is empty. Start shopping now!',
-            ], 200);
-        }
-
-        // Return cart items
-        return response()->json([
-            'data' => $data,
-            'status' => 'success',
-        ], 200);
-    } catch (\Exception $e) {
-        // Log the error and return a generic message
-        // \Log::error('CartList Error: ' . $e->getMessage());
-
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Failed to fetch cart items. Please try again later.',
-        ], 500);
     }
-}
 
-public function CartCount(Request $request) {
-    try {
-        $user_id = $request->header('id');
-        if (!$user_id) {
-            return response()->json(['error' => 'User ID header is missing'], 400);
+    public function CartCount(Request $request) {
+        try {
+            $user_id = $request->header('id');
+            if (!$user_id) {
+                return response()->json(['error' => 'User ID header is missing'], 400);
+            }
+            $data = ProductCart::where('user_id', $user_id)->count();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred'], 500);
         }
-        $data = ProductCart::where('user_id', $user_id)->count();
-        return response()->json($data);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'An error occurred'], 500);
     }
-}
 
 
 
@@ -293,7 +303,7 @@ public function CartCount(Request $request) {
                 'brand_id' => 'required|numeric',
                 'color' => 'required|string|max:255',
                 'size' => 'required|string|max:255',
-                'img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
+                'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
                 'img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
                 'img3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
                 'img4' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
@@ -510,10 +520,7 @@ public function CartCount(Request $request) {
     }
 
 
-    //Deal of the day list
-    public function DealOfTheDayPage(){
-        return view("admin-page.deal-of-day");
-    }
+   
     public function DealOfTheDayAddPage(){
         $products = Product::all();
         return view("admin-page.deal-of-day-add", compact('products'));
@@ -597,6 +604,96 @@ public function CartCount(Request $request) {
         DealOfDay::where('id',$id)->delete();
 
         return redirect()->back()->with('message', 'Deal Of the day Deleted');
+    }
+
+    public function productSliderList(){
+        $data = ProductSlider::all();
+
+        return response()->json($data);
+    }
+
+    public function productSliderCreate(Request $request){
+        $title = $request->input('title');
+        $short_des = $request->input('short_des');
+        $price = $request->input('price');
+        $product_id = $request->input('product_id');
+        $image = $request->file('image');
+
+        $t = time();
+        $file_name = $image->getClientOriginalName();
+        $image_name = "{$t}-{$file_name}";
+        $image_url = "banners/{$image_name}";
+
+        $image->move(public_path("banners"), $image_name);
+
+        ProductSlider::create([
+            'title'=>$title,
+            'short_des'=>$short_des,
+            'price'=>$price,
+            'product_id'=>$product_id,
+            'image'=>$image_url,
+        ]);
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Create successfully.',
+        ], 201);
+
+    }
+
+    public function productSliderEdit(Request $request){
+        $id = $request->query('id');
+
+        $slider = ProductSlider::find($id);
+
+        $products = Product::all();
+
+        return view('admin-page.product-slider-edit', compact('slider', 'products'));
+    }
+
+    function productSliderUpdate(Request $request){
+        $id = $request->input('id');
+        $title = $request->input('title');
+        $short_des = $request->input('short_des');
+        $price = $request->input('price');
+        $product_id = $request->input('product_id');
+        $image = $request->file('image');
+
+        if($image){
+            $t = time();
+            $file_name = $image->getClientOriginalName();
+            $image_name = "{$t}-{$file_name}";
+            $image_url = "banners/{$image_name}";
+
+            // Upload File to the 'banners' folder in public
+            $image->move(public_path('banners'), $image_name);
+            $slider=ProductSlider::where('id', $id)->update([
+                'title'=>$title,
+                'short_des'=>$short_des,
+                'price'=>$price,
+                'product_id'=>$product_id,
+                'image'=>$image_url
+            ]);
+            return response()->json($slider);
+
+        }else{
+            $slider=ProductSlider::where('id', $id)->update([
+                'title'=>$title,
+                'short_des'=>$short_des,
+                'price'=>$price,
+                'product_id'=>$product_id,
+            ]);
+            return response()->json($slider);
+        }
+    }
+
+    function productSliderDelete(Request $request){
+        $id = $request->query('id');
+        $image = $request->query('imgPath');
+
+        File::delete($image);
+        ProductSlider::where('id',$id)->delete();
+
+        return redirect()->back()->with('message', 'Slider Deleted');
     }
 
 

@@ -150,7 +150,7 @@
 
 
                        <li class="menu-category menu-category-nav">
-                           <a href="#HotOffers" class="menu-title">Hot Offers</a>
+                           <a href="{{ url('/products-remark/Special') }}" class="menu-title">Hot Offers</a>
                        </li>
 
                        @if (Cookie::get('token') !== null)
@@ -281,7 +281,7 @@
 
             </span>
                <p class="mb-2 mobile-hover-menu ">
-                   <a href="/" class="text-dark">Hot Offers</a>
+                   <a href="{{ url('/products-remark/Special') }}" class="text-dark">Hot Offers</a>
                </p>
 
                @if (Cookie::get('token') !== null)

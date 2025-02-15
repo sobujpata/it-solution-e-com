@@ -3,49 +3,41 @@
 
     <div class="addProduct">
         <div class="head-newProduct">
-            <h1>Add a New Sub Menu</h1>
-            <button type="button" class="black-70-button"><a href="{{ url('/add-main-menu') }}" style="color:#fff;">Add Main Menu</a></button>
-
+            <h1><u>Add a New Service</u></h1>
         </div>
         <form id="save-form">
             
             <div class="input-grid">
                 <span>
-                    <p>Sub Name*</p>
-                    <input id="subMenu" class="subMenu" type="text" placeholder="Menu Name">
+                    <p>Title*</p>
+                    <input id="title" class="title" type="text" placeholder="Title">
                 </span>
                 <span>
-                    <p>Main Menu*</p>
-                    <select id="mainMenuId" class="mainMenuId" type="text" style="width: 100%; height: 35px;">
-                        <option value="">Select Category</option>
-                        
-                    </select>
+                    <p>Short Des*</p>
+                    <input id="short_des" class="short_des" type="text" placeholder="Short des">
+                </span>
+                <span>
+                    <p>Icon class*</p>
+                    <input id="icon" class="icon" type="text" placeholder="Short des">
                 </span>
                 
             </div>
-            <button type="reset" id="menu-form" class="black-70-button">Clear Form</button>
-            <button onclick="SaveMenu()" class="black-button" >Publish menu</button>
         </form>
+        <button onclick="SaveForm()" class="black-button" >Publish menu</button>
+        <br>
         <br>
         <hr>
         <div class="head-newProduct" class="">
-            <h1><u>Main Menu List</u></h1>
+            <h1><u>Service List</u></h1>
         </div>
-        <br>
-        @if(Session::has('error'))
-         <p style="background-color:red; color:white; padding: 10px; border-radius: 5px;">{{ Session::get('error') }}</p>
-        @endif
-        @if(Session::has('message'))
-         <p style="background-color:rgb(21, 136, 243); color:rgb(26, 23, 23); padding: 10px; border-radius: 5px;">{{ Session::get('message') }}</p>
-        @endif
         <br>
         <table id="tableData" width="100%">
             <thead>
                 <tr>
                     <th>Ser No</th>
-                    <th>Sub Menu Name</th>
-                    <th>Menu Name</th>
-                    <th>Created At</th>
+                    <th>Title</th>
+                    <th>Short Des</th>
+                    <th>Icon class</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -62,49 +54,38 @@
 </div>
 
 <script>
-    FillCategoryDropDown();
-
-    async function FillCategoryDropDown(){
-        // showLoader();
-        let res = await axios.get("/menu-list")
-
-        // console.log(res);
-        res.data.forEach(function (item,i) {
-            let option=`<option value="${item['id']}">${item['name']}</option>`
-            $("#mainMenuId").append(option);
-        })
+    async function SaveForm() {
+        let title = document.getElementById('title').value;
+        let short_des = document.getElementById('short_des').value;
+        let icon = document.getElementById('icon').value;
         
-
-        hideLoader()
-    }
-    async function SaveMenu() {
-        let subMenu = document.getElementById('subMenu').value;
-        let mainMenuId = document.getElementById('mainMenuId').value;
-        
-        if (!subMenu) return errorToast("Menu is Required!");
-        if (!mainMenuId) return errorToast("Main Menu is Required!");
+        if (!title) return errorToast("Title is Required!");
+        if (!short_des) return errorToast("short_des is Required!");
+        if (!icon) return errorToast("icon is Required!");
         
 
         
         let formData = new FormData();
-        formData.append('name', subMenu);
-        formData.append('main_menu_id', mainMenuId);
+        formData.append('title', title);
+        formData.append('short_des', short_des);
+        formData.append('icon', icon);
         
 
         // console.log([...formData.entries()]); // Debugging formData
 
         try {
             showLoader();
-            let res = await axios.post("/sub-menu-create", formData, {
+            let res = await axios.post("/create-services-setting", formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             console.log(res)
             hideLoader();
             if (res.status === 201) {
-                successToast('Sub Menu Created Successfully!');
+                successToast('Service Created Successfully!');
                 document.getElementById("save-form").reset();
+                getService();
             } else {
-                errorToast("Failed to Create menu");
+                errorToast("Failed to Create Service");
             }
         } catch (error) {
             hideLoader();
@@ -112,14 +93,15 @@
                 errorToast("Server Error: " + error.response.data.message);
             } else {
                 errorToast("An Error Occurred: " + error.message);
+
             }
         }
     }
-    async function getListMenu(){
+    async function getService(){
         showLoader();
-        let res = await axios.get("/sub-menu-list");
+        let res = await axios.get("/services-setting-list");
         hideLoader();
-        // console.log(res);
+        console.log(res);
 
         let tableList=$("#tableList");
         let tableData=$("#tableData");
@@ -127,11 +109,12 @@
         tableData.DataTable().destroy();
         tableList.empty();
         res.data.forEach(function (item,index) {
+            
             let row = `<tr>
                         <td>${index+1}</td>
-                        <td>${item['name']}</td>
-                        <td>${item['main_menu']["name"]}</td>
-                        <td>${item['created_at']}</td>
+                        <td>${item['title']}</td>
+                        <td>${item['short_des']}</td>
+                        <td>${item['icon']}</td>
                         <td>
                             <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }" style="padding:5px; background-color:black; border-radius:5px; color:white; ">
                                 <i class="fa-solid fa-pen"></i>
@@ -145,22 +128,22 @@
         document.querySelectorAll('.editBtn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
-                window.location.href = `/sub-edit?id=${id}`;
+                window.location.href = `/services-setting-edit?id=${id}`;
             });
         });
     
         document.querySelectorAll('.deleteBtn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
-                window.location.href = `/sub-delete?id=${id}`;
+                window.location.href = `/services-setting-delete?id=${id}`;
             });
         });
     
         new DataTable('#tableData',{
-            // order:[[0,'desc']],
+            order:[[0,'desc']],
             lengthMenu:[20,30,50,100,500]
         });
     }
-    getListMenu();
+    getService();
 
 </script>

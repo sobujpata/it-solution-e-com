@@ -46,6 +46,14 @@
                 <span class="title">Products</span>
             </a>
         </li>
+        <li>
+            <a href="{{ url('/product-slider-admin') }}" class="{{ Route::currentRouteName() == 'product-slider-admin' ? 'active' : '' }}">
+                <span class="icon">
+                    <ion-icon name="cube-outline"></ion-icon>
+                </span>
+                <span class="title">Product Slider</span>
+            </a>
+        </li>
 
         <li>
             <a href="{{url('/main-category')}}" class="{{ Route::currentRouteName() == 'main-category' ? 'active' : '' }}">

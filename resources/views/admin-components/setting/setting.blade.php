@@ -2,15 +2,56 @@
 <div class="productCardBox">
 
     <div class="card">
-        <div>
-            <div class="numbers">
-                <a href="{{ url('/add-main-menu') }}">Add Main Menu</a>
+        <a href="{{ url('/add-main-menu') }}">
+            <div>
+                <div class="numbers">
+                    Menu Setting
+                </div>
             </div>
-        </div>
 
-        <div class="iconBx">
-            <ion-icon name="help-outline"></ion-icon>
-        </div>
+            <div class="iconBx">
+                <ion-icon name="help-outline"></ion-icon>
+            </div>
+        </a>
+    </div>
+    <div class="card">
+        <a href="{{ url('/offer-card') }}">
+            <div>
+                <div class="numbers">
+                    Offer Card
+                </div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="help-outline"></ion-icon>
+            </div>
+        </a>
+    </div>
+    <div class="card">
+        <a href="{{ url('/services-setting') }}">
+            <div>
+                <div class="numbers">
+                    Service Setting
+                </div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="help-outline"></ion-icon>
+            </div>
+        </a>
+    </div>
+    <div class="card">
+        <a href="{{ url('/testimonial-setting') }}">
+            <div>
+                <div class="numbers">
+                    Testimonial Setting
+                </div>
+            </div>
+
+            <div class="iconBx">
+                <ion-icon name="help-outline"></ion-icon>
+            </div>
+        </a>
     </div>
 
     <div class="card">

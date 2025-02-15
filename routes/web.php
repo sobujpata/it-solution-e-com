@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MainMenuController;
+use App\Http\Controllers\OfferCardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TestimonialController;
@@ -63,6 +64,7 @@ Route::get('/products/{id}', [ProductController::class, 'ProductDetails']);
 
 Route::get('/products-remark/{remark}', [ProductController::class, 'ProductRemark'])->name('product.remark');
 
+Route::get('/offer-card-home', [OfferCardController::class, 'OfferCardHome']);
 Route::get('/testimonial', [TestimonialController::class, 'Testimonial']);
 
 Route::get('/services', [ServiceController::class, 'index']);
@@ -198,18 +200,58 @@ Route::middleware(['admin'])->group(function () {
     Route::post("/update-deal-of-the-day", [ProductController::class, 'DealOfTheDayUpdate'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/deal-of-the-day-delete", [ProductController::class, 'DealOfTheDayDelete'])->middleware([TokenVerificationMiddleware::class]);
     
+    //Product slide Route
+    Route::get("/product-slider-admin", [ProductController::class, 'productSliderPage'])->name('product-slider')->middleware([TokenVerificationMiddleware::class]);
+    //Product slide API
+    Route::get("/product-slider-list", [ProductController::class, 'productSliderList'])->middleware([TokenVerificationMiddleware::class]);
+    Route::POST("/create-product-slider", [ProductController::class, 'productSliderCreate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/product-slider-edit", [ProductController::class, 'productSliderEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-product-slider", [ProductController::class, 'productSliderUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/product-slider-delete", [ProductController::class, 'productSliderDelete'])->middleware([TokenVerificationMiddleware::class]);
+    
+    //Product slide Route
+    Route::get("/services-setting", [ServiceController::class, 'ServicesPage'])->name('services-setting')->middleware([TokenVerificationMiddleware::class]);
+    //Product slide API
+    Route::get("/services-setting-list", [ServiceController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
+    Route::POST("/create-services-setting", [ServiceController::class, 'ServicesCreate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/services-setting-edit", [ServiceController::class, 'ServicesEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-services-setting", [ServiceController::class, 'ServicesUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/services-setting-delete", [ServiceController::class, 'ServicesDelete'])->middleware([TokenVerificationMiddleware::class]);
+    
+    //offer card Route
+    Route::get("/offer-card", [OfferCardController::class, 'index'])->name('offer-card')->middleware([TokenVerificationMiddleware::class]);
+    //offer card API
+    Route::get("/offer-card-list", [OfferCardController::class, 'OfferList'])->middleware([TokenVerificationMiddleware::class]);
+    Route::POST("/create-offer-card", [OfferCardController::class, 'OfferCardCreate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/offer-card-edit", [OfferCardController::class, 'OfferCardEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-offer-card", [OfferCardController::class, 'OfferCardUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/offer-card-delete", [OfferCardController::class, 'OfferCardDelete'])->middleware([TokenVerificationMiddleware::class]);
+    
+    //Testimonial Route
+    Route::get("/testimonial-setting", [TestimonialController::class, 'testimonialPage'])->name('testimonial-setting')->middleware([TokenVerificationMiddleware::class]);
+    //Testimonial API
+    Route::get("/testimonial-setting-list", [TestimonialController::class, 'Testimonial'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/testimonial-setting-edit", [TestimonialController::class, 'testimonialEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-testimonial-setting", [TestimonialController::class, 'testimonialUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    
     //Main menu Route
     Route::get("/add-main-menu", [MainMenuController::class, 'MainMenuPage'])->middleware([TokenVerificationMiddleware::class]);
     //main menu API
     Route::post('/menu-create', [MainMenuController::class, "StoreMenu"])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/menu-list', [MainMenuController::class, "ListMenu"])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/menu-edit", [MainMenuController::class, 'MenuEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-menu", [MainMenuController::class, 'MenuUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/menu-delete", [MainMenuController::class, 'MenuDelete'])->middleware([TokenVerificationMiddleware::class]);
     
     //Sub menu
     Route::get('/add-dropdown-menu', [MainMenuController::class, "SubMenuPage"])->middleware([TokenVerificationMiddleware::class]);
     //Sub menu API
     Route::post('/sub-menu-create', [MainMenuController::class, "SubMenuCreate"])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/sub-menu-list', [MainMenuController::class, "ListSubMenu"])->middleware([TokenVerificationMiddleware::class]);
-
+    Route::get("/sub-edit", [MainMenuController::class, 'SubEdit'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post("/update-sub", [MainMenuController::class, 'SubUpdate'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get("/sub-delete", [MainMenuController::class, 'SubDelete'])->middleware([TokenVerificationMiddleware::class]);
+    
 
     Route::get("/summary", [DashboardController::class, 'Summary'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/visitors", [DashboardController::class, 'VisitorCount'])->middleware([TokenVerificationMiddleware::class]);

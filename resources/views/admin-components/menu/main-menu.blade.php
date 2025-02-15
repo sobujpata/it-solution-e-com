@@ -7,6 +7,7 @@
             <button type="button" class="black-70-button"><a href="{{ url('/add-dropdown-menu') }}" style="color:#fff;">Add Sub Menu</a></button>
 
         </div>
+       
         <form id="save-form">
             
             <div class="input-grid">
@@ -24,6 +25,13 @@
         <div class="head-newProduct" class="">
             <h1><u>Main Menu List</u></h1>
         </div>
+        <br>
+        @if(Session::has('error'))
+         <p style="background-color:red; color:white; padding: 10px; border-radius: 5px;">{{ Session::get('error') }}</p>
+        @endif
+        @if(Session::has('message'))
+         <p style="background-color:rgb(21, 136, 243); color:rgb(26, 23, 23); padding: 10px; border-radius: 5px;">{{ Session::get('message') }}</p>
+        @endif
         <br>
         <table id="tableData" width="100%">
             <thead>
@@ -104,7 +112,7 @@
                             <button class="btn btn-sm btn-outline-success editBtn" data-id="${ item['id'] }" style="padding:5px; background-color:black; border-radius:5px; color:white; ">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
-                            <button data-path="${item['brandImg']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger" style="padding:5px; background-color:red; border-radius:5px; color:white; "><i class="fa-solid fa-trash"></i></button>
+                            <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger" style="padding:5px; background-color:red; border-radius:5px; color:white; "><i class="fa-solid fa-trash"></i></button>
                         </td>
                      </tr>`
             tableList.append(row)
@@ -113,15 +121,14 @@
         document.querySelectorAll('.editBtn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
-                window.location.href = `/brand-edit?id=${id}`;
+                window.location.href = `/menu-edit?id=${id}`;
             });
         });
     
         document.querySelectorAll('.deleteBtn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
-                const imgPath = this.getAttribute('data-path');
-                window.location.href = `/brand-delete?id=${id}?imgPath=${imgPath}`;
+                window.location.href = `/menu-delete?id=${id}`;
             });
         });
     

@@ -38,6 +38,38 @@ class MainMenuController extends Controller
             ], 500);
         }
     }
+
+    function MenuEdit(Request $request){
+        $id = $request->query('id');
+
+        $mainMenu = MainMenu::find($id);
+
+        return view("admin-page.main-menu-edit", compact('mainMenu'));
+    }
+
+    function MenuUpdate(Request $request){
+        $id = $request->input('id');
+        $name = $request->input('name');
+
+        MainMenu::where('id', $id)->update(['name'=>$name]);
+
+        return response()->json([
+            'status'=>'success'
+        ], 203);
+    }
+    function MenuDelete(Request $request){
+        $id = $request->input('id');
+
+        $sub_menu = Submenu::where('main_menu_id', $id)->first();
+        if($sub_menu){
+            return redirect()->back()->with('error', 'Not Deleted ! Because Sub menu available.');
+        }
+        MainMenu::where('id', $id)->delete();
+
+        return redirect()->back()->with('message', 'Delete Successfully.');
+    }
+
+
     public function SubMenuCreate(Request $request)
     {
         try {
@@ -62,6 +94,42 @@ class MainMenuController extends Controller
                 'message' => "Something went wrong: " . $e->getMessage(),
             ], 500);
         }
+    }
+
+    function SubEdit(Request $request){
+        $id = $request->query('id');
+
+        $subMenu = SubMenu::find($id);
+
+        $mainMenu = MainMenu::all();
+
+        return view('admin-page.sub-menu-edit', compact('subMenu', 'mainMenu'));
+    }
+    function SubUpdate(Request $request){
+        $id = $request->input('id');
+        $name = $request->input('name');
+        $main_menu_id = $request->input('main_menu_id');
+
+        $subMenu = SubMenu::find($id);
+
+        $subMenu->update([
+            'name'=>$name,
+            'main_menu_id'=>$main_menu_id,
+        ]);
+
+        return response()->json([
+            'status'=>'success',
+        ], 203);
+    }
+    function SubDelete(Request $request){
+        $id = $request->query('id');
+        
+
+        $subMenu = SubMenu::find($id);
+
+        $subMenu->delete();
+
+        return redirect()->back()->with('message', "Sub menu deleted.");
     }
 
     public function ListMenu(){
