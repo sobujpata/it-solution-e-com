@@ -65,7 +65,7 @@
                 </span>
                 <span>
                     <p>Star Rate</p>
-                    <input type="number" placeholder="Star Rate" name="star" id="star">
+                    <input type="text" placeholder="Star Rate" name="star" id="star">
                 </span>
                 <span>
                     <p>Color</p>
@@ -73,7 +73,7 @@
                 </span>
                 <span>
                     <p>Size</p>
-                    <input type="number" placeholder="Size" name="size" id="size">
+                    <input type="text" placeholder="Size" name="size" id="size">
                 </span>
             </div>
             <span class="bio">
@@ -103,10 +103,9 @@
                     <input oninput="newImg4.src=window.URL.createObjectURL(this.files[0])" type="file" name="img4" id="img4">
                 </span>
             </div>
-            
-            <button type="reset" id="product-form" class="black-70-button">Clear Form</button>
-            <button onclick="Save()" class="black-button" >Publish Product</button>
         </form>
+        {{-- <button type="reset" id="product-form" class="black-70-button">Clear Form</button> --}}
+        <button onclick="Save()" class="black-button" >Publish Product</button>
 
 
        
@@ -209,6 +208,7 @@
         if (res.status === 201) {
             successToast('Product Created Successfully!');
             document.getElementById("save-form").reset();
+            window.location.href="/products-list"
         } else {
             errorToast("Failed to Create Product");
         }
