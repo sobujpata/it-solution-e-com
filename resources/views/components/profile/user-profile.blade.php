@@ -25,7 +25,7 @@
           <div class="card-body text-center">
             <!-- Profile picture image-->
             <img class="img-account-profile rounded-circle mb-2 w-100 ratio-1x1"
-              src="{{ asset('images/avater.jpeg') }}" alt=""
+              src="" alt=""
               style="margin-left: auto; margin-right: auto; aspect-ratio: 1 / 1;" id="profileImage">
 
               <div class="element">
@@ -132,7 +132,12 @@
 
         // console.log(res.data)
 
-        document.getElementById('profileImage').src=res.data['profile']['image_url'];
+        let profileImage = document.getElementById('profileImage');
+        if (profileImage) {
+            profileImage.src = res.data?.profile?.image_url || "images/avater.jpeg";
+        } else {
+            console.error("Profile image element not found.");
+        }
         document.getElementById('inputFirstName').value=res.data['firstName'];
         document.getElementById('firstName').innerHTML=res.data['firstName'];
         document.getElementById('lastName').innerHTML=res.data['lastName'];
