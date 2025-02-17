@@ -12,7 +12,7 @@
     i:hover {
       opacity: 0.6;
     }
-    input {
+    #profileImageUpdate {
       display: none;
     }
     </style>
