@@ -86,14 +86,22 @@ Route::post('/user-login', [UserController::class, 'UserLogin']);
 Route::post('/send-otp', [UserController::class, 'SendOTPCode']);
 Route::post('/verify-otp', [UserController::class, 'VerifyOTP']);
 Route::post('/reset-password', [UserController::class, 'ResetPassword'])->middleware([TokenVerificationMiddleware::class]);
+
 Route::get('/user-profile', [UserController::class, 'UserProfile'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/user-update', [UserController::class, 'UpdateProfile'])->middleware([TokenVerificationMiddleware::class]);
 
 // User Logout
 Route::get('/logout', [UserController::class, 'UserLogout']);
 
+
+
+
 //Customer dashboard route
 Route::middleware(['user'])->group(function () {
+    //profile
+    Route::get('/profile', [UserController::class, 'UserProfilePage'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/customer-profile', [UserController::class, 'GetUserProfile'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post('/update-profile', [UserController::class, 'ProfileUpdate'])->middleware([TokenVerificationMiddleware::class]);
     //cart page
     Route::get('/cart', [ProductController::class, 'CartListPage'])->middleware([TokenVerificationMiddleware::class]);
     // Product Cart

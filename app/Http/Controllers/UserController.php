@@ -10,8 +10,12 @@ use App\Helper\JWTToken;
 use Illuminate\View\View;
 use App\Models\MainCategory;
 use Illuminate\Http\Request;
+use App\Models\CustomerProfile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Validator;
 
 class UserController extends Controller
 {
@@ -49,7 +53,11 @@ class UserController extends Controller
         return view('home.dashboard.profile-page', compact('mainCategories', 'bestSale'));
     }
 
-
+    function UserProfilePage(){
+        $mainCategories = MainCategory::with('categories')->get();
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+        return view('home.profile', compact('mainCategories', 'bestSale'));
+    }
 
     function UserRegistration(Request $request){
         try {
@@ -73,33 +81,7 @@ class UserController extends Controller
 
         }
     }
-
-
-
-
-    // function UserLogin(Request $request){
-    //    $count=User::where('email','=',$request->input('email'))
-    //         ->where('password','=',$request->input('password'))
-    //         ->select('id')->first();
-
-    //    if($count!==null){
-    //        // User Login-> JWT Token Issue
-    //        $token=JWTToken::CreateToken($request->input('email'),$count->id);
-    //        return response()->json([
-    //            'status' => 'success',
-    //            'message' => 'User Login Successful',
-    //            'token'=>$token
-    //        ],200)->cookie('token',$token,time()+60*24*30);
-    //    }
-    //    else{
-    //        return response()->json([
-    //            'status' => 'failed',
-    //            'message' => 'unauthorized'
-    //        ],200);
-
-    //    }
-
-    // }
+    
     function UserLogin(Request $request)
         {
             // dd($request);
@@ -244,4 +226,90 @@ class UserController extends Controller
             ],200);
         }
     }
+
+    function GetUserProfile(Request $request){
+        $user_id = $request->header('id');
+
+        $data = User::with('profile')->find($user_id);
+
+        return response()->json($data);
+    }
+
+    public function ProfileUpdate(Request $request) {
+        $user_id = $request->header('id');
+        $validatedData = $request->validate([
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'cus_add' => 'required|string|max:255',
+            'cus_city' => 'required|string|max:255',
+            'cus_country' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'mobile' => 'required|string|max:255',
+            'cus_fax' => 'nullable|string|max:255',
+            'cus_postcode' => 'required|numeric',
+            'profileImage' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5000',
+        ]);
+    
+        $imageUrls = [];
+    
+        if ($request->hasFile('profileImage')) {
+            $img = $request->file('profileImage');
+            $imgName = $user_id . '-' . time() . '-' . $img->getClientOriginalName();
+            $imgPath = $img->storeAs('profile', $imgName, 'public');
+            $imageUrls['profileImage'] = "storage/{$imgPath}";
+        }
+
+        // Fetch existing user
+        $user = User::find($user_id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Save the user to the database
+        try {
+            DB::beginTransaction();
+    
+            // Update user data
+            $user->update([
+                'firstName' => $validatedData['firstName'],
+                'lastName' => $validatedData['lastName'],
+                'email' => $validatedData['email'],
+                'mobile' => $validatedData['mobile'],
+            ]);
+    
+            // Update or create user details
+            CustomerProfile::updateOrCreate(
+                ['user_id' => $user_id], // Find existing record by user_id
+                [
+                    'user_id' => $user_id,
+                    'cus_add' => $validatedData['cus_add'],
+                    'cus_city' => $validatedData['cus_city'],
+                    'cus_postcode' => $validatedData['cus_postcode'],
+                    'cus_country' => $validatedData['cus_country'],
+                    'cus_fax' => $validatedData['cus_fax'],
+
+                    'ship_name' => $validatedData['firstName'] . " " . $validatedData['lastName'],
+                    'ship_add' => $validatedData['cus_add'],
+                    'ship_postcode' => $validatedData['cus_postcode'],
+
+                    'ship_city' => $validatedData['cus_city'],
+                    
+                    'ship_country' => $validatedData['cus_country'],
+                    'ship_phone' => $validatedData['mobile'],
+                    'image_url' => $imageUrls['profileImage'] ?? $user->customerProfile->image_url ?? null,
+                ]
+            );
+            DB::commit();
+    
+            return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
+    
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("User update failed for ID {$user_id}: " . $e->getMessage());
+            return response()->json(['message' => 'User update failed', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+
+    
 }

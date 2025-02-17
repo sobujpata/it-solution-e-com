@@ -15,20 +15,6 @@
            position: relative !important;
        }
    </style>
-   <script>
-    async function getCartCount() {
-        try {
-            // Include the user id in the headers if using the header approach:
-            const resCart = await axios.get('/cart-count');
-            document.getElementById('countCartDesktop').innerHTML = resCart.data;
-        } catch (error) {
-            console.error("Error fetching cart count:", error);
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", getCartCount);
-
-    </script>
    <header>
        <div class="header-top">
 
@@ -109,10 +95,12 @@
                    </div>
 
                    <div class="header-user-actions">
-
+                    <a href="{{ url('/profile') }}">
                        <button class="action-btn">
-                           <ion-icon name="person-outline"></ion-icon>
-                       </button>
+                        
+                            <ion-icon name="person-outline"></ion-icon>
+                        </button>
+                    </a>
 
                        <button class="action-btn">
                            <ion-icon name="heart-outline"></ion-icon>
@@ -570,14 +558,5 @@
 }
 
 getNav();
-
-
-
-       async function getCartCount() {
-           let res = await axios.get('/cart-count');
-           // console.log(res)
-           // document.getElementById('countCart').innerHTML =res.data
-           // document.getElementById('countCartMobile').innerHTML =res.data
-       }
-       getCartCount()
+      
    </script>
