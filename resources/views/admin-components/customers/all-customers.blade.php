@@ -64,7 +64,6 @@
                     <tr>
                         <td>${index + 1}</td>
                         <td>
-                            <a href="./sub-category-edit?id=${customer.id}">
                                 <span class="flex">
                                     <div class="imgBx">
                                         <img src="${profile.image_url || 'Images/default-image.jpg'}" alt="">
@@ -73,7 +72,6 @@
                                         <span>${customer.email || ''}</span>
                                     </h4>
                                 </span>
-                            </a>
                         </td>
                         <td>${customer.id}</td>
                         <td>${profile.cus_add || 'N/A'}</td>

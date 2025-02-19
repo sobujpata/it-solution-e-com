@@ -14,7 +14,7 @@
                     <td>PRICE</td>
                     <td>PAYMENT</td>
                     <td>STATUS</td>
-                    {{-- <td>action</td> --}}
+                    <td>action</td>
                 </tr>
             </thead>
 
@@ -73,7 +73,7 @@
                     <td>${item['total']}</td>
                     <td>${item['payable']}</td>
                     <td>
-                        <button id="${buttonId}" style="padding:10px; border-radius:5px;" class="modalBtn ${buttonClass}">${item['delivery_status']}</button>
+                        <button id="${buttonId}" style="padding:7px; border-radius:5px; margin-bottom:5px;" class="modalBtn ${buttonClass}">${item['delivery_status']}</button>
                         
                         <!-- Modal -->
                         <div id="${modalId}" class="modal" style="display: none;">
@@ -103,7 +103,11 @@
                                 </div>
                             </div>
                         </div>
-                    </td>
+
+                        </td>
+                        <td>
+                            <button data-id="${item['id']}" style="padding:5px; background-color:green; color:white; border-radius:5px;" class="DetailsBtn"><i class="fa fa-eye fa-xl"></i></button>
+                        </td>
                 </tr>`;
             
             tableList.append(row);
@@ -125,6 +129,13 @@
                 event.target.style.display = "none";
             }
         };
+
+        $('.DetailsBtn').on('click', async function () {
+            let id = $(this).data('id');
+            console.log(id);
+            window.location.href = `/order-details?id=${id}`; // Use backticks (`) instead of double quotes ("")
+        });
+
 
         document.querySelectorAll('.save-status-btn').forEach(button => {
             button.addEventListener('click', async function () {

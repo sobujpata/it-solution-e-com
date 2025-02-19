@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 //Category Api
+Route::get('/notification', [OfferCardController::class, "Notification"]);
 Route::get('/Category-header-list', [CategoryController::class, "CategoryHeader"]);
 
 Route::get('/Category-list', [CategoryController::class, "CategoryList"]);
@@ -158,6 +159,8 @@ Route::middleware(['admin'])->group(function () {
     // Invoice API
     Route::post('/update-delivery-status', [InvoiceController::class, 'updateDeliveryStatus'])->middleware([TokenVerificationMiddleware::class]);
     Route::get("/list-invoice", [InvoiceController::class, 'InvoiceList'])->name('product.list')->middleware([TokenVerificationMiddleware::class]);
+    
+    Route::get("/order-details", [InvoiceController::class, 'InvoiceProductDetails'])->name('invoice.product.list')->middleware([TokenVerificationMiddleware::class]);
     
     // Product API
     Route::post("/create-product", [ProductController::class, 'CreateProduct'])->middleware([TokenVerificationMiddleware::class]);

@@ -10,7 +10,8 @@
         </button>
 
         <div class="newsletter-img">
-            <img src="{{asset('images/news.jpg')}}" alt="subscribe newsletter" width="400" height="400">
+            <img src="" alt="subscribe newsletter" width="400" height="400" id="noticeImage">
+            {{-- <img src="{{asset('images/news.jpg')}}" alt="subscribe newsletter" width="400" height="400"> --}}
         </div>
 
         <div class="newsletter">
@@ -22,7 +23,7 @@
                     <h3 class="newsletter-title">Subscribe Newsletter.</h3>
 
                     <p class="newsletter-desc">
-                        Subscribe the <b>Localbazer One Of The Best Solution</b> to get latest products and discount update.
+                        Subscribe the <b>It Solution One Of The Best Solution</b> to get latest products and discount update.
                     </p>
 
                 </div>
@@ -38,3 +39,12 @@
     </div>
 
 </div>
+<script>
+    getNotification()
+
+    async function getNotification(){
+        let res = await axios.get('/notification');
+        document.getElementById('noticeImage').src=res.data['image'];
+        console.log(res);
+    }
+</script>

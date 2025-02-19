@@ -21,6 +21,7 @@ class InvoiceController extends Controller
         $bestSale = Product::where("remark", "popular")->take(4)->get();
         return view('home.orders', compact('mainCategories', 'bestSale'));
     }
+
     public function InvoiceList(){
         $invoices = Invoice::all();
 
@@ -204,6 +205,17 @@ class InvoiceController extends Controller
 
         return response()->json($data);
     }
+    public function InvoiceProductDetails(Request $request){
+
+        $invoice_id = $request->query('id');
+        $invoice = Invoice::find($invoice_id);
+
+        $InvoiceProducts = InvoiceProduct::where('invoice_id', $invoice_id)->with('products')->get();
+
+        return view('admin-page.invoice-products', compact('InvoiceProducts', 'invoice'));
+    }
+
+
 
 
 }

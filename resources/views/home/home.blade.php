@@ -2,7 +2,7 @@
 @section('content')
         @include('components.home.model')
         
-        @include('components.home.notification-toast')
+        {{-- @include('components.home.notification-toast') --}}
         <!--BANNER-->
         @include('components.home.banner')
 

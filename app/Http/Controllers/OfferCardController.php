@@ -96,4 +96,10 @@ class OfferCardController extends Controller
 
         return redirect()->back()->with('message', 'Card Deleted');
     }
+
+    function Notification(){
+        $data = OfferCard::first();
+
+        return response()->json($data);
+    }
 }
