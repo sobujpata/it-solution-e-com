@@ -21,8 +21,10 @@
                 <div class="card-body">
                     <h4>Shipping & Billing</h4>
                     <hr>
+                    {{-- @dd($customer_details) --}}
                     <form action="{{ route('create.invoice') }}" method="post">
                         @csrf
+                        
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-group mb-2">
@@ -58,7 +60,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="text" name="apartment" placeholder="Apartment, Flat No, Road No" class="form-control">
+                                    <input type="text" name="apartment" placeholder="Apartment, Flat No, Road No" class="form-control" value="">
                                     @error('apartment')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -66,7 +68,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-2">
-                                    <textarea type="text" name="address" placeholder="Address" class="form-control" rows="1"></textarea>
+                                    <textarea type="text" name="address" placeholder="Address" class="form-control" rows="1">{{ $customer_details->ship_add ?? null }}</textarea>
                                     @error('address')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -75,7 +77,7 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="text" name="city" placeholder="City" class="form-control">
+                                    <input type="text" name="city" placeholder="City" class="form-control" value="{{ $customer_details->ship_city ?? null }}">
                                     @error('city')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -83,7 +85,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="text" name="postal_code" placeholder="Postal code" class="form-control">
+                                    <input type="text" name="postal_code" placeholder="Postal code" class="form-control" value="{{ $customer_details->ship_postcode ?? null }}">
                                     @error('postal_code')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -91,7 +93,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-2">
-                                    <input type="text" name="country" value="Bangladesh" readonly class="form-control">
+                                    <input type="text" name="country" value="{{ $customer_details->ship_country ?? "Bangladesh" }}" readonly class="form-control">
                                     @error('country')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror

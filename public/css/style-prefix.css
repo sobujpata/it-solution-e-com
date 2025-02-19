@@ -217,10 +217,10 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 
 /**
- * MODAL 
+ * modal-notification 
  */
 
-.modal {
+.modal-notification {
   position: fixed;
   top: 0;
   left: 0;
@@ -279,9 +279,9 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 }
 
-.modal.closed { display: none; }
+.modal-notification.closed { display: none; }
 
-.modal-close-overlay {
+.modal-notification-close-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -292,7 +292,7 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 .newsletter-img { display: none; }
 
-.modal-content {
+.modal-notification-content {
   position: relative;
   max-width: 350px;
   margin: 20px;
@@ -319,7 +319,7 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 }
 
-.modal-close-btn {
+.modal-notification-close-btn {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -331,9 +331,9 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
           border-radius: var(--border-radius-sm);
 }
 
-.modal-close-btn:hover { opacity: 0.9; }
+.modal-notification-close-btn:hover { opacity: 0.9; }
 
-.modal-close-btn ion-icon { --ionicon-stroke-width: 70px; }
+.modal-notification-close-btn ion-icon { --ionicon-stroke-width: 70px; }
 
 .newsletter {
   padding: 50px 30px;
@@ -2457,10 +2457,10 @@ footer {
 
   
   /**
-   * #MODAL 
+   * #modal-notification 
    */
 
-  .modal-content {
+  .modal-notification-content {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;

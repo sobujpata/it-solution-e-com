@@ -1,11 +1,11 @@
 <!--- MODAL-->
-<div class="modal" data-modal>
+<div class="modal-notification" data-modal>
 
-    <div class="modal-close-overlay" data-modal-overlay></div>
+    <div class="modal-notification-close-overlay" data-modal-overlay></div>
 
-    <div class="modal-content">
+    <div class="modal-notification-content">
 
-        <button class="modal-close-btn" data-modal-close>
+        <button class="modal-notification-close-btn" data-modal-close>
             <ion-icon name="close-outline"></ion-icon>
         </button>
 

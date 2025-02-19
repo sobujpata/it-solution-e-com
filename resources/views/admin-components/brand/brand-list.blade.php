@@ -34,7 +34,7 @@
         showLoader();
         let res=await axios.get("/list-brand");
         hideLoader();
-    console.log(res);
+    // console.log(res);
         let tableList=$("#tableList");
         let tableData=$("#tableData");
     

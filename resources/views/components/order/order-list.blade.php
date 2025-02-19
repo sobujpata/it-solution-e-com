@@ -99,9 +99,9 @@ async function orderList() {
         const res = await axios.get('/invoice-customer-list');
         hideLoader(); // Hide loader
 
+        // console.log(res)
         const orderItems = res.data['data'];
         const orderContainer = $("#byList");
-        console.log(orderItems)
         // Clear existing order items
         orderContainer.empty();
 
@@ -116,6 +116,15 @@ async function orderList() {
         orderItems.forEach(item => {
             orderContainer.append(renderorderRow(item));
         });
+
+        $('.editBtn').on('click', async function () {
+           let id= $(this).data('id');
+           let total= $(this).data('total');
+           await InvoiceProductsPage(id,total)
+           $("#staticBackdrop").modal('show');
+
+
+    })
 
         
 
@@ -158,10 +167,13 @@ function renderorderRow(item) {
                                 <div class="row justify-content-center">
                                     <div class="col-md-9">
                                         <span class="text-sm"><strong>Shipping Address: </strong>${item.ship_details}</span>
+                                        <div class="col-12 text-center btn btn-outline-info btn-sm mt-3 rounded-2">Order Status: ${item.delivery_status}</div>
                                     </div>
                                     <div class="col-md-3 mt-4 text-center ">
-                                        <div class="col-12 text-center btn btn-info btn-sm mb-2 rounded-2"><strong> ${item.delivery_status}</strong></div>
-                                        <button class="col-12 btn btn-primary btn-sm rounded-2">Print</button>
+                                        
+                                        <!-- Button trigger modal -->
+                                        <button data-id="${item['id']}" data-total="${item['payable']}" class="btn editBtn btn-sm btn-outline-primary rounded-2">Details</button>
+                                        
                                     </div>
                                 </div>
                                 

@@ -144,8 +144,8 @@
                        @if (Cookie::get('token') !== null)
                            <li class="menu-category"><a href="{{ url('/invoices') }}" class="menu-title">Orders</a>
                            </li>
-                           <li class="menu-category"><a href="{{ url('/profile') }}" class="menu-title">Account</a>
-                           </li>
+                           {{-- <li class="menu-category"><a href="{{ url('/profile') }}" class="menu-title">Account</a>
+                           </li> --}}
                            <li class="menu-category"><a href="{{ url('/logout') }}" class="menu-title">Logout</a>
                            </li>
                        @else

@@ -107,8 +107,10 @@ Route::middleware(['user'])->group(function () {
     // Product Cart
     Route::post('/CreateCartList', [ProductController::class, 'CreateCartList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/CartList', [ProductController::class, 'CartList'])->middleware([TokenVerificationMiddleware::class]);
-    Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCartList'])->middleware([TokenVerificationMiddleware::class]);
+    Route::get('/DeleteCartList', [ProductController::class, 'DeleteCartList'])->middleware([TokenVerificationMiddleware::class]);
     Route::get('/cart-count', [ProductController::class, 'CartCount'])->middleware([TokenVerificationMiddleware::class]);
+    Route::post('/UpdateCartQuantity', [ProductController::class, 'UpdateCartQuantity'])->middleware([TokenVerificationMiddleware::class]);
+    
     
 
     //Wish API Route

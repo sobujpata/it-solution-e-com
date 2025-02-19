@@ -236,7 +236,10 @@ class ProductController extends Controller
             $data = ProductCart::where('user_id', $user_id)
                 ->with(['product:id,title,image,price']) // Optimize query with selected fields
                 ->get();
-
+                $totalPrice = ProductCart::where('user_id', $user_id)
+                ->selectRaw('SUM(price) as total')
+                ->value('total');
+            
             // Check if the cart is empty
             if ($data->isEmpty()) {
                 return response()->json([
@@ -249,6 +252,7 @@ class ProductController extends Controller
             // Return cart items
             return response()->json([
                 'data' => $data,
+                'totalPrice' => $totalPrice,
                 'status' => 'success',
             ], 200);
         } catch (\Exception $e) {
@@ -281,8 +285,10 @@ class ProductController extends Controller
 
     public function DeleteCartList(Request $request){
         $user_id=$request->header('id');
-        $data=ProductCart::where('user_id','=',$user_id)->where('product_id','=',$request->product_id)->delete();
-        return ResponseHelper::Out('success',$data,200);
+        $product_id=$request->query('id');
+        $data=ProductCart::where('user_id',$user_id)->where('product_id',$product_id)->delete();
+
+        return redirect()->back()->with('message', 'Cart item deleted.');
     }
 
     //Product create
@@ -694,6 +700,44 @@ class ProductController extends Controller
         ProductSlider::where('id',$id)->delete();
 
         return redirect()->back()->with('message', 'Slider Deleted');
+    }
+
+    function UpdateCartQuantity(Request $request){
+        $userId = $request->header('id');
+        $request->validate([
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer|min:1|max:10',
+        ]);
+
+        // Get logged-in user ID
+        $productId = $request->input('product_id');
+        $newQuantity = $request->input('quantity');
+
+        $product = Product::find($productId);
+
+        $discount_price =$product->discount_price;
+
+        $new_price = $discount_price * $newQuantity;
+
+        
+        // Find cart item for the user and product
+        $cartItem = ProductCart::where('user_id', $userId)
+                        ->where('product_id', $productId)
+                        ->first();
+
+        if (!$cartItem) {
+            return response()->json(['error' => 'Product not found in cart'], 404);
+        }
+
+        ProductCart::where('product_id', $productId)->update([
+            'price'=>$new_price,
+            'qty'=>$newQuantity,
+        ]);
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Card Update successfully.'
+        ],200);
+        
     }
 
 

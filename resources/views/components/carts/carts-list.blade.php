@@ -98,7 +98,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body m-2 rounded-2" style="background-color:#f0f0f0">
-                        {{-- <p><span>Subtotal:</span><span style="float:right;">150000</span></p> --}}
+                        <p>Order Summary:</p>
                     <p><span>Total:</span><span style="float:right;" id="total"></span></p>
                         <a href="{{ url('/payment-form') }}" class="btn btn-success w-100">Checkout</a>
                     </div>
@@ -109,6 +109,7 @@
     </div>
     <hr style="">
 </div>
+
 <script>
 async function CartList() {
     try {
@@ -116,45 +117,58 @@ async function CartList() {
         const res = await axios.get('/CartList');
         hideLoader(); // Hide loader
 
+        document.getElementById('total').innerHTML = res.data.totalPrice;
+
         const cartItems = res.data['data'];
         const cartContainer = $("#cartProduct"); 
         cartContainer.empty(); // Clear previous items
 
         if (cartItems.length === 0) {
-            cartContainer.append('<tr><td colspan="5">Your cart is empty. Start shopping now!</td></tr>');
+            cartContainer.append('<tr><td colspan="5"><a href="/">Your cart is empty. Start shopping now!</a></td></tr>');
             $("#total").text("0.00");
             return;
         }
 
-        // Render cart items
         cartItems.forEach(item => {
             cartContainer.append(renderCartRow(item));
         });
 
-        // Update total price
-        calculateTotal(cartItems);
 
-        // Delegate event listeners
-        $(document).on('click', '.remove-btn', function () {
-            const productId = $(this).data('id');
-            confirmRemoval(productId);
-        });
-
-        $(document).on('click', '.increment', function () {
+        $(document).off('click', '.increment').on('click', '.increment', function () {
             const input = $(this).siblings('input');
             updateQuantity(input, 1);
         });
 
-        $(document).on('click', '.decrement', function () {
+        $(document).off('click', '.decrement').on('click', '.decrement', function () {
             const input = $(this).siblings('input');
             updateQuantity(input, -1);
         });
+
 
     } catch (error) {
         hideLoader();
         console.error(error);
         errorToast("Failed to fetch cart items. Please try again.");
     }
+
+        $(document).off('click', '.deleteBtn').on('click', '.deleteBtn', function () {
+        const productId = $(this).data('id');
+
+        Swal.fire({
+            // title: "Are you sure to remove this item?",
+            text: "Are you sure to remove this item?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, remove it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/DeleteCartList?id=${productId}`;
+            }
+        });
+});
+
 }
 
 // Render cart row dynamically
@@ -173,19 +187,21 @@ function renderCartRow(item) {
                                     <h5 style="float:left;">${item.product.title}</h5>
                                 </div>
                                 <div class="col-sm-4">
-                                    <strong>BDT ${item.price}</strong>
+                                    <strong id="basePrice" data-price="${item.price}">BDT ${item.price}</strong>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="row">
                                 <div class="col-9">
-                                    <button class="decrement btn btn-secondary">-</button>
-                                    <input type="text" name="quantity" value="${item.qty}" maxlength="2" max="10" size="1" class="quantity-input btn btn-info" style="width:40px !important;" data-id="${item.product_id}" readonly />
-                                    <button class="increment btn btn-secondary">+</button>
+                                    <button class="decrement btn btn-secondary btn-sm p-2">-</button>
+                                    <input type="text" name="quantity" value="${item.qty}" maxlength="2" max="10" size="1" 
+                                    class="quantity-input btn-sm btn p-2" style="width:40px !important;" 
+                                    data-id="${item.product_id}" readonly />
+                                    <button class="increment btn btn-secondary btn-sm p-2">+</button>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn remove-btn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></a>
+                                    <button class="btn deleteBtn" data-id="${item.product_id}"><i class="fa fa-trash text-danger"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -197,56 +213,32 @@ function renderCartRow(item) {
     `;
 }
 
-// Update total price
-function calculateTotal(cartItems) {
-    const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price) * item.qty, 0);
-    $("#total").text(total.toFixed(2)); 
-}
-
-// Confirm product removal
-async function confirmRemoval(productId) {
-    if (confirm("Are you sure you want to remove this item?")) {
-        await removeCartItem(productId);
-    }
-}
-
-// Remove product from cart
-async function removeCartItem(productId) {
-    try {
-        showLoader();
-        const res = await axios.get(`/DeleteCartList/${productId}`);
-        hideLoader();
-
-        if (res.status === 200) {
-            successToast("Product removed from cart.");
-            CartList(); // Refresh cart
-        } else {
-            errorToast("Failed to remove product. Please try again.");
-        }
-    } catch (error) {
-        hideLoader();
-        console.error(error);
-        errorToast("Failed to remove product. Please try again.");
-    }
-}
-
-// Update quantity and sync with backend
 async function updateQuantity(input, change) {
     let currentQty = parseInt(input.val(), 10);
     let newQty = currentQty + change;
-
     if (newQty < 1 || newQty > 10) return;
 
     input.val(newQty);
 
     try {
         const productId = input.data('id');
-        await axios.post(`/UpdateCartQuantity`, { product_id: productId, quantity: newQty });
-        CartList(); // Refresh cart
+        const res = await axios.post(`/UpdateCartQuantity`, {
+            product_id: productId,
+            quantity: newQty
+        });
+
+        if (res.data['status'] === 'success') {
+            CartList();
+        } else {
+            errorToast("Failed to update quantity.");
+            input.val(currentQty); // Reset input value if update fails
+        }
     } catch (error) {
         console.error("Failed to update quantity:", error);
+        input.val(currentQty); // Reset input if request fails
     }
 }
+
 
 // Initial call
 CartList();

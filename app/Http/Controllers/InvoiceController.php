@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerProfile;
 use App\Models\User;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -30,6 +31,8 @@ class InvoiceController extends Controller
         $user_id = $request->header('id');
         $user = User::findOrFail($user_id);
 
+        $customer_details = CustomerProfile::where('user_id', $user_id)->first();
+
         $products = ProductCart::where('user_id', $user_id)->with('product')->get();
         $total_product_price_r = ProductCart::where('user_id', $user_id)->sum('price');
         $total_product_price = round($total_product_price_r, 2);
@@ -41,6 +44,7 @@ class InvoiceController extends Controller
         // dd($products);
         return view('home.payment-page', compact(
             'user', 
+            'customer_details', 
             'products', 
             'total_product_price',
             'shipping_charge',
@@ -76,7 +80,7 @@ class InvoiceController extends Controller
         $user_id = $request->header('id');
 
         // Validate the form data
-        $request->validate([
+        $validatedData = $request->validate([
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
             'email' => 'required|email',
@@ -116,6 +120,28 @@ class InvoiceController extends Controller
                 'delivery_status' => "Pending",
                 'user_id' => $user_id,
             ]);
+
+            // Update or create user details
+            CustomerProfile::updateOrCreate(
+                ['user_id' => $user_id], // Find existing record by user_id
+                [
+                    'user_id' => $user_id,
+                    'cus_add' => $validatedData['address'],
+                    'cus_city' => $validatedData['city'],
+                    'cus_postcode' => $validatedData['postal_code'],
+                    'cus_country' => $validatedData['country'],
+
+                    'ship_name' => $validatedData['firstName'] . " " . $validatedData['lastName'],
+                    'apartment' => $validatedData['apartment'],
+                    'ship_add' => $validatedData['address'],
+                    'ship_postcode' => $validatedData['postal_code'],
+
+                    'ship_city' => $validatedData['city'],
+                    
+                    'ship_country' => $validatedData['country'],
+                    'ship_phone' => $validatedData['mobile'],
+                ]
+            );
             // Retrieve products from the product_carts table
             $productCards = DB::table('product_carts')->where('user_id', $user_id)->get();
             
@@ -161,12 +187,22 @@ class InvoiceController extends Controller
     public function InvoiceByCustomer(Request $request){
         $user_id = $request->header('id');
 
-        $invoices = Invoice::where('user_id', $user_id)->get();
+        $invoices = Invoice::where('user_id', $user_id)->with('invoice_products')->get();
 
         return response()->json([
             'data'=>$invoices,
             'status'=>"success"
         ]);
+    }
+
+    public function InvoiceByID(Request $request){
+        $user_id = $request->header('id');
+
+        $invoice_id = $request->input('id');
+
+        $data = InvoiceProduct::where('invoice_id', $invoice_id)->with('products')->get();
+
+        return response()->json($data);
     }
 
 

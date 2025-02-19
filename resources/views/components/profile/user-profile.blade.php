@@ -100,7 +100,7 @@
                     value="">
                 </div>
                 <!-- Form Group (cus_fax)-->
-                <div class="col-md-6">
+                <div class="col-md-6 mt-3 mt-md-0">
                   <label class="small mb-1" for="inputFax">Fax Number <small class="text-sm">(If available.)</small></label>
                   <input class="form-control" id="inputFax" type="text" name="cus_fax"
                     placeholder="Enter your fax" value="">
