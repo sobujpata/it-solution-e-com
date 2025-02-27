@@ -15,6 +15,10 @@
                     <input id="subMenu" class="subMenu" type="text" placeholder="Menu Name">
                 </span>
                 <span>
+                    <p>Url*</p>
+                    <input id="subUrl" class="subUrl" type="text" placeholder="Url Name">
+                </span>
+                <span>
                     <p>Main Menu*</p>
                     <select id="mainMenuId" class="mainMenuId" type="text" style="width: 100%; height: 35px;">
                         <option value="">Select Category</option>
@@ -44,6 +48,7 @@
                 <tr>
                     <th>Ser No</th>
                     <th>Sub Menu Name</th>
+                    <th>URL</th>
                     <th>Menu Name</th>
                     <th>Created At</th>
                     <th>Action</th>
@@ -79,15 +84,18 @@
     }
     async function SaveMenu() {
         let subMenu = document.getElementById('subMenu').value;
+        let subUrl = document.getElementById('subUrl').value;
         let mainMenuId = document.getElementById('mainMenuId').value;
         
         if (!subMenu) return errorToast("Menu is Required!");
+        if (!subUrl) return errorToast("Url is Required!");
         if (!mainMenuId) return errorToast("Main Menu is Required!");
         
 
         
         let formData = new FormData();
         formData.append('name', subMenu);
+        formData.append('url', subUrl);
         formData.append('main_menu_id', mainMenuId);
         
 
@@ -130,6 +138,7 @@
             let row = `<tr>
                         <td>${index+1}</td>
                         <td>${item['name']}</td>
+                        <td>${item['url']}</td>
                         <td>${item['main_menu']["name"]}</td>
                         <td>${item['created_at']}</td>
                         <td>

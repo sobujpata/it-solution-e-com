@@ -75,11 +75,13 @@ class MainMenuController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255|unique:main_menus,name',
+                'url' => 'required|string|max:255',
                 'main_menu_id' => 'required|string|max:255',
             ]);
 
             $data = SubMenu::create([
                 'name' => $request->input('name'),
+                'url' => $request->input('url'),
                 'main_menu_id' => $request->input('main_menu_id'),
             ]);
 
@@ -108,12 +110,14 @@ class MainMenuController extends Controller
     function SubUpdate(Request $request){
         $id = $request->input('id');
         $name = $request->input('name');
+        $url = $request->input('url');
         $main_menu_id = $request->input('main_menu_id');
 
         $subMenu = SubMenu::find($id);
 
         $subMenu->update([
             'name'=>$name,
+            'url'=>$url,
             'main_menu_id'=>$main_menu_id,
         ]);
 

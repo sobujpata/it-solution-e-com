@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubMenu extends Model
 {
-    protected $fillable = ["name", "main_menu_id"];
+    protected $fillable = ["name", "main_menu_id", "url"];
 
     public function main_menu()
     {
