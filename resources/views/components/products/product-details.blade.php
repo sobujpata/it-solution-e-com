@@ -110,6 +110,16 @@
         }
 
     }
+    .social-share a i {
+        margin-right: 5px;
+    }
+
+    .social-share a:nth-child(1) { background: #3b5998; } /* Facebook */
+    .social-share a:nth-child(2) { background: #1da1f2; } /* Twitter */
+    .social-share a:nth-child(3) { background: #0077b5; } /* LinkedIn */
+    .social-share a:nth-child(4) { background: #25D366; } /* WhatsApp */
+    .social-share a:nth-child(5) { background: #0088cc; } /* Telegram */
+
 </style>
 
 <div class="product-container">
@@ -232,23 +242,28 @@
                         </form>
                     </div>
 
+                    @php
+                        $url = urlencode(url('/products/' . $product->id));
+                        $title = urlencode($product->title);
+                    @endphp
 
-                    <div class="social-links">
+                    <div class="social-links social-share">
                         <p><b>Share At : </b></p>
-                        <a href="#">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url }}" target="_blank">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#">
+                        <a href="https://twitter.com/intent/tweet?url={{ $url }}&text={{ $title }}" target="_blank">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#">
-                            <i class="fab fa-instagram"></i>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $url }}" target="_blank">
+                            <i class="fab fa-linkedin"></i>
                         </a>
-                        <a href="#">
+                        <a href="https://api.whatsapp.com/send?text={{ $title }}%20{{ $url }}" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-                        <a href="#">
-                            <i class="fab fa-pinterest"></i>
+                    
+                        <a href="https://t.me/share/url?url={{ $url }}&text={{ $title }}" target="_blank">
+                            <i class="fab fa-telegram"></i>
                         </a>
                     </div>
                 </div>
