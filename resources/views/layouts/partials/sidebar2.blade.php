@@ -1,3 +1,7 @@
+<style>
+   
+
+</style>
 <!--- SIDEBAR-->
 <div class="sidebar  has-scrollbar" data-mobile-menu>
 
@@ -21,11 +25,11 @@
                             class="text-bold">+</span>
                     </a>
                 </p>
-                <div class="collapse" id="collapse-{{ $item->id }}">
+                <div class="collapse " id="collapse-{{ $item->id }}">
                     @if ($item->categories->isNotEmpty())
                         <ul>
                             @foreach ($item->categories as $subcategory)
-                                <li><a class="text-dark" href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right">300</span></a></li>
+                                <li class="hovered-li"><a class="text-dark" href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }} <span style="float:right"></span></a></li>
                             @endforeach
                         </ul>
                     @else

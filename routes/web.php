@@ -48,6 +48,9 @@ Route::get('/', [HomeController::class, 'index']);
 
     return response()->json($products);
 });
+
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+
 //Category Api
 Route::get('/notification', [OfferCardController::class, "Notification"]);
 Route::get('/Category-header-list', [CategoryController::class, "CategoryHeader"]);

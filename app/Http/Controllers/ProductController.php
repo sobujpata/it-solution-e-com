@@ -740,6 +740,19 @@ class ProductController extends Controller
         
     }
 
+    public function search(Request $request) {
+        $query = $request->input('search'); // Get search input
+    
+        $products = Product::where('title', 'LIKE', "%{$query}%")
+            ->orWhere('short_des', 'LIKE', "%{$query}%")
+            ->paginate(10);
+        $mainCategories = MainCategory::with('categories')->get();
+
+        $bestSale = Product::where("remark", "popular")->take(4)->get();
+    
+        return view('home.products-search', compact('products','mainCategories','bestSale', 'query'));
+    }
+
 
 
  }

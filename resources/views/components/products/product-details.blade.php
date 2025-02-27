@@ -252,12 +252,12 @@
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url }}" target="_blank">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ $url }}&text={{ $title }}" target="_blank">
+                        {{-- <a href="https://twitter.com/intent/tweet?url={{ $url }}&text={{ $title }}" target="_blank">
                             <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $url }}" target="_blank">
+                        </a> --}}
+                        {{-- <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $url }}" target="_blank">
                             <i class="fab fa-linkedin"></i>
-                        </a>
+                        </a> --}}
                         <a href="https://api.whatsapp.com/send?text={{ $title }}%20{{ $url }}" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                         </a>

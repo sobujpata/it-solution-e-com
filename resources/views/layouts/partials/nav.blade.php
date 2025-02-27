@@ -84,14 +84,14 @@
                    </a>
 
                    <div class="header-search-container dropdown">
-
-                       <input type="search" name="search" class="search-field"
-                           placeholder="Enter your product name..." id="search">
-
-                       <button class="search-btn">
-                           <ion-icon name="search-outline"></ion-icon>
-                       </button>
-                       
+                    <form action="{{ url('/products/search/') }}" method="get">
+                        <input type="search" name="search" class="search-field" placeholder="Enter your product name..." id="search">
+                        
+                        <button class="search-btn">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </button>
+                    </form>
+                    
                         <ul id="searchResults" class="dropdown-menu w-100"></ul>
                         
                    </div>
@@ -111,7 +111,16 @@
                         let suggestions = results.map(product =>
                             `<li>
                                 <a class="dropdown-item" href="/products/${product.id}">
-                                    <img src="/${product.image}?t=${new Date().getTime()}" width="30" class="me-2 w-6"> ${product.title} - <del class="text-decoration-line-through">$${product.price}</del>-$${product.discount_price}
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="/${product.image}?t=${new Date().getTime()}" class="me-2 w-md-80 w-100 rounded-2">
+                                        </div>    
+                                        <div class="col-10">
+                                            ${product.title} <br> 
+                                            <del class="text-decoration-line-through">$${product.price}</del> - $${product.discount_price}
+                                        </div>    
+                                    </div>
+                                     
                                 </a>
                             </li>`
                         ).join('');
@@ -365,7 +374,7 @@
                                            <li>
                                                 <a class="text-dark"
                                                    href="{{ url('/product-category/' . urlencode($subcategory->categoryName)) }}">{{ $subcategory->categoryName }}
-                                                   <span style="float:right">300</span>
+                                                   <span style="float:right">>></span>
                                                 </a>
                                             </li>
                                        @endforeach
