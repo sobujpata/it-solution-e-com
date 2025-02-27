@@ -1,22 +1,24 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\BannerController;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\MainMenuController;
-use App\Http\Controllers\OfferCardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MainMenuController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OfferCardController;
 use App\Http\Controllers\TestimonialController;
-use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
+ //products search
+ Route::get('/search-products', function (Request $request) {
+    $query = $request->query('q');
+    
+    if (!$query) {
+        return response()->json([]);
+    }
+
+    // Fetch products from the database
+    $products = Product::where('title', 'LIKE', "%{$query}%")
+        ->limit(20)
+        ->get(['id', 'title', 'price','discount_price', 'image']); // Adjust fields as needed
+
+    return response()->json($products);
+});
 //Category Api
 Route::get('/notification', [OfferCardController::class, "Notification"]);
 Route::get('/Category-header-list', [CategoryController::class, "CategoryHeader"]);

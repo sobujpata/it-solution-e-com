@@ -113,10 +113,10 @@
 </style>
 
 <div class="product-container">
-    <div class="container" style="padding-top: 10px">
+    <div class="container px-0 px-md-2" style="padding-top: 10px">
         
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 px-0 px-md-2">
                 <div class="card">
                     <!-- card left -->
                     <div class="product-imgs">
@@ -153,7 +153,7 @@
 
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 px-0 px-md-2">
                 <!-- card right -->
                 <div class="product-content">
                     <h3 class="product-title">{{ $product->title }}</h3>
@@ -190,7 +190,7 @@
                             <p>
                             </p>
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-9">
                                     <div class="row">
                                         <div class="col-5">
                                             Color Select:
@@ -207,8 +207,8 @@
                                 
                                     <input type="text" value="{{ $product->id }}" style="display:none;" id="p_id">
                                 </div>
-                                <div class="col-4">
-                                    <input type="number" min="0" value="1" name="quantity" step="1" class="quantity-input form-control"
+                                <div class="col-3">
+                                    <input type="number" min="0" value="1" name="quantity" step="1" class="px-0 px-md-2 form-control"
                                     aria-label="Quantity" id="p_qty">
                                 </div>
                             </div>

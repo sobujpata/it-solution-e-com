@@ -83,16 +83,58 @@
                            style="width: 200px; height:90px;">
                    </a>
 
-                   <div class="header-search-container">
+                   <div class="header-search-container dropdown">
 
                        <input type="search" name="search" class="search-field"
-                           placeholder="Enter your product name...">
+                           placeholder="Enter your product name..." id="search">
 
                        <button class="search-btn">
                            <ion-icon name="search-outline"></ion-icon>
                        </button>
-
+                       
+                        <ul id="searchResults" class="dropdown-menu w-100"></ul>
+                        
                    </div>
+                   
+                   
+
+                   <!-- Include Axios -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+<script>
+    document.getElementById('search').addEventListener('keyup', function () {
+        let query = this.value;
+        let dropdown = document.getElementById('searchResults');
+
+        if (query.length > 2) {
+            axios.get('/search-products', { params: { q: query } })
+                .then(response => {
+                    let results = response.data;
+                    if (results.length > 0) {
+                        let suggestions = results.map(product =>
+                            `<li>
+                                <a class="dropdown-item" href="/products/${product.id}">
+                                    <img src="/${product.image}?t=${new Date().getTime()}" width="30" class="me-2 w-6"> ${product.title} - <del class="text-decoration-line-through">$${product.price}</del>-$${product.discount_price}
+                                </a>
+                            </li>`
+                        ).join('');
+                        dropdown.innerHTML = suggestions;
+                        dropdown.classList.add('show'); // Show dropdown
+                    } else {
+                        dropdown.classList.remove('show');
+                    }
+                });
+        } else {
+            dropdown.classList.remove('show'); // Hide dropdown when no input
+        }
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!document.getElementById('search').contains(e.target)) {
+            document.getElementById('searchResults').classList.remove('show');
+        }
+    });
+</script>
 
                    <div class="header-user-actions">
                     <a href="{{ url('/profile') }}">
