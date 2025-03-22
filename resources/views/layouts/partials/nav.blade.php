@@ -79,7 +79,7 @@
                <div class="container">
 
                    <a class='header-logo' href='/'>
-                       <img src="{{ asset('images/logo/it-logo2.jpg') }}" alt="It Solution logo"
+                       <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
                            style="width: 200px; height:90px;">
                    </a>
 
@@ -150,17 +150,18 @@
                             <ion-icon name="person-outline"></ion-icon>
                         </button>
                     </a>
-
+                    <a href="/cart">
+                        <button class="action-btn">
+                            <ion-icon name="cart-outline"></ion-icon>
+                            {{-- <span class="count"></span> --}}
+                        </button>
+                    </a>
+                    <a href="{{url('/invoices')}}">
                        <button class="action-btn">
-                           <ion-icon name="heart-outline"></ion-icon>
+                           <ion-icon name="bag-handle-outline"></ion-icon>
                            {{-- <span class="count" id="countCartDesktop">0</span> --}}
                        </button>
-                       <a href="/cart">
-                           <button class="action-btn">
-                               <ion-icon name="bag-handle-outline"></ion-icon>
-                               {{-- <span class="count"></span> --}}
-                           </button>
-                       </a>
+                    </a>
                    </div>
 
                </div>
@@ -191,10 +192,7 @@
                        </li>
 
                        @if (Cookie::get('token') !== null)
-                           <li class="menu-category"><a href="{{ url('/invoices') }}" class="menu-title">Orders</a>
-                           </li>
-                           {{-- <li class="menu-category"><a href="{{ url('/profile') }}" class="menu-title">Account</a>
-                           </li> --}}
+                          
                            <li class="menu-category"><a href="{{ url('/logout') }}" class="menu-title">Logout</a>
                            </li>
                        @else
@@ -267,7 +265,7 @@
            <div id="mySidenav" class="sidenav">
                <div class="row mb-3">
                    <div class="col-10">
-                       <img src="{{ asset('images/logo/it-logo2.jpg') }}" alt="It Solution logo"
+                       <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
                            style="width: 150px; height:40px;">
                    </div>
                    <div class="col-2">
@@ -341,7 +339,7 @@
            <div id="categoryManu" class="sidenav">
                <div class="row">
                    <div class="col-10">
-                       <img src="{{ asset('images/logo/it-logo2.jpg') }}" alt="It Solution logo"
+                       <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
                            style="width: 150px; height:40px;">
                    </div>
                    <div class="col-2">
@@ -403,7 +401,7 @@
                                    <div class="col-12">
                                        <div class="row">
                                            <div class="col-4">
-                                               <a href="#" class="">
+                                               <a href="{{ url('/products/'.$item->id) }}" class="">
                                                    <img src="{{ asset($item->image) }}" alt="baby fabric shoes"
                                                        width="75" height="75" class="showcase-img">
                                                </a>
@@ -411,7 +409,7 @@
                                            <div class="col-8">
                                                <div class="row">
                                                    <div class="col-12 text-left">
-                                                       <a href="#" class="p-0">
+                                                       <a href="{{ url('/products/'.$item->id) }}" class="p-0">
                                                            {{ $item->title }}
                                                        </a>
                                                    </div>
@@ -445,7 +443,7 @@
                </button>
                <a href="{{ url('/cart') }}">
                    <button class="action-btn">
-                       <ion-icon name="bag-handle-outline"></ion-icon>
+                       <ion-icon name="cart-outline"></ion-icon>
 
                        {{-- <span class="count" id="countCartMobile"></span> --}}
                    </button>
@@ -456,13 +454,11 @@
                        </ion-icon>
                    </button>
                </a>
-
-               <button class="action-btn">
-                   <ion-icon name="heart-outline"></ion-icon>
-
-                   {{-- <span class="count">0</span> --}}
-               </button>
-
+               <a href="{{url('/invoices')}}">
+                    <button class="action-btn">
+                        <ion-icon name="bag-handle-outline"></ion-icon>
+                    </button>
+                </a>
                <button class="action-btn" onclick="categorynNavOpen()">
                    <ion-icon name="grid-outline"></ion-icon>
                </button>
