@@ -148,7 +148,7 @@ class ProductController extends Controller
 
         $bestSale = Product::where("remark", "popular")->take(4)->get();
 
-        return view('home.category-wise-product', compact('products', 'categories', 'mainCategories','bestSale'));
+        return view('home.category-wise-product', compact('products', 'category', 'mainCategories','bestSale'));
     }
 
     public function ProductDetails(Request $request, $id)
