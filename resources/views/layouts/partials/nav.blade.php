@@ -79,7 +79,7 @@
                <div class="container">
 
                    <a class='header-logo' href='/'>
-                       <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
+                       <img src="{{ asset('images/logo/it-logo.svg') }}" alt="It Solution logo"
                            style="width: 200px;">
                    </a>
 
@@ -265,7 +265,7 @@
            <div id="mySidenav" class="sidenav">
                <div class="row mb-3">
                    <div class="col-10 px-4">
-                       <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
+                       <img src="{{ asset('images/logo/it-logo.svg') }}" alt="It Solution logo"
                            style="width: 170px;">
                    </div>
                    <div class="col-2">
@@ -339,7 +339,7 @@
            <div id="categoryManu" class="sidenav">
                <div class="row">
                    <div class="col-10 px-4">
-                       <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
+                       <img src="{{ asset('images/logo/it-logo.svg') }}" alt="It Solution logo"
                            style="width: 170px;">
                    </div>
                    <div class="col-2">
