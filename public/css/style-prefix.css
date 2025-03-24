@@ -2211,11 +2211,17 @@ footer {
     color: var(--sonic-silver);
     font-size: var(--fs-9);
     text-transform: uppercase;
+    text-align: center;
   }
 
   .header-alert-news b { font-weight: var(--weight-500); }
 
-  .header-main { padding: 25px 0; }
+  .header-main { 
+    padding: 10px 0 25px 0; 
+  }
+  .header-logo img{
+    width:250px !important;
+  }
 
   .mobile-bottom-navigation {
     -webkit-border-top-left-radius: var(--border-radius-md);
