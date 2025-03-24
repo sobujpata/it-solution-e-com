@@ -31,12 +31,12 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     public function main_category()
     {
-        return $this->belongsTo(MainCategory::class);
+        return $this->belongsTo(MainCategory::class, 'main_category_id');
     }
 
     public function product_details()

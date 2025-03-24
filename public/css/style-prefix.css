@@ -2777,9 +2777,9 @@ footer {
   .dropdown-panel {
     position: absolute;
     top: 100%;
-    left: 0;
+    left: -160px;
     background: var(--white);
-    width: 1024px;
+    width: 1280px;
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 1fr 30px 1fr 30px 1fr 30px 1fr;

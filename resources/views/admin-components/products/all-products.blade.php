@@ -46,14 +46,13 @@
         tableData.DataTable().destroy();
         tableList.empty();
         res.data.data.forEach(function (item,index) {
-            // let imgUrl = item['image'];
-            // console.log(imgUrl);
+          
             let row = `<tr>
                         <td>${index+1}</td>
                         <td><img src="${item['image']}" style="width: 70px; height: 80px;" alt="No Image"/></td>
                         <td>${item['title']}</td>
                         <td>${item['main_category']['categoryName']}</td>
-                        <td>${item['category']['categoryName']}</td>
+                        <td>${item['categories']['categoryName']}</td>
                         <td>${item['brand']['brandName']}</td>
                         <td>${item['stock']}</td>
                         <td>${item['price']}</td>

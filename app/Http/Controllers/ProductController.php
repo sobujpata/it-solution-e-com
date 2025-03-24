@@ -102,10 +102,10 @@ class ProductController extends Controller
         ]);
 
         // Perform the search
-        $products = Product::with('category')
+        $products = Product::with('categories')
             ->where('title', 'like', '%' . $searchQuery . '%')
             ->orWhere('price', 'like', '%' . $searchQuery . '%')
-            ->orWhereHas('category', function ($query) use ($searchQuery) {
+            ->orWhereHas('categories', function ($query) use ($searchQuery) {
                 $query->where('categoryName', 'like', '%' . $searchQuery . '%');
             })
             ->paginate(8);
@@ -148,7 +148,7 @@ class ProductController extends Controller
 
         $bestSale = Product::where("remark", "popular")->take(4)->get();
 
-        return view('home.category-wise-product', compact('products', 'category', 'mainCategories','bestSale'));
+        return view('home.category-wise-product', compact('products', 'categories', 'mainCategories','bestSale'));
     }
 
     public function ProductDetails(Request $request, $id)
@@ -387,7 +387,8 @@ class ProductController extends Controller
     function ProductList(Request $request)
     {
         // $user_role=$request->header('role');
-        $product = Product::with('category', 'main_category','brand')->get();
+        $product = Product::with('categories', 'brand', 'main_category', 'product_details')->get();
+
         return response()->json([
             'data' => $product,
             // 'role' => $user_role,
@@ -399,7 +400,7 @@ class ProductController extends Controller
         $productId = $request->query('id');
 
         // dd($productId);
-        $product = Product::where('id', $productId)->with('main_category','category', 'brand')->first();
+        $product = Product::where('id', $productId)->with('main_category','categories', 'brand')->first();
         $product_detail = ProductDetail::where('product_id', $productId)->first();
         // Check if the product exists
         if (!$product) {

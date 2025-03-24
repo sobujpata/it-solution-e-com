@@ -80,7 +80,7 @@
 
                    <a class='header-logo' href='/'>
                        <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
-                           style="width: 200px; height:90px;">
+                           style="width: 200px;">
                    </a>
 
                    <div class="header-search-container dropdown">
@@ -264,9 +264,9 @@
            {{-- mobile side main menu bar --}}
            <div id="mySidenav" class="sidenav">
                <div class="row mb-3">
-                   <div class="col-10">
+                   <div class="col-10 px-4">
                        <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
-                           style="width: 150px; height:40px;">
+                           style="width: 170px;">
                    </div>
                    <div class="col-2">
                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -338,9 +338,9 @@
            {{-- mobile side category menu bar --}}
            <div id="categoryManu" class="sidenav">
                <div class="row">
-                   <div class="col-10">
+                   <div class="col-10 px-4">
                        <img src="{{ asset('images/logo/it-logo.png') }}" alt="It Solution logo"
-                           style="width: 150px; height:40px;">
+                           style="width: 170px;">
                    </div>
                    <div class="col-2">
                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -390,7 +390,7 @@
 
                <div class="product-showcase">
 
-                   <h3 class="showcase-heading">best sellers</h3>
+                   <h3 class="showcase-heading px-4">best sellers</h3>
 
                    <div class="showcase-wrapper">
 
