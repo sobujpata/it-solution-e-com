@@ -74,10 +74,10 @@
             </h2>
             
 
-            <div class="header-search-container">
+            {{-- <div class="header-search-container">
                 <input type="search" name="search-category-product" id="category-search" class="search-field"
                     placeholder="Search products in category... ">
-            </div>
+            </div> --}}
             <div id="loading-indicator" style="display: none; text-align: center;">
                 <p>Loading...</p>
             </div>

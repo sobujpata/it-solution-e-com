@@ -98,21 +98,16 @@
                             <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="product-img p-1" style="border-radius:15px; width: 100%;">
                             <img src="{{ asset(optional($product->product_details->first())->img2) }}" alt="{{ $product->title }}" class="product-img hover" width="300">
                             
-                            <p class="showcase-badge angle pink">{{ $product->discount }}</p>
+                            {{-- <p class="showcase-badge angle pink">{{ $product->discount }}</p> --}}
                                 <div class="showcase-actions">
-                                    
-                            
                                     <button class="btn-action" title="View Details">
                                         <a href="{{ url('/products/'.$product->id) }}}">
                                             <ion-icon name="eye-outline"></ion-icon>
                                         </a>
                                     </button>
-
                                     <button class="btn-action" onclick="AddToCartFromAll(this)">
                                         <ion-icon name="cart-outline"></ion-icon>
                                     </button>
-                                    
-                            
                                     <button class="btn-action">
                                         <a href="{{ url('/order-form/'.$product->id) }}}">
                                             <ion-icon name="bag-add-outline"></ion-icon>

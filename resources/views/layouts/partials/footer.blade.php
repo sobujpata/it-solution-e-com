@@ -112,7 +112,8 @@
                     </div>
 
                     <address class="content">
-                        Dhaka-1206, Bangladesh
+                        Level-6 Block-D Shop No-83 Bashundhara City Shopping Mall,Panthapath , Dhaka, Bangladesh
+
                     </address>
                 </li>
 
@@ -121,7 +122,8 @@
                         <ion-icon name="call-outline"></ion-icon>
                     </div>
 
-                    <a href="tel:+607936-8058" class="footer-nav-link">(+880) 1739871705</a>
+                    <a href="tel:+607936-8058" class="footer-nav-link">(+880) 1977-741140
+                    </a>
                 </li>
 
                 <li class="footer-nav-item flex">
@@ -129,7 +131,7 @@
                         <ion-icon name="mail-outline"></ion-icon>
                     </div>
 
-                    <a href="mailto:example@gmail.com" class="footer-nav-link">localbazer24@gmail.com</a>
+                    <a href="mailto:example@gmail.com" class="footer-nav-link">techbd928@gmail.com </a>
                 </li>
 
             </ul>

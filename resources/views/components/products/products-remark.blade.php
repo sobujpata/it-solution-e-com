@@ -93,7 +93,7 @@
                         <div class="showcase-banner">
                             <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="product-img p-1" style="border-radius:15px; width: 100%;">
                             <img src="{{ asset(optional($product->product_details->first())->img2) }}" alt="{{ $product->title }}" class="product-img hover" width="300">
-                            <p class="showcase-badge angle pink">{{ $product->discount }}</p>
+                            {{-- <p class="showcase-badge angle pink">{{ $product->discount }}</p> --}}
                                 <div class="showcase-actions">
                                     
                             

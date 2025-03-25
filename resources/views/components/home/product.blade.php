@@ -491,7 +491,7 @@
                             <div class="showcase-banner">
                                 <img src="${item.image}" alt="${item.title}" class="product-img default" width="300">
                                 <img src="${img2}" alt="${item.title}" class="product-img hover" width="300">
-                                <p class="showcase-badge angle pink">${item.discount}</p>
+                                
                                 <div class="showcase-actions">
                                     
                             
